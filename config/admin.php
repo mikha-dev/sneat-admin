@@ -1,14 +1,41 @@
 <?php
 
 use Dcat\Admin\Admin;
+
 return [
 
-    'disable_no_referrer_meta' => true,
+    'footer' => [
+        'powered_by' => env('POWERED_BY', 'Powered by <a class="footer-link fw-medium" target="_blank" href="https://dev4traders.com">dev4taders</a>'),
+        'menu' => '<a href="#" class="footer-link me-4" target="_blank">Documentation</a><a href="#" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>'
+    ],
+    'meta' => [
+        'description' => '',
+        'keywords' => '',
+        'disable_referrer' => true
+    ],
+    'layout' => [
+        // modes: dark, light, system
+        'mode' => 'light',
+        // directions: ltr, rtl
+        'dir' => 'ltr',
+
+        //content types: container-xxl, layout-compact, layout-wide
+        'content_type' => 'container-xxl',
+    ],
+
+    'auth' => [
+        'allow_register' => true,
+        'allow-reset-password' => true,
+        'allow-socials'
+    ],
+
+    //todo::rm
+    //'disable_no_referrer_meta' => true,
     'paginate-default' => env('PAGINATE_DEF', 20),
     'login-layout' => env('LOGIN_LAYOUT', 'primary'),
     'powered' => env('POWERED_BY', 'Powered by <a target="_blank" href="https://dev4traders.com">dev4taders</a>'),
     'allow-register' => env('ALLOW_REGISTER', false),
-    'registration-activation-enabled' => env('REGISTRATION_ACTIVATION_ENABLED', false),    
+    'registration-activation-enabled' => env('REGISTRATION_ACTIVATION_ENABLED', false),
     'allow-reset-password' => env('ALLOW_RESET_PASSWORD', false),
     'login-image' => env('LOGIN_IMAGE', 'images/login.png'),
     'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', 'images/login-bg.jpg'),

@@ -21,7 +21,7 @@ class AuthController extends Controller
     /**
      * @var string
      */
-    protected $view = 'admin::pages.login';
+    protected $view = 'admin::pages.authentications.login-basic';
 
     /**
      * @var string
@@ -66,7 +66,7 @@ class AuthController extends Controller
 
         if($credentials[$this->username()] != 'admin') {
             $credentials['domain_id'] = Admin::domain()->id;
-        }            
+        }
 
         if ($this->guard()->attempt($credentials, $remember)) {
             return $this->sendLoginResponse($request);
