@@ -1,5 +1,6 @@
 <?php
 
+use Dcat\Admin\Admin;
 return [
 
     'disable_no_referrer_meta' => true,
@@ -22,7 +23,6 @@ return [
         'es' => 'Spain',
         'pt' => 'Portugal',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | dcat-admin name
@@ -34,6 +34,7 @@ return [
     */
     'name'      => env('APP_NAME'),
 
+    'version' => env('VERSION', 'v'.Admin::VERSION),
     /*
     |--------------------------------------------------------------------------
     | dcat-admin logo
@@ -56,7 +57,6 @@ return [
     |
     */
     'logo-mini' => env('APP_LOGO_MINI', 'images/logo-mini.png'),
-
     /*
     |--------------------------------------------------------------------------
     | dcat-admin favicon
@@ -96,7 +96,6 @@ return [
         'namespace' => 'App\\Admin\\Controllers',
 
         'middleware' => ['web', 'admin'],
-
         'enable_session_middleware' => true,
     ],
 
@@ -181,7 +180,6 @@ return [
             'auth/login',
             'auth/logout',
         ],
-
         'enable_session_middleware' => true,
     ],
 
@@ -293,7 +291,6 @@ return [
             'image' => 'images',
             'file'  => 'files',
         ],
-
     ],
 
     /*
@@ -351,7 +348,6 @@ return [
 
         // sidebar-separate
         'body_class' => [''],
-
         'horizontal_menu' => false,
 
         'sidebar_collapsed' => false,

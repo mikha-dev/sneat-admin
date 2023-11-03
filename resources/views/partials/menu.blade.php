@@ -3,7 +3,11 @@
 
     $horizontal = config('admin.layout.horizontal-menu');
 
-    $defaultIcon = config('admin.menu.default_icon', 'feather icon-circle');
+    $icon = $item['icon']; 
+    if(isset($item['domain_setting']) && !is_null($item['domain_setting']) && !is_null($item['domain_setting']['icon'])) {
+        $icon = $item['domain_setting']['icon'];
+    }
+
 @endphp
 
 @if($builder->visible($item))
@@ -13,7 +17,7 @@
                href="{{ $builder->getUrl($item['uri']) }}"
                class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
                 {!! str_repeat('&nbsp;', $depth) !!}
-                <i class="fas {{ $item['icon'] ?: $defaultIcon }}"></i>
+                <i class="fa fa-fw {{ $icon }}"></i>
                 <span class="ms-2">
                     {!! $builder->translate($item['title']) !!}
                 </span>

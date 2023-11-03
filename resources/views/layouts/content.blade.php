@@ -6,6 +6,9 @@
             <h1>
                 <span class="text-capitalize">{!! $header !!}</span>
                 <small>{!! $description !!}</small>
+                @if($helpTopic) 
+                {!!$helpTopic!!}
+                @endif
             </h1>
         @elseif($breadcrumb || config('admin.enable_default_breadcrumb'))
             <div>&nbsp;</div>

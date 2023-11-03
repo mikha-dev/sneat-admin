@@ -125,7 +125,7 @@ class Admin
         // <link rel="apple-touch-icon" href="/storage/img/icon-192.png" />
         // <meta name="msapplication-TileImage" content="/storage/img/icon-192.png" />
         // <meta name="msapplication-TileColor" content="#ff0000">
-        // <link rel="manifest" href="/manifest.json">        
+        // <link rel="manifest" href="/manifest.json">
 
         // if ($favicon === null) {
         //     return static::context()->favicon ?: config('admin.favicon');
@@ -577,7 +577,6 @@ class Admin
         $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
 
         $pjaxId = static::getPjaxContainerId();
-
         $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
