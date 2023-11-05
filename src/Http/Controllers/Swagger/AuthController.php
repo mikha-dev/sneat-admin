@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Swagger;
+namespace Dcat\Admin\Http\Controllers\Swagger;
 
+use OpenApi\Attributes as OA;
 use Illuminate\Routing\Controller;
 
 /**
