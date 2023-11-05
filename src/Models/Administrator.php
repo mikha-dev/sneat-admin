@@ -2,18 +2,19 @@
 
 namespace Dcat\Admin\Models;
 
-use Dcat\Admin\Traits\HasDateTimeFormatter;
+use Illuminate\Support\Facades\URL;
 use Dcat\Admin\Traits\HasPermissions;
 //use Illuminate\Auth\Authenticatable;
 //use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable;
 //use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
+use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * Class Administrator.
  *
@@ -105,4 +106,5 @@ class Administrator extends Authenticatable
     {
         return $this->email;
     }
+
 }
