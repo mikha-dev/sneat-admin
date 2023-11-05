@@ -28,6 +28,10 @@ $customizerHidden = 'customizer-hide';
 @endsection
 
 --}}
+
+@extends('layouts.full-page')
+
+@section('content')
 <div class="authentication-wrapper authentication-basic container-p-y">
 <div class="authentication-inner">
     <!-- Register -->
@@ -35,10 +39,12 @@ $customizerHidden = 'customizer-hide';
     <div class="card-body">
         <!-- Logo -->
         <div class="app-brand justify-content-center">
-        <a href="{{url('/')}}" class="app-brand-link gap-2">
-            <span class="app-brand-logo"><img src="/storage/{!! config('admin.logo-image') !!}"></span>
-            <span class="app-brand-text text-body fw-bold">{{config('admin.name')}}</span>
-        </a>
+            <a href="{{url('/')}}" class="app-brand-link gap-2">
+                <span class="app-brand-logo">
+                    <img src="/storage/{!! config('admin.logo-image') !!}" alt="" class="app-brand-img w-px-150" data-app-light-img="/storage/{!! config('admin.logo-image-light') !!}" data-app-dark-img="/storage/{!! config('admin.logo-image-dark') !!}">
+                </span>
+                <span class="app-brand-text text-body fw-bold">{{config('admin.name')}}</span>
+            </a>
         </div>
         <!-- /Logo -->
         <h4 class="mb-2">{{ __('admin.welcome_back') }}</h4>
@@ -123,3 +129,4 @@ $customizerHidden = 'customizer-hide';
         });
     });
 </script>
+@endsection

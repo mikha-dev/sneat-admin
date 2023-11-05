@@ -13,14 +13,21 @@ return [
         'keywords' => '',
         'disable_referrer' => true
     ],
+
+    // theme-default, theme-semi-dark, theme-bordered
+    'theme' => 'theme-default',
+
     'layout' => [
         // modes: dark, light, system
         'mode' => 'light',
         // directions: ltr, rtl
         'dir' => 'ltr',
 
-        //content types: container-xxl, layout-compact, layout-wide
+        //content types: container-xxl, container-fluid // todo::rm layout-compact, layout-wide
         'content_type' => 'container-xxl',
+
+        // layout-menu-collapsed & layout-menu-fixed & layout-navbar-fixed & layout-footer-fixed
+        'initials' => 'layout-menu-collapsed',
     ],
 
     'auth' => [
@@ -28,6 +35,10 @@ return [
         'allow-reset-password' => true,
         'allow-socials'
     ],
+
+    'logo-image'        => env('APP_LOGO_IMAGE', 'images/logo.png'),
+    'logo-image-light'  => env('APP_LOGO_IMAGE_LIGHT', 'images/logo-light.png'),
+    'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', 'images/logo-dark.png'),
 
     //todo::rm
     //'disable_no_referrer_meta' => true,
@@ -369,24 +380,24 @@ return [
     |
     | This value is the layout of admin pages.
     */
-    'layout' => [
-        // default, blue, blue-light, green
-        'color' => 'default',
+    // 'layout' => [
+    //     // default, blue, blue-light, green
+    //     'color' => 'default',
 
-        // sidebar-separate
-        'body_class' => [''],
-        'horizontal_menu' => false,
+    //     // sidebar-separate
+    //     'body_class' => [''],
+    //     'horizontal_menu' => false,
 
-        'sidebar_collapsed' => false,
+    //     'sidebar_collapsed' => false,
 
-        // light, primary, dark
-        'sidebar_style' => 'light',
+    //     // light, primary, dark
+    //     'sidebar_style' => 'light',
 
-        'dark_mode_switch' => true,
+    //     'dark_mode_switch' => true,
 
-        // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
-        'navbar_color' => '',
-    ],
+    //     // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
+    //     'navbar_color' => '',
+    // ],
 
     /*
     |--------------------------------------------------------------------------

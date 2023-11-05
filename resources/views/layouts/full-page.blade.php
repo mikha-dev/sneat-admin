@@ -2,9 +2,11 @@
 @php
 $mode = config('admin.layout.mode').'-style';
 $dir = config('admin.layout.dir');
-$contentLayout = config('admin.layout.content_type');
+$initials = config('admin.layout.initials');
+$theme = config('admin.theme');
+$contentType = config('admin.layout.content_type'); // todo::move to content section/blade
 @endphp
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ $mode }}" dir="{{$dir}}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ $mode }} {{ $initials }}" dir="{{ $dir }}" data-theme="{{ $theme }}">
 
 <head>
     <meta charset="utf-8" />
@@ -20,7 +22,7 @@ $contentLayout = config('admin.layout.content_type');
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(! empty($favicon = Dcat\Admin\Admin::favicon()))
         {!! $favicon !!}
-    @endif  
+    @endif
 
     {!! admin_section(Dcat\Admin\Admin::SECTION['HEAD']) !!}
 
@@ -32,7 +34,7 @@ $contentLayout = config('admin.layout.content_type');
 <body>
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
-    </script>  
+    </script>
 
     {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
