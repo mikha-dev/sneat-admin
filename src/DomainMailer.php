@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace Dcat\Admin;
 
 use Illuminate\Mail\Mailer;
-use App\DomainTemplateMailable;
-use App\Models\DomainMailSetting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Dcat\Admin\DomainTemplateMailable;
+use Dcat\Admin\Models\DomainMailSetting;
 use Illuminate\Notifications\Notification;
-use App\Interfaces\MailDepartmentInterface;
+use Dcat\Admin\Contracts\MailDepartmentInterface;
 
 class DomainMailer {
 

@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDomain;
 use Illuminate\Database\Eloquent\Model;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
-use Dcat\Admin\Traits\HasDomain;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DomainMailSetting extends Model {
@@ -15,9 +15,30 @@ class DomainMailSetting extends Model {
     public $incrementing = false;
     protected $fillable = ['transport', 'encryption',  'default_department_id', 'host', 'port', 'username', 'password'];
 
-    protected $table = 'mail_settings';
+    const TABLE_NAME = 'admin_mail_settings';
+
+    /**
+     * {@inheritDoc}
+    */
+    public function __construct(array $attributes = [])
+    {
+        $this->init();
+
+        parent::__construct($attributes);
+    }
+
+    protected function init()
+    {
+        $connection = config('admin.database.connection') ?: config('database.default');
+
+        $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.mail_settings') ?: self::TABLE_NAME);
+    }
+
 
     public function default_department() : HasOne {
-        return $this->hasOne(EmailDepartment::class, 'id', 'default_department_id');
+        $departmentModel = config('admin.database.departments_model');
+        return $this->hasOne($departmentModel, 'id', 'default_department_id');
     }
 }

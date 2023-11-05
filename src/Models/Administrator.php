@@ -21,7 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class Administrator extends Authenticatable
 {
-    use 
+    use
     //    Authenticatable,
         HasPermissions,
         HasDateTimeFormatter;
@@ -63,7 +63,7 @@ class Administrator extends Authenticatable
 
         if ($avatar) {
             if (! URL::isValidUrl($avatar)) {
-                $avatar = Storage::disk(config('admin.upload.disk'))->url($avatar);
+                $avatar = Storage::disk(config('admin.upload.disk'))->url($avatar); //todo:: check and fix
             }
 
             return $avatar;
@@ -86,7 +86,7 @@ class Administrator extends Authenticatable
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id')->withTimestamps();
     }
 
-    public function domains() : HasMany {
+    public function managed_domains() : HasMany { //todo:: renamed to managed_domains
         $relatedModel = config('admin.database.domains_model');
         return $this->hasMany($relatedModel, 'manager_id');
     }
@@ -96,14 +96,13 @@ class Administrator extends Authenticatable
         return $this->belongsTo($relatedModel, 'domain_id');
     }
 
-    /**
-     * 判断是否允许查看菜单.
-     *
-     * @param  array|Menu  $menu
-     * @return bool
-     */
-    public function canSeeMenu($menu)
+    public function canSeeMenu($menu) : bool
     {
         return true;
+    }
+
+    public function routeNotificationForDomainMailer($notifiable) : string
+    {
+        return $this->email;
     }
 }

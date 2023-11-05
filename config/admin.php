@@ -383,6 +383,24 @@ return [
         'domains_table' => 'admin_domains',
         'domains_model' => Dcat\Admin\Models\Domain::class,
 
+        // Domains Emais table and model.
+        'domain_mails_table' => 'admin_mails',
+        'domain_mails_model' => Dcat\Admin\Models\DomainEmail::class,
+
+        // Domains Emais Templates table and model.
+        'mail_templates_table' => 'admin_mail_templates',
+        'mail_templates_model' => Dcat\Admin\Models\DomainMailTemplate::class,
+
+        // Domains Menu Settings table and model.
+        'mail_templates_table' => 'admin_mail_templates',
+        'mail_templates_model' => Dcat\Admin\Models\DomainMailTemplate::class,
+
+        'menu_domain_settings_table' => 'admin_menu_domain_settings',
+        'menu_domain_settings_model' => Dcat\Admin\Models\MenuDomainSetting::class,
+
+        'system_notification_settings_table' => 'admin_system_notification_settings',
+        'system_notification_settings_model' => Dcat\Admin\Models\SystemNotificationSetting::class,
+
         // Pivot table for table above.
         'role_users_table'       => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',

@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace Dcat\Admin\Models;
 
 use Exception;
 use App\Models\User;
 use App\Mail\CustomMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Traits\HasCountedEnum;
-use App\Models\EmailDepartment;
-use App\Jobs\SendCustomEmailJob;
 use Dcat\Admin\Traits\HasDomain;
-use App\Enums\EmailDirectionType;
+use Dcat\Admin\Traits\HasCountedEnum;
+use Dcat\Admin\Models\EmailDepartment;
 use Illuminate\Database\Eloquent\Model;
+use Dcat\Admin\Enums\EmailDirectionType;
 use Illuminate\Database\Eloquent\Builder;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Symfony\Component\Mime\MessageConverter;
@@ -21,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DomainEmail extends Model
 {
-    use HasDateTimeFormatter;    
+    use HasDateTimeFormatter;
     use HasDomain;
     use HasCountedEnum;
     use SoftDeletes;
@@ -31,25 +30,43 @@ class DomainEmail extends Model
     const HEADER_CONTEXT_ID = 'X-Mailer-Context-Id';
     const HEADER_CONTEXT_TYPE = 'X-Mailer-Context-Type';
 
-    protected $table = 'admin_mails';
+    const TABLE_NAME = 'admin_mails';
 
     protected $casts = [
         'direction_type' => EmailDirectionType::class
     ];
-    // protected $appends = [
-    //     'shortBody'
-    // ];
+
+    /**
+     * {@inheritDoc}
+    */
+    public function __construct(array $attributes = [])
+    {
+        $this->init();
+
+        parent::__construct($attributes);
+    }
+
+    protected function init()
+    {
+        $connection = config('admin.database.connection') ?: config('database.default');
+
+        $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.domain_mails') ?: self::TABLE_NAME);
+    }
 
     public function user() : BelongsTo {
-        return $this->belongsTo(User::class, 'user_email', 'email');
+        $userModel = config('admin.database.users_model');
+        return $this->belongsTo($userModel, 'user_email', 'email');
     }
 
     public function department() : BelongsTo {
-        return $this->belongsTo(EmailDepartment::class, 'department_id');
-    }    
+        $departmentModel = config('admin.database.email_departments_model');
+        return $this->belongsTo($departmentModel, 'department_id');
+    }
 
     public function getShortBodyAttribute() {
-        return Str::words(strip_tags($this->body), 10, '...');        
+        return Str::words(strip_tags($this->body), 10, '...');
     }
     // public function context() : MorphOne {
     //     return $this->morphOne();
@@ -74,12 +91,12 @@ class DomainEmail extends Model
 
         if($headers->has(self::HEADER_DEPARTMENT_ID)) {
             $record->department_id = $headers->get(self::HEADER_DEPARTMENT_ID)->getBodyAsString();
-        }        
+        }
 
         if($headers->has(self::HEADER_CONTEXT_ID) && $headers->has(self::HEADER_CONTEXT_TYPE)) {
             $record->context_id = $headers->get(self::HEADER_CONTEXT_ID)->getBodyAsString();
             $record->context_type = $headers->get(self::HEADER_CONTEXT_TYPE)->getBodyAsString();
-        }                    
+        }
 
         $record->save();
     }
@@ -97,7 +114,8 @@ class DomainEmail extends Model
         $record->body = $request->get('html_body');
 
         /** @var EmailDepartment $dep */
-        $dep = EmailDepartment::with('domain')->get()->first(function($dep) use($to) {
+        $departmentModel = config('admin.database.email_departments_model');
+        $dep = $departmentModel::with('domain')->get()->first(function($dep) use($to) {
             return $dep->emailAddress == $to;
         });
 
@@ -108,7 +126,7 @@ class DomainEmail extends Model
             throw new Exception('Email Department not found. to: '. $to);
         }
 
-        $record->save();        
+        $record->save();
     }
 
     public function scopeIn(Builder $query) : Builder {
@@ -117,12 +135,13 @@ class DomainEmail extends Model
 
     public function scopeOut(Builder $query) : Builder {
         return $query->where('direction_type', EmailDirectionType::OUT);
-    }    
-
-    public function sendReply(string $message) : void {
-        $subject = 'RE:'.$this->subject;
-        $reply = $message.'<blockquote>'.$this->body.'</blockquote>';
-
-        dispatch(new SendCustomEmailJob(CustomMail::make($subject, $reply, $this->user, $this->department), $this->user->email));
     }
+
+    //todo:: think more
+    // public function sendReply(string $message) : void {
+    //     $subject = 'RE:'.$this->subject;
+    //     $reply = $message.'<blockquote>'.$this->body.'</blockquote>';
+
+    //     dispatch(new SendCustomEmailJob(CustomMail::make($subject, $reply, $this->user, $this->department), $this->user->email));
+    // }
 }

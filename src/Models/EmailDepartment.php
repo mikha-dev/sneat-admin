@@ -1,19 +1,38 @@
 <?php
 
-namespace App\Models;
+namespace Dcat\Admin\Models;
 
 use Dcat\Admin\Traits\HasDomain;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use App\Interfaces\MailDepartmentInterface;
+use Dcat\Admin\Contracts\MailDepartmentInterface;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 class EmailDepartment extends Model implements MailDepartmentInterface
 {
-    use HasDateTimeFormatter;    
+    use HasDateTimeFormatter;
     use HasDomain;
 
-    protected $table = 'mail_departments';
+    const TABLE_NAME = 'admin_mail_departments';
+
+    /**
+     * {@inheritDoc}
+    */
+    public function __construct(array $attributes = [])
+    {
+        $this->init();
+
+        parent::__construct($attributes);
+    }
+
+    protected function init()
+    {
+        $connection = config('admin.database.connection') ?: config('database.default');
+
+        $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.email_departments_table') ?: self::TABLE_NAME);
+    }
 
     public function getEmailAddressAttribute() : string {
         return $this->getAddress();

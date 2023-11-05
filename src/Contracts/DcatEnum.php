@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin;
+namespace Dcat\Admin\Contracts;
 
 interface DcatEnum
 {

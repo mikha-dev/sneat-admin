@@ -3,13 +3,13 @@
 namespace Dcat\Admin;
 
 use ReflectionClass;
-use App\Models\DomainEmail;
+use Dcat\Admin\Models\DomainEmail;
 use Illuminate\Bus\Queueable;
-use App\Models\DomainMailTemplate;
+use Dcat\Admin\Models\DomainMailTemplate;
 use Illuminate\Queue\SerializesModels;
 use Spatie\MailTemplates\TemplateMailable;
-use App\Interfaces\MailDepartmentInterface;
-use App\Interfaces\DomainMailTemplateInterface;
+use Dcat\Admin\Contracts\MailDepartmentInterface;
+use Dcat\Admin\Contracts\DomainMailTemplateInterface;
 use Dcat\Admin\Contracts\DomainNotificationWithContextInterface;
 
 class DomainTemplateMailable extends TemplateMailable

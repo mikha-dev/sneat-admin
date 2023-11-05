@@ -1,6 +1,8 @@
 <?php
 
-namespace Dcat\Admin;
+namespace Dcat\Admin\Contracts;
+
+use Dcat\Admin\Contracts\DcatEnum;
 
 interface DcatEnumColored extends DcatEnum
 {
