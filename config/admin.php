@@ -1,13 +1,30 @@
 <?php
 
-use Dcat\Admin\Admin;
-
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin html title
+    |--------------------------------------------------------------------------
+    |
+    | Html title for all pages.
+    |
+    */
+    'title'  => env('APP_NAME'),
+
+    'version' => env('VERSION', 'v'.Dcat\Admin\Admin::VERSION),
+
+    'supported_locales' => [
+        'en' => 'English',
+        'es' => 'Spain',
+        'pt' => 'Portugal',
+    ],
 
     'footer' => [
         'powered_by' => env('POWERED_BY', 'Powered by <a class="footer-link fw-medium" target="_blank" href="https://dev4traders.com">dev4taders</a>'),
         'menu' => '<a href="#" class="footer-link me-4" target="_blank">Documentation</a><a href="#" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>'
     ],
+
     'meta' => [
         'description' => '',
         'keywords' => '',
@@ -23,171 +40,13 @@ return [
         // directions: ltr, rtl
         'dir' => 'ltr',
 
-        //content types: container-xxl, container-fluid // todo::rm layout-compact, layout-wide
+        //content types: container-xxl, container-fluid
         'content_type' => 'container-xxl',
 
         // layout-menu-collapsed & layout-menu-fixed & layout-navbar-fixed & layout-footer-fixed
         'initials' => 'layout-menu-collapsed',
     ],
 
-    'auth' => [
-        'allow_register' => true,
-        'allow-reset-password' => true,
-        'allow-socials'
-    ],
-
-    'logo-image'        => env('APP_LOGO_IMAGE', 'images/logo.png'),
-    'logo-image-light'  => env('APP_LOGO_IMAGE_LIGHT', 'images/logo-light.png'),
-    'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', 'images/logo-dark.png'),
-
-    //todo::rm
-    //'disable_no_referrer_meta' => true,
-    'paginate-default' => env('PAGINATE_DEF', 20),
-    'login-layout' => env('LOGIN_LAYOUT', 'primary'),
-    'powered' => env('POWERED_BY', 'Powered by <a target="_blank" href="https://dev4traders.com">dev4taders</a>'),
-    'allow-register' => env('ALLOW_REGISTER', false),
-    'registration-activation-enabled' => env('REGISTRATION_ACTIVATION_ENABLED', false),
-    'allow-reset-password' => env('ALLOW_RESET_PASSWORD', false),
-    'login-image' => env('LOGIN_IMAGE', 'images/login.png'),
-    'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', 'images/login-bg.jpg'),
-
-    'recaptch-enabled' => env('ENABLE_RECAPTCHA', false),
-    'recaptch-site'   => env('RE_CAP_SITE', 'YOURGOOGLECAPTCHAsitekeyHERE'),
-    'recaptch-secret' => env('RE_CAP_SECRET', 'YOURGOOGLECAPTCHAsecretHERE'),
-    'version' => env('VERSION', 'v'.Dcat\Admin\Admin::VERSION),
-
-    'supported_locales' => [
-        'en' => 'English',
-        'es' => 'Spain',
-        'pt' => 'Portugal',
-    ],
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of dcat-admin, This setting is displayed on the
-    | login page.
-    |
-    */
-    'name'      => env('APP_NAME'),
-
-    'version' => env('VERSION', 'v'.Admin::VERSION),
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin logo
-    |--------------------------------------------------------------------------
-    |
-    | The logo of all admin pages. You can also set it as an image by using a
-    | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
-    |
-    */
-    'logo-image'      => env('APP_LOGO_IMAGE', 'images/logo.png'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin mini logo
-    |--------------------------------------------------------------------------
-    |
-    | The logo of all admin pages when the sidebar menu is collapsed. You can
-    | also set it as an image by using a `img` tag, eg
-    | '<img src="http://logo-url" alt="Admin logo">'.
-    |
-    */
-    'logo-mini' => env('APP_LOGO_MINI', 'images/logo-mini.png'),
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin favicon
-    |--------------------------------------------------------------------------
-    |
-    */
-    'icons' => [
-        'icon-32' => 'images/icon-32.png',
-        'icon-192' => 'images/icon-192.png'
-    ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | User default avatar
-     |--------------------------------------------------------------------------
-     |
-     | Set a default avatar for newly created users.
-     |
-     */
-    'default_avatar' => '@admin/images/default-avatar.png',
-
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin route settings
-    |--------------------------------------------------------------------------
-    |
-    | The routing configuration of the admin page, including the path prefix,
-    | the controller namespace, and the default middleware. If you want to
-    | access through the root path, just set the prefix to empty string.
-    |
-    */
-    'route' => [
-        'domain' => env('ADMIN_ROUTE_DOMAIN'),
-
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
-
-        'namespace' => 'App\\Admin\\Controllers',
-
-        'middleware' => ['web', 'admin'],
-        'enable_session_middleware' => true,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin install directory
-    |--------------------------------------------------------------------------
-    |
-    | The installation directory of the controller and routing configuration
-    | files of the administration page. The default is `app/Admin`, which must
-    | be set before running `artisan admin::install` to take effect.
-    |
-    */
-    'directory' => app_path('Admin'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin html title
-    |--------------------------------------------------------------------------
-    |
-    | Html title for all pages.
-    |
-    */
-    'title'  => env('APP_NAME'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Assets hostname
-    |--------------------------------------------------------------------------
-    |
-   */
-    'assets_server' => env('ADMIN_ASSETS_SERVER'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Access via `https`
-    |--------------------------------------------------------------------------
-    |
-    | If your page is going to be accessed via https, set it to `true`.
-    |
-    */
-    'https' => env('ADMIN_HTTPS', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin auth setting
-    |--------------------------------------------------------------------------
-    |
-    | Authentication settings for all admin pages. Include an authentication
-    | guard and a user provider setting of authentication driver.
-    |
-    | You can specify a controller for `login` `logout` and other auth routes.
-    |
-    */
     'auth' => [
         'enable' => true,
 
@@ -218,8 +77,166 @@ return [
             'auth/login',
             'auth/logout',
         ],
+
+        'enable_session_middleware' => true,
+
+        'allow-register' => env('ALLOW_REGISTER', true),
+        'registration-activation-enabled' => env('REGISTRATION_ACTIVATION_ENABLED', true),
+        'allow-reset-password' => env('ALLOW_RESET_PASSWORD', true),
+        'allow-socials' => env('ALLOW_SOCIALS', true),
+        'recaptch-enabled' => env('ENABLE_RECAPTCHA', false),
+        'recaptch-site'   => env('RE_CAP_SITE', 'YOURGOOGLECAPTCHAsitekeyHERE'),
+        'recaptch-secret' => env('RE_CAP_SECRET', 'YOURGOOGLECAPTCHAsecretHERE'),
+        'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', 'images/login-bg.png'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin favicon
+    |--------------------------------------------------------------------------
+    |
+    */
+    'icons' => [
+        'icon-32' => 'images/icon-32.png',
+        'icon-192' => 'images/icon-192.png'
+    ],
+
+        /*
+     |--------------------------------------------------------------------------
+     | User default avatar
+     |--------------------------------------------------------------------------
+     |
+     | Set a default avatar for newly created users.
+     |
+     */
+    'default_avatar' => '@admin/images/default-avatar.png',
+
+
+    'logo-mini' => env('APP_LOGO_MINI', 'images/logo-mini.png'),
+    'logo-mini-dark' => env('APP_LOGO_MINI_DARK', 'images/logo-mini-dark.png'),
+    'logo-image'        => env('APP_LOGO_IMAGE', 'images/logo.png'), // todo::rm
+    'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', 'images/logo-dark.png'),
+
+    //todo::rm
+    //'disable_no_referrer_meta' => true,
+    'paginate-default' => env('PAGINATE_DEF', 20),
+    //todo::rm
+    'login-layout' => env('LOGIN_LAYOUT', 'primary'),
+    //todo::rm
+    'powered' => env('POWERED_BY', 'Powered by <a target="_blank" href="https://dev4traders.com">dev4taders</a>'),
+    //todo::rm
+    'allow-register' => env('ALLOW_REGISTER', false),
+    //todo::rm
+    'registration-activation-enabled' => env('REGISTRATION_ACTIVATION_ENABLED', false),
+    //todo::rm
+    'allow-reset-password' => env('ALLOW_RESET_PASSWORD', false),
+    //todo::rm
+    'login-image' => env('LOGIN_IMAGE', 'images/login.png'),
+    //todo::rm
+    'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', 'images/login-bg.jpg'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of dcat-admin, This setting is displayed on the
+    | login page.
+    |
+    */
+    //todo::rm use app name
+    'name'      => env('APP_NAME'),
+
+    //'version' => env('VERSION', 'v'.Admin::VERSION),
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin logo
+    |--------------------------------------------------------------------------
+    |
+    | The logo of all admin pages. You can also set it as an image by using a
+    | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
+    |
+    */
+    //todo:rm
+    'logo-image'      => env('APP_LOGO_IMAGE', 'images/logo.png'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin mini logo
+    |--------------------------------------------------------------------------
+    |
+    | The logo of all admin pages when the sidebar menu is collapsed. You can
+    | also set it as an image by using a `img` tag, eg
+    | '<img src="http://logo-url" alt="Admin logo">'.
+    |
+    */
+    //todo:rm
+    'logo-mini' => env('APP_LOGO_MINI', 'images/logo-mini.png'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin route settings
+    |--------------------------------------------------------------------------
+    |
+    | The routing configuration of the admin page, including the path prefix,
+    | the controller namespace, and the default middleware. If you want to
+    | access through the root path, just set the prefix to empty string.
+    |
+    */
+    'route' => [
+        'domain' => env('ADMIN_ROUTE_DOMAIN'),
+
+        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
+
+        'namespace' => 'App\\Admin\\Controllers',
+
+        'middleware' => ['web', 'admin'],
+
         'enable_session_middleware' => true,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin install directory
+    |--------------------------------------------------------------------------
+    |
+    | The installation directory of the controller and routing configuration
+    | files of the administration page. The default is `app/Admin`, which must
+    | be set before running `artisan admin::install` to take effect.
+    |
+    */
+    'directory' => app_path('Admin'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Assets hostname
+    |--------------------------------------------------------------------------
+    |
+   */
+    'assets_server' => env('ADMIN_ASSETS_SERVER'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Access via `https`
+    |--------------------------------------------------------------------------
+    |
+    | If your page is going to be accessed via https, set it to `true`.
+    |
+    */
+    'https' => env('ADMIN_HTTPS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin auth setting
+    |--------------------------------------------------------------------------
+    |
+    | Authentication settings for all admin pages. Include an authentication
+    | guard and a user provider setting of authentication driver.
+    |
+    | You can specify a controller for `login` `logout` and other auth routes.
+    |
+    */
 
     /*
     |--------------------------------------------------------------------------
@@ -227,6 +244,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'grid' => [
+
+        'page-count-default' => env('PAGE_COUNT_DEF', 20),
 
         // The global Grid action display class.
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
@@ -360,8 +379,10 @@ return [
         'menu_table' => 'admin_menu',
         'menu_model' => Dcat\Admin\Models\Menu::class,
 
+        // Domains table and model.
         'domains_table' => 'admin_domains',
         'domains_model' => Dcat\Admin\Models\Domain::class,
+
         // Pivot table for table above.
         'role_users_table'       => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
@@ -373,6 +394,7 @@ return [
         'domain_role_defaults_table' => 'admin_domain_role_defaults'
     ],
 
+    //todo:rm
     /*
     |--------------------------------------------------------------------------
     | Application layout
