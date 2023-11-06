@@ -52,7 +52,7 @@ class DomainEmail extends Model
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.domain_mails') ?: self::TABLE_NAME);
+        $this->setTable(config('admin.database.domain_mails_table') ?: self::TABLE_NAME);
     }
 
     public function user() : BelongsTo {

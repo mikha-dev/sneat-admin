@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Mail;
+namespace Dcat\Admin\Mails;
 
 use Dcat\Admin\DomainTemplateMailable;
 use Dcat\Admin\Contracts\DomainNotificationWithContextInterface;

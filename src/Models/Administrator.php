@@ -2,14 +2,18 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDomain;
 use Illuminate\Support\Facades\URL;
-use Dcat\Admin\Traits\HasPermissions;
+use Dcat\Admin\Contracts\NotifiableInterface;
 //use Illuminate\Auth\Authenticatable;
 //use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable;
 //use Illuminate\Database\Eloquent\Model;
+use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
+use Dcat\Admin\Traits\HasNotificationSubscriptions;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,12 +24,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property Role[] $roles
  */
-class Administrator extends Authenticatable
+class Administrator extends Authenticatable implements NotifiableInterface
 {
-    use
     //    Authenticatable,
-        HasPermissions,
-        HasDateTimeFormatter;
+    use HasPermissions;
+    use HasDateTimeFormatter;
+    use Notifiable;
+    use HasDomain;
+    use HasNotificationSubscriptions;
 
     const DEFAULT_ID = 1;
 
