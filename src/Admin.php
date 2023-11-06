@@ -64,6 +64,11 @@ class Admin
         'LEFT_SIDEBAR_MENU_BOTTOM' => 'ADMIN_LEFT_SIDEBAR_MENU_BOTTOM',
     ];
 
+    public CONST CONTENT_INITIAL_MENU_COLLAPSED = 'layout-menu-collapsed';
+    public CONST CONTENT_INITIAL_MENU_FIXED = 'layout-menu-fixed';
+    public CONST CONTENT_INITIAL_NAV_FIXED = 'layout-navbar-fixed';
+    public CONST CONTENT_INITIAL_FOOTER_FXED = 'layout-footer-fixed';
+
     private static $defaultPjaxContainerId = 'pjax-container';
 
     /**

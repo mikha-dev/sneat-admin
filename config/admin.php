@@ -1,15 +1,12 @@
 <?php
 
+use Dcat\Admin\Admin;
+use Dcat\Admin\Enums\LayoutContentType;
+use Dcat\Admin\Enums\LayoutModeType;
+use Dcat\Admin\Enums\LayoutDirectionType;
+
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | dcat-admin html title
-    |--------------------------------------------------------------------------
-    |
-    | Html title for all pages.
-    |
-    */
     'title'  => env('APP_NAME'),
 
     'version' => env('VERSION', 'v'.Dcat\Admin\Admin::VERSION),
@@ -35,16 +32,19 @@ return [
     'theme' => 'theme-default',
 
     'layout' => [
-        // modes: dark, light, system
-        'mode' => 'light',
-        // directions: ltr, rtl
-        'dir' => 'ltr',
+        'mode' => LayoutModeType::SYSTEM,
 
-        //content types: container-xxl, container-fluid
-        'content_type' => 'container-xxl',
+        'dir' => LayoutDirectionType::LTR,
+
+        'content_type' => LayoutContentType::XXL,
 
         // layout-menu-collapsed & layout-menu-fixed & layout-navbar-fixed & layout-footer-fixed
-        'initials' => 'layout-menu-collapsed',
+        'initials' => [
+            Admin::CONTENT_INITIAL_MENU_FIXED,
+            //Admin::CONTENT_INITIAL_MENU_COLLAPSED,
+            Admin::CONTENT_INITIAL_NAV_FIXED,
+            Admin::CONTENT_INITIAL_FOOTER_FXED,
+        ]
     ],
 
     'auth' => [

@@ -29,7 +29,7 @@ $customizerHidden = 'customizer-hide';
 
 --}}
 
-@extends('layouts.full-page')
+@extends('admin::layouts.full-page')
 
 @section('content')
 <div class="authentication-wrapper authentication-basic container-p-y">
@@ -54,11 +54,11 @@ $customizerHidden = 'customizer-hide';
         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
         <div class="mb-3">
             <label for="username" class="form-label">{{ __('admin.email_or_username') }}</label>
-            <input 
-            type="text" 
-            class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" 
-            id="username" 
-            name="username" 
+            <input
+            type="text"
+            class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
+            id="username"
+            name="username"
             placeholder="{{ __('admin.email_or_username') }}" autofocus
             value="{{ old('username') }}"
         >
