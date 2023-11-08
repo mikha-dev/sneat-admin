@@ -1,4 +1,3 @@
-
 {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_BEFORE']) !!}
 
 <nav class="header-navbar navbar-expand-lg navbar
@@ -24,7 +23,7 @@
 
                 @if(!$configData['horizontal-menu'])
                 <div class="navbar-left d-flex align-items-center">
-                    {!! Dcat\Admin\Admin::navbar()->render('left') !!}
+                    {!! Dcat\Admin\Admin::navbar()->render(Dcat\Admin\Enums\ElementPositionType::START) !!}
                 </div>
                 @else
                 <div class="d-md-block horizontal-navbar-brand justify-content-center text-center">
@@ -40,7 +39,7 @@
                     </ul>
                 </div>
                 <div class="navbar-left d-flex align-items-center">
-                    {!! Dcat\Admin\Admin::navbar()->render('left') !!}
+                    {!! Dcat\Admin\Admin::navbar()->render(Dcat\Admin\Enums\ElementPositionType::START) !!}
                 </div>
                 @endif
 

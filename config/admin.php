@@ -2,7 +2,7 @@
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Enums\LayoutType;
-use Dcat\Admin\Enums\LayoutModeType;
+use Dcat\Admin\Enums\DarkModeType;
 use Dcat\Admin\Enums\LayoutContentType;
 use Dcat\Admin\Enums\LayoutDirectionType;
 
@@ -12,6 +12,7 @@ return [
 
     'version' => env('VERSION', 'v'.Dcat\Admin\Admin::VERSION),
 
+    // todo:: move to lang selector and add translators
     'supported_locales' => [
         'en' => [ 'title' => 'English', 'dir' => LayoutDirectionType::LTR],
         'es' => [ 'title' => 'Spain', 'dir' => LayoutDirectionType::LTR],
@@ -34,7 +35,7 @@ return [
     'layout' => [
         'type' => LayoutType::VERTICAL,
 
-        'mode' => LayoutModeType::SYSTEM,
+        'dark_mode' => DarkModeType::SYSTEM,
 
         'dir' => LayoutDirectionType::LTR,
 

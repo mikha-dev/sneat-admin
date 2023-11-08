@@ -13,12 +13,15 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
+use Dcat\Admin\Layout\Shortcuts;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Auth\GuardHelpers;
 use Composer\Autoload\ClassLoader;
+use Dcat\Admin\Enums\DarkModeType;
 use Dcat\Admin\Support\Translator;
+use Dcat\Admin\Layout\LangSelector;
 use Dcat\Admin\Contracts\Repository;
 use Illuminate\Support\Facades\Auth;
 use Dcat\Admin\Layout\SectionManager;
@@ -26,6 +29,8 @@ use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Support\Facades\Event;
 use Dcat\Admin\Extend\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasDashboardNotifications;
+use Dcat\Admin\Widgets\Navs\ShortcutsNav;
 use Illuminate\Database\Eloquent\Builder;
 use Dcat\Admin\Contracts\ExceptionHandler;
 use Illuminate\Contracts\Support\Renderable;
@@ -146,7 +151,7 @@ class Admin
         static::context()->translation = $path;
     }
 
-    public static function user() : Model|Authenticatable|HasPermissions|EmailContextObjectInterface|null
+    public static function user() : Model|Authenticatable|HasPermissions|EmailContextObjectInterface|HasDashboardNotifications|null
     {
         return static::guard()->user();
     }
@@ -490,6 +495,10 @@ class Admin
         $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return admin_javascript_json($jsVariables);
+    }
+
+    public static function darkMode() : DarkModeType {
+        return config('admin.layout.dark_mode');
     }
 
     //todo:clean and rm

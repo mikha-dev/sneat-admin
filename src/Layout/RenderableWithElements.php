@@ -34,7 +34,7 @@ class RenderableWithElements implements Renderable
         return $this;
     }
 
-    public function render( ElementPositionType $position = ElementPositionType::START)
+    public function render( ElementPositionType $position = ElementPositionType::END)
     {
         $this->callComposing($position);
 

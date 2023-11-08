@@ -25,6 +25,7 @@ use Dcat\Admin\Layout\SectionManager;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Dcat\Admin\Contracts\ExceptionHandler;
+use Dcat\Admin\Layout\Shortcuts;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -216,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
         });
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.footer', Footer::class);
+        $this->app->singleton('admin.shortcuts', Shortcuts::class);
         $this->app->singleton('admin.lang-selector', LangSelector::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Context::class);

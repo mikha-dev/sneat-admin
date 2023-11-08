@@ -5,11 +5,11 @@ namespace Dcat\Admin\Enums;
 use Dcat\Admin\DcatEnum;
 use Dcat\Admin\Traits\DcatEnumTrait;
 
-enum LayoutModeType : string implements DcatEnum
+enum DarkModeType : string implements DcatEnum
 {
     use DcatEnumTrait;
 
-    case LIGHT = 'light';
-    case DARK = 'dark';
-    case SYSTEM = 'system';
+    case LIGHT = 'sun';
+    case DARK = 'moon';
+    case SYSTEM = 'desktop';
 }

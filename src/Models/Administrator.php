@@ -2,17 +2,20 @@
 
 namespace Dcat\Admin\Models;
 
+use Illuminate\Support\Str;
 use Dcat\Admin\Traits\HasDomain;
-use Illuminate\Support\Facades\URL;
-use Dcat\Admin\Contracts\NotifiableInterface;
+use Illuminate\Support\Collection;
 //use Illuminate\Auth\Authenticatable;
 //use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable;
 //use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\HasDashboardNotifications;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
+use Dcat\Admin\Contracts\NotifiableInterface;
 use Dcat\Admin\Traits\HasNotificationSubscriptions;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +35,7 @@ class Administrator extends Authenticatable implements NotifiableInterface
     use Notifiable;
     use HasDomain;
     use HasNotificationSubscriptions;
+    use HasDashboardNotifications;
 
     const DEFAULT_ID = 1;
 
@@ -64,12 +68,12 @@ class Administrator extends Authenticatable implements NotifiableInterface
      *
      * @return mixed|string
      */
-    public function getAvatarAttribute() : string
+    public function getAvatarAttribute(): string
     {
         $avatar = $this->avatar_url;
 
         if ($avatar) {
-            if (! URL::isValidUrl($avatar)) {
+            if (!URL::isValidUrl($avatar)) {
                 $avatar = Storage::disk(config('admin.upload.disk'))->url($avatar); //todo:: check and fix
             }
 
@@ -93,22 +97,24 @@ class Administrator extends Authenticatable implements NotifiableInterface
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id')->withTimestamps();
     }
 
-    public function managed_domains() : HasMany { //todo:: renamed to managed_domains
+    public function managed_domains(): HasMany
+    { //todo:: renamed to managed_domains
         $relatedModel = config('admin.database.domains_model');
         return $this->hasMany($relatedModel, 'manager_id');
     }
 
-    public function domain() : BelongsTo {
+    public function domain(): BelongsTo
+    {
         $relatedModel = config('admin.database.domains_model');
         return $this->belongsTo($relatedModel, 'domain_id');
     }
 
-    public function canSeeMenu($menu) : bool
+    public function canSeeMenu($menu): bool
     {
         return true;
     }
 
-    public function routeNotificationForDomainMailer($notifiable) : string
+    public function routeNotificationForDomainMailer($notifiable): string
     {
         return $this->email;
     }
