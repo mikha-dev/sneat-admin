@@ -43,7 +43,7 @@ class Content implements Renderable
      *
      * @var string
      */
-    protected string $helpTopic = '';    
+    protected string $helpTopic = '';
 
     /**
      * Page breadcrumb.
@@ -133,7 +133,7 @@ class Content implements Renderable
         $this->helpTopic = $helpTopic;
 
         return $this;
-    }    
+    }
 
     /**
      * 设置翻译文件路径.
@@ -447,6 +447,7 @@ class Content implements Renderable
     {
         // default data array
         $defaultData = [
+            'footer_class'             => config('admin.footer_class'),
             'theme'             => '',
             'sidebar_collapsed' => false,
             'sidebar-style'     => 'sidebar-light-primary',

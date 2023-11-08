@@ -4,6 +4,6 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Layout\RenderableWithElements;
 
-class Navbar extends RenderableWithElements
+class Footer extends RenderableWithElements
 {
 }

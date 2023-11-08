@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 @php
-$mode = config('admin.layout.mode').'-style';
+$mode = config('admin.layout.mode')->value; //todo:: move to php
+$mode = $mode.'-style';
+
 $dir = config('admin.layout.dir');
-$initials = config('admin.layout.initials');
+$initials = config('admin.layout.initials')[0]; //todo::fix
 $theme = config('admin.theme');
 $contentType = config('admin.layout.content_type'); // todo::move to content section/blade
 @endphp
@@ -38,7 +40,7 @@ $contentType = config('admin.layout.content_type'); // todo::move to content sec
 
     {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
-    <div id="{{ $pjaxContainerId }}">
+    <div id="@if(isset($pjaxContainerId)){{ $pjaxContainerId }}@endif">
         @yield('app')
     </div>
 

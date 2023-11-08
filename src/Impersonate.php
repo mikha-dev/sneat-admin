@@ -2,27 +2,19 @@
 
 namespace App;
 
-//use App\Models\User;
 use Dcat\Admin\Admin;
 use Illuminate\Foundation\Auth\User;
 
-//todo:: think about using laravel impersonate
-// https://github.com/OctopyID/LaraPersonate
-// or
-// https://github.com/404labfr/laravel-impersonate
 class Impersonate
 {
-    private $isActiveKey = '';
-
-    private $originalUserKey = '';
+    private CONST IS_ACTIVE_KEY = 'impersonate.is_active';
+    private CONST ORIGINAL_USER_ID = 'impersonate.original_user_id';
 
     /**
      * Create a new Impersonate instance.
      */
     public function __construct()
     {
-        $this->isActiveKey = config('impersonate.session')['is_active'];
-        $this->originalUserKey = config('impersonate.session')['original_user'];
     }
 
     /**
@@ -31,17 +23,17 @@ class Impersonate
      * Log the new user in
      * @param User $user
      */
-    public function login(User $user)
+    public function login($userId)
     {
         // if not impersonated, save current logged in user
         // otherwise do not update (leave first original user in session)
         if (!$this->isActive()) {
-            session()->put($this->originalUserKey, Admin::user()->id);
+            session()->put(self::ORIGINAL_USER_ID, Admin::user()->id);
         }
 
-        Admin::guard()->loginUsingId($user->id);
+        Admin::guard()->loginUsingId($userId);
 
-        session()->put($this->isActiveKey, true);
+        session()->put(self::IS_ACTIVE_KEY, true);
     }
 
     /**
@@ -59,14 +51,14 @@ class Impersonate
         Admin::guard()->logout();
 
         // log back in as the original user
-        $originalUserId = session()->get($this->originalUserKey);
+        $originalUserId = session()->get(self::ORIGINAL_USER_ID);
 
         if ($originalUserId) {
             Admin::guard()->loginUsingId($originalUserId);
         }
 
-        session()->forget($this->originalUserKey);
-        session()->forget($this->isActiveKey);
+        session()->forget(self::ORIGINAL_USER_ID);
+        session()->forget(self::IS_ACTIVE_KEY);
 
         return true;
     }
@@ -77,6 +69,6 @@ class Impersonate
      */
     public function isActive()
     {
-        return session()->has($this->isActiveKey);
+        return session()->has(self::IS_ACTIVE_KEY);
     }
 }

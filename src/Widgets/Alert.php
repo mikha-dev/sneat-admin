@@ -11,7 +11,7 @@ class Alert extends Widget
     protected $content;
     protected $style;
     protected $icon;
-    protected $showCloseBtn = false;
+    protected $dismissable = false;
 
     public function __construct($content = '', $title = null, $style = 'danger')
     {
@@ -99,9 +99,9 @@ class Alert extends Widget
      * @param  bool  $value
      * @return $this
      */
-    public function removable(bool $value = true)
+    public function dismissable(bool $value = true)
     {
-        $this->showCloseBtn = $value;
+        $this->dismissable = $value;
 
         return $this;
     }
@@ -144,7 +144,7 @@ class Alert extends Widget
             'content'      => $this->content,
             'icon'         => $this->icon,
             'attributes'   => $this->formatHtmlAttributes(),
-            'showCloseBtn' => $this->showCloseBtn,
+            'dismissable' => $this->dismissable,
         ];
     }
 }

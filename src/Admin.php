@@ -3,22 +3,32 @@
 namespace Dcat\Admin;
 
 use Closure;
+use App\Impersonate;
 use Dcat\Admin\Layout\Menu;
+use Dcat\Admin\Layout\Footer;
 use Dcat\Admin\Layout\Navbar;
+use Dcat\Admin\Models\Domain;
+use Dcat\Admin\Extend\Manager;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtml;
+use Dcat\Admin\Support\Context;
+use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Auth\GuardHelpers;
+use Composer\Autoload\ClassLoader;
+use Dcat\Admin\Support\Translator;
 use Dcat\Admin\Contracts\Repository;
 use Illuminate\Support\Facades\Auth;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Support\Facades\Event;
+use Dcat\Admin\Extend\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Dcat\Admin\Contracts\ExceptionHandler;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Symfony\Component\HttpFoundation\Response;
 use Dcat\Admin\Http\Controllers\AuthController;
@@ -35,32 +45,28 @@ class Admin
     const VERSION = '2.2.2-beta';
 
     const SECTION = [
-        // 往 <head> 标签内输入内容
         'HEAD' => 'ADMIN_HEAD',
 
-        // 往body标签内部输入内容
         'BODY_INNER_BEFORE' => 'ADMIN_BODY_INNER_BEFORE',
         'BODY_INNER_AFTER' => 'ADMIN_BODY_INNER_AFTER',
 
-        // 往#app内部输入内容
         'APP_INNER_BEFORE' => 'ADMIN_APP_INNER_BEFORE',
         'APP_INNER_AFTER' => 'ADMIN_APP_INNER_AFTER',
 
-        // 顶部导航栏用户面板
         'NAVBAR_USER_PANEL' => 'ADMIN_NAVBAR_USER_PANEL',
         'NAVBAR_AFTER_USER_PANEL' => 'ADMIN_NAVBAR_AFTER_USER_PANEL',
-        // 顶部导航栏之前
+
         'NAVBAR_BEFORE' => 'ADMIN_NAVBAR_BEFORE',
-        // 顶部导航栏底下
+
         'NAVBAR_AFTER' => 'ADMIN_NAVBAR_AFTER',
 
-        // 侧边栏顶部用户信息面板
+
         'LEFT_SIDEBAR_USER_PANEL' => 'ADMIN_LEFT_SIDEBAR_USER_PANEL',
-        // 菜单栏
+
         'LEFT_SIDEBAR_MENU' => 'ADMIN_LEFT_SIDEBAR_MENU',
-        // 菜单栏顶部
+
         'LEFT_SIDEBAR_MENU_TOP' => 'ADMIN_LEFT_SIDEBAR_MENU_TOP',
-        // 菜单栏底部
+
         'LEFT_SIDEBAR_MENU_BOTTOM' => 'ADMIN_LEFT_SIDEBAR_MENU_BOTTOM',
     ];
 
@@ -69,33 +75,24 @@ class Admin
     public CONST CONTENT_INITIAL_NAV_FIXED = 'layout-navbar-fixed';
     public CONST CONTENT_INITIAL_FOOTER_FXED = 'layout-footer-fixed';
 
-    private static $defaultPjaxContainerId = 'pjax-container';
+    private static string $defaultPjaxContainerId = 'pjax-container';
 
-    /**
-     * 版本.
-     *
-     * @return string
-     */
-    public static function longVersion()
+    public static function longVersion() : string
     {
         return sprintf('Dcat Admin <comment>version</comment> <info>%s</info>', static::VERSION);
     }
 
-    /**
-     * @return Color
-     */
-    public static function color()
+    public static function color() : Color
     {
         return app('admin.color');
     }
 
-    /**
-     * 菜单管理.
-     *
-     * @param  Closure|null  $builder
-     * @return Menu
-     */
-    public static function menu(Closure $builder = null)
+    public static function impersonate() : Impersonate
+    {
+        return app('admin.impersonate');
+    }
+
+    public static function menu(Closure $builder = null) : Menu
     {
         $menu = app('admin.menu');
 
@@ -104,25 +101,16 @@ class Admin
         return $menu;
     }
 
-    /**
-     * 设置 title.
-     *
-     * @return string|void
-     */
-    public static function title($title = null)
+    public static function title($title = null) : string
     {
         if ($title === null) {
             return static::context()->metaTitle ?: config('admin.title');
         }
 
-        static::context()->metaTitle = $title;
+        return static::context()->metaTitle = $title;
     }
 
-    /**
-     * @param  null|string  $favicon
-     * @return string|void
-     */
-    public static function favicon()
+    public static function favicon() : string
     {
 
         // <link rel="icon" type="image/png" sizes="32x32" href="/storage/img/icon-32.png">
@@ -153,49 +141,36 @@ class Admin
         return $link;
     }
 
-    /**
-     * 设置翻译文件路径.
-     *
-     * @param  string|null  $path
-     */
-    public static function translation(?string $path)
+    public static function translation(?string $path) : void
     {
         static::context()->translation = $path;
     }
 
-    /**
-     * 获取登录用户模型.
-     *
-     * @return Model|Authenticatable|HasPermissions|EmailContextObjectInterface
-     */
-    public static function user()
+    public static function user() : Model|Authenticatable|HasPermissions|EmailContextObjectInterface|null
     {
         return static::guard()->user();
     }
 
-    /**
-     * Get the ID for the currently authenticated user.
-     *
-     * @return int|string|null
-     */
-    public static function id()
+    public static function id() : int|string|null
     {
         return static::guard()->id();
     }
 
-    /**
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard|GuardHelpers
-     */
-    public static function guard()
+    public static function guard() : \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard|GuardHelpers
     {
         return Auth::guard(config('admin.auth.guard') ?: 'admin');
     }
 
-    /**
-     * @param  Closure|null  $builder
-     * @return Navbar
-     */
-    public static function navbar(Closure $builder = null)
+    public static function footer(Closure $builder = null) : Footer
+    {
+        $footer = app('admin.footer');
+
+        $builder && $builder($footer);
+
+        return $footer;
+    }
+
+    public static function navbar(Closure $builder = null) : Navbar
     {
         $navbar = app('admin.navbar');
 
@@ -204,23 +179,12 @@ class Admin
         return $navbar;
     }
 
-    /**
-     * 启用或禁用Pjax.
-     *
-     * @param  bool  $value
-     * @return void
-     */
-    public static function pjax(bool $value = true)
+    public static function pjax(bool $value = true) : void
     {
         static::context()->pjaxContainerId = $value ? static::$defaultPjaxContainerId : false;
     }
 
-    /**
-     * 禁用pjax.
-     *
-     * @return void
-     */
-    public static function disablePjax()
+    public static function disablePjax() : void
     {
         static::pjax(false);
     }
@@ -241,13 +205,7 @@ class Admin
         return $id ?: static::$defaultPjaxContainerId;
     }
 
-    /**
-     * section.
-     *
-     * @param  Closure|null  $builder
-     * @return SectionManager
-     */
-    public static function section(Closure $builder = null)
+    public static function section(Closure $builder = null) : SectionManager
     {
         $manager = app('admin.sections');
 
@@ -256,24 +214,12 @@ class Admin
         return $manager;
     }
 
-    /**
-     * 配置.
-     *
-     * @return \Dcat\Admin\Support\Setting
-     */
-    public static function setting()
+    public static function setting() : Setting
     {
         return app('admin.setting');
     }
 
-    /**
-     * 创建数据仓库实例.
-     *
-     * @param  string|Repository|Model|Builder  $value
-     * @param  array  $args
-     * @return Repository
-     */
-    public static function repository($repository, array $args = [])
+    public static function repository( string|Repository|Model|Builder $repository, array $args = []) : Repository
     {
         if (is_string($repository)) {
             $repository = new $repository($args);
@@ -292,17 +238,12 @@ class Admin
         return $repository;
     }
 
-    /**
-     * 应用管理.
-     *
-     * @return Application
-     */
-    public static function app()
+    public static function app() : Application
     {
         return app('admin.app');
     }
 
-    public static function domain()
+    public static function domain() : Domain
     {
         return app('admin.domain');
     }
@@ -315,7 +256,9 @@ class Admin
      */
     public static function handleException(\Throwable $e)
     {
-        return app(ExceptionHandler::class)->handle($e);
+        /** @var mixed $handler */
+        $handler = app(ExceptionHandler::class);
+        return $handler->handle($e);
     }
 
     /**
@@ -343,7 +286,7 @@ class Admin
     /**
      * @param  callable  $callback
      */
-    public static function booting($callback)
+    public static function booting($callback) : void
     {
         Event::listen('admin:booting', $callback);
     }
@@ -351,7 +294,7 @@ class Admin
     /**
      * @param  callable  $callback
      */
-    public static function booted($callback)
+    public static function booted($callback) : void
     {
         Event::listen('admin:booted', $callback);
     }
@@ -359,7 +302,7 @@ class Admin
     /**
      * @return void
      */
-    public static function callBooting()
+    public static function callBooting() : void
     {
         Event::dispatch('admin:booting');
     }
@@ -367,27 +310,17 @@ class Admin
     /**
      * @return void
      */
-    public static function callBooted()
+    public static function callBooted() : void
     {
         Event::dispatch('admin:booted');
     }
 
-    /**
-     * 上下文管理.
-     *
-     * @return \Dcat\Admin\Support\Context
-     */
-    public static function context()
+    public static function context() : Context
     {
         return app('admin.context');
     }
 
-    /**
-     * 翻译器.
-     *
-     * @return \Dcat\Admin\Support\Translator
-     */
-    public static function translator()
+    public static function translator() : Translator
     {
         return app('admin.translator');
     }
@@ -396,7 +329,7 @@ class Admin
      * @param  array|string  $name
      * @return void
      */
-    public static function addIgnoreQueryName($name)
+    public static function addIgnoreQueryName($name) : void
     {
         $context = static::context();
 
@@ -405,20 +338,12 @@ class Admin
         $context->ignoreQueries = array_merge($ignoreQueries, (array) $name);
     }
 
-    /**
-     * @return array
-     */
-    public static function getIgnoreQueryNames()
+    public static function getIgnoreQueryNames() : array
     {
         return static::context()->ignoreQueries ?? [];
     }
 
-    /**
-     * 中断默认的渲染逻辑.
-     *
-     * @param  string|\Illuminate\Contracts\Support\Renderable|\Closure  $value
-     */
-    public static function prevent($value)
+    public static function prevent(string|Renderable|\Closure $value)
     {
         if ($value !== null) {
             static::context()->add('contents', $value);
@@ -468,24 +393,12 @@ class Admin
             .$asset->styleToHtml();
     }
 
-    /**
-     * 响应json数据.
-     *
-     * @param  array  $data
-     * @return JsonResponse
-     */
-    public static function json(array $data = [])
+    public static function json(array $data = []) : JsonResponse
     {
         return JsonResponse::make($data);
     }
 
-    /**
-     * 插件管理.
-     *
-     * @param  string  $name
-     * @return \Dcat\Admin\Extend\Manager|\Dcat\Admin\Extend\ServiceProvider|null
-     */
-    public static function extension(?string $name = null)
+    public static function extension(?string $name = null) : Manager|ServiceProvider|null
     {
         if ($name) {
             return app('admin.extend')->get($name);
@@ -495,13 +408,9 @@ class Admin
     }
 
     /**
-     * 响应并中断后续逻辑.
-     *
-     * @param  Response|string|array  $response
-     *
      * @throws HttpResponseException
      */
-    public static function exit($response = '')
+    public static function exit(Response|string|array $response = '')
     {
         if (is_array($response)) {
             $response = response()->json($response);
@@ -512,22 +421,12 @@ class Admin
         throw new HttpResponseException($response instanceof Response ? $response : response($response));
     }
 
-    /**
-     * 类自动加载器.
-     *
-     * @return \Composer\Autoload\ClassLoader
-     */
-    public static function classLoader()
+    public static function classLoader() : ClassLoader
     {
         return Composer::loader();
     }
 
-    /**
-     * 往分组插入中间件.
-     *
-     * @param  array  $mix
-     */
-    public static function mixMiddlewareGroup(array $mix = [])
+    public static function mixMiddlewareGroup(array $mix = []) : void
     {
         $router = app('router');
 
@@ -593,6 +492,7 @@ class Admin
         return admin_javascript_json($jsVariables);
     }
 
+    //todo:clean and rm
     /**
      * @return bool
      */
@@ -612,7 +512,7 @@ class Admin
      *
      * @return void
      */
-    public static function routes()
+    public static function routes() : void
     {
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
@@ -644,18 +544,16 @@ class Admin
                 $router->get('auth/logout', $authController.'@getLogout');
                 $router->get('auth/setting', $authController.'@getSetting');
                 $router->put('auth/setting', $authController.'@putSetting');
+                $router->get('auth/impersonate/{id}', $authController.'@impersonate');
+                $router->get('auth/deimpersonate', $authController.'@deimpersonate');
             });
         }
 
         static::registerHelperRoutes();
     }
 
-    /**
-     * 注册api路由.
-     *
-     * @return void
-     */
-    public static function registerApiRoutes()
+    //todo:: add auth routes: login/register/reset pwd,verify
+    public static function registerApiRoutes() : void
     {
         $attributes = [
             'prefix'     => admin_base_path('dcat-api'),
@@ -677,12 +575,7 @@ class Admin
         });
     }
 
-    /**
-     * 注册开发工具路由.
-     *
-     * @return void
-     */
-    public static function registerHelperRoutes()
+    public static function registerHelperRoutes() : void
     {
         if (! config('admin.helpers.enable', true) || ! config('app.debug')) {
             return;

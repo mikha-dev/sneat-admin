@@ -7,71 +7,70 @@ use Illuminate\Support\Str;
 
 class Dropdown extends Widget
 {
-    const DIVIDER = '_divider';
+    //todo::rm
+    // const DIVIDER = '_divider';
 
-    /**
-     * @var string
-     */
-    protected static $dividerHtml = '<li class="dropdown-divider"></li>';
+    // /**
+    //  * @var string
+    //  */
+    // protected static $dividerHtml = '<li class="dropdown-divider"></li>';
 
     protected $view = 'admin::widgets.dropdown';
+    //todo::fix and uncomment
+    //protected string $view = 'admin::widgets.dropdown';
+
+    protected array $options = [];
 
     /**
      * @var array
      */
     protected $button = [
         'text'  => null,
-        'class' => 'btn btn-secondary waves-effect',
-        'style' => null,
+        'class' => 'btn btn-secondary',
+        'icon' => null,
     ];
 
-    /**
-     * @var string
-     */
-    protected $buttonId;
+    protected string $buttonId;
 
-    /**
-     * @var \Closure
-     */
-    protected $builder;
+    // /**
+    //  * @var \Closure
+    //  */
+    // protected $builder;
 
-    /**
-     * @var bool
-     */
-    protected $divider;
+    // /**
+    //  * @var bool
+    //  */
+    // protected $divider;
 
     /**
      * @var bool
      */
     protected $click = false;
-
-    /**
-     * @var string
-     */
-    protected $direction = 'down';
+    
+    protected string $direction = 'down';
 
     public function __construct(array $options = [])
     {
         $this->options($options);
     }
 
-    /**
-     * Set the options of dropdown menus.
-     *
-     * @param  array  $options
-     * @param  string|null  $title
-     * @return $this
-     */
-    public function options($options = [], ?string $title = null)
-    {
-        if (! $options) {
-            return $this;
-        }
+    // /**
+    //  * Set the options of dropdown menus.
+    //  *
+    //  * @param  array  $options
+    //  * @param  string|null  $title
+    //  * @return $this
+    //  */
+    // public function options($options = [], ?string $title = null)
+    // {
+    //     if (! $options) {
+    //         return $this;
+    //     }
 
-        $this->options[] = [$title, Helper::array($options)];
+    //     $this->options[] = [$title, Helper::array($options)];
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * Set the button text.
@@ -79,9 +78,16 @@ class Dropdown extends Widget
      * @param  string|null  $text
      * @return $this
      */
-    public function button(?string $text)
+    public function button(string $text)
     {
         $this->button['text'] = $text;
+
+        return $this;
+    }
+
+    public function icon(string $icon)
+    {
+        $this->button['icon'] = $icon;
 
         return $this;
     }
@@ -92,25 +98,26 @@ class Dropdown extends Widget
      * @param  string  $class
      * @return $this
      */
-    public function buttonClass(?string $class)
+    public function buttonClass(string $class)
     {
         $this->button['class'] = $class;
 
         return $this;
     }
 
-    /**
-     * Set the button style.
-     *
-     * @param  string  $class
-     * @return $this
-     */
-    public function buttonStyle(?string $style)
-    {
-        $this->button['style'] = $style;
+    //todo::rm
+    // /**
+    //  * Set the button style.
+    //  *
+    //  * @param  string  $class
+    //  * @return $this
+    //  */
+    // public function buttonStyle(?string $style)
+    // {
+    //     $this->button['style'] = $style;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function direction(string $direction = 'down')
     {
@@ -139,31 +146,31 @@ class Dropdown extends Widget
         return $this->direction('end');
     }    
 
-    /**
-     * Show divider.
-     *
-     * @param  string  $class
-     * @return $this
-     */
-    public function divider()
-    {
-        $this->divider = true;
+    // /**
+    //  * Show divider.
+    //  *
+    //  * @param  string  $class
+    //  * @return $this
+    //  */
+    // public function divider()
+    // {
+    //     $this->divider = true;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Applies the callback to the elements of the options.
-     *
-     * @param  string  $class
-     * @return $this
-     */
-    public function map(\Closure $builder)
-    {
-        $this->builder = $builder;
+    // /**
+    //  * Applies the callback to the elements of the options.
+    //  *
+    //  * @param  string  $class
+    //  * @return $this
+    //  */
+    // public function map(\Closure $builder)
+    // {
+    //     $this->builder = $builder;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * Add click event listener.
@@ -192,53 +199,82 @@ class Dropdown extends Widget
         return $this->buttonId;
     }
 
-    /**
-     * @return string
-     */
-    protected function renderOptions()
+    public function add(string $title, bool $disabled = false)
     {
-        $html = '';
+        $this->items[] = [
+            'title'   => $title,
+            'disabled' => $disabled,
+        ];
 
-        foreach ($this->options as &$items) {
-            [$title, $options] = $items;
-
-            if ($title) {
-                $html .= "<li class='dropdown-header'>$title</li>";
-            }
-
-            foreach ($options as $key => $val) {
-                $html .= $this->renderOption($key, $val);
-            }
-        }
-
-        return $html;
-    }
+        return $this;
+    }    
 
     /**
-     * @param  mixed  $k
-     * @param  mixed  $v
-     * @return mixed|string
+     * Add item.
+     *
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
      */
-    protected function renderOption($k, $v)
+    public function addDivider()
     {
-        if ($v === static::DIVIDER) {
-            return static::$dividerHtml;
-        }
+        $this->items[] = [
+            'divider' => true,
+        ];
 
-        if ($builder = $this->builder) {
-            $v = $builder->call($this, $v, $k);
-        }
+        return $this;
+    }    
 
-        $v = mb_strpos($v, '</a>') ? $v : "<a class='dropdown-item' href='javascript:void(0)'>$v</a>";
-        $v = "<li class='dropdown-item'>$v</li>";
 
-        if ($this->divider) {
-            $v .= static::$dividerHtml;
-            $this->divider = null;
-        }
+    //todo::rm
+    // /**
+    //  * @return string
+    //  */
+    // protected function renderOptions()
+    // {
+    //     $html = '';
 
-        return $v;
-    }
+    //     foreach ($this->options as &$items) {
+    //         [$title, $options] = $items;
+
+    //         if ($title) {
+    //             $html .= "<li class='dropdown-header'>$title</li>";
+    //         }
+
+    //         foreach ($options as $key => $val) {
+    //             $html .= $this->renderOption($key, $val);
+    //         }
+    //     }
+
+    //     return $html;
+    // }
+
+    // /**
+    //  * @param  mixed  $k
+    //  * @param  mixed  $v
+    //  * @return mixed|string
+    //  */
+    // protected function renderOption($k, $v)
+    // {
+    //     if ($v === static::DIVIDER) {
+    //         return static::$dividerHtml;
+    //     }
+
+    //     if ($builder = $this->builder) {
+    //         $v = $builder->call($this, $v, $k);
+    //     }
+
+    //     $v = mb_strpos($v, '</a>') ? $v : "<a class='dropdown-item' href='javascript:void(0)'>$v</a>";
+    //     $v = "<li class='dropdown-item'>$v</li>";
+
+    //     if ($this->divider) {
+    //         $v .= static::$dividerHtml;
+    //         $this->divider = null;
+    //     }
+
+    //     return $v;
+    // }
 
     /**
      * @return string
@@ -246,7 +282,7 @@ class Dropdown extends Widget
     public function render()
     {
         $this->addVariables([
-            'options'   => $this->renderOptions(),
+            'items'      => $this->items,
             'button'    => $this->button,
             'buttonId'  => $this->buttonId,
             'click'     => $this->click,

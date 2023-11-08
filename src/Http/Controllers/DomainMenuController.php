@@ -11,7 +11,6 @@ use Dcat\Admin\Widgets\Tab;
 use Dcat\Admin\Enums\IconType;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Permission;
-use Dcat\Admin\Http\Actions\Menu\Show;
 use Dcat\Admin\Http\Actions\Menu\DomainMenuToogleVisibilityRowAction;
 
 class DomainMenuController extends AdminController
@@ -27,7 +26,7 @@ class DomainMenuController extends AdminController
             ->title($this->title())
             ->helpTopic($this->helpTopic())
             ->description(__('admin.customize_menu'))
-            ->withInfo('Press F5 to refresh sidebar menu')
+            ->withInfo('Press F5 to refresh sidebar menu') //todo:move to lang
             ->body(function (Row $row) {  $row->column(4, $this->treeView()->render());});
     }
 
@@ -59,7 +58,7 @@ class DomainMenuController extends AdminController
                 if ($menu == 'user')
                     $tabs->add('User Dashboard', $view, $menu == 'user', 'user');
                 else
-                    $tabs->addLink('User Dashboard', url()->current() . '?menu=user');                    
+                    $tabs->addLink('User Dashboard', url()->current() . '?menu=user');
 
                 return $tabs;
             });
@@ -69,7 +68,7 @@ class DomainMenuController extends AdminController
                     return $query->whereHas('permissions', function($permission) {
                         return $permission->whereIn('id', Admin::user()->allPermissions()->pluck('id'));
                     })->orderBy('order');
-                });    
+                });
             } else {
                 $tree->query(function($query) {
                     return $query->whereHas('permissions', function($permission) {
@@ -78,7 +77,7 @@ class DomainMenuController extends AdminController
                         })->pluck('id');
                         return $permission->whereIn('id', $permissionIds);
                     })->orderBy('order');
-                });                    
+                });
             }
 
             $tree->disableCreateButton();
@@ -86,18 +85,18 @@ class DomainMenuController extends AdminController
             $tree->disableEditButton();
             $tree->disableDeleteButton();
             $tree->disableSaveButton();
-            $tree->maxDepth(3);            
+            $tree->maxDepth(3);
 
             $tree->actions(function (Tree\Actions $actions) {
                 $actions->prepend(new DomainMenuToogleVisibilityRowAction());
-            });            
+            });
 
             $tree->branch(function ($branch) {
 
                 // if(is_null($branch['domain_setting']))
                 //     return null;
 
-                $icon = $branch['icon']; 
+                $icon = $branch['icon'];
                 if(!is_null($branch['domain_setting']) && !is_null($branch['domain_setting']['icon'])) {
                     $icon = $branch['domain_setting']['icon'];
                 }
@@ -128,7 +127,7 @@ class DomainMenuController extends AdminController
             $form->radio('domain_setting.icon_type', __('admin.icon_type'))->options(IconType::map())
                 ->when(IconType::SVG->value, function(Form $form) {
                     $link = admin_url('svg-icons');
-                    $form->svgIcon('domain_setting.icon_svg')->help("Manage SVG Icon at <a href='$link'>SVG Icons</a>");                    
+                    $form->svgIcon('domain_setting.icon_svg')->help("Manage SVG Icon at <a href='$link'>SVG Icons</a>");
                 })
                 ->when(IconType::FONT->value, function(Form $form) {
                     $form->icon('domain_setting.icon_font');
@@ -138,11 +137,11 @@ class DomainMenuController extends AdminController
 
             $form->saved(function (Form $form, $result) {
                 $response = $form->response()->location('auth/domain-menu');
-    
+
                 if ($result) {
                     return $response->success(__('admin.save_succeeded'));
                 }
-    
+
                 return $response->info(__('admin.nothing_updated'));
             });
         });

@@ -2,17 +2,17 @@
 
 namespace Dcat\Admin\Http\Controllers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Dcat\Admin\Http\Repositories\Administrator;
-use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Traits\HasFormResponse;
-use Illuminate\Auth\GuardHelpers;
+use Dcat\Admin\Admin;
 use Illuminate\Http\Request;
+use Dcat\Admin\Layout\Content;
+use Illuminate\Auth\GuardHelpers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
+use Dcat\Admin\Traits\HasFormResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Dcat\Admin\Http\Repositories\Administrator;
 
 class AuthController extends Controller
 {
@@ -277,4 +277,32 @@ class AuthController extends Controller
     {
         return Admin::guard();
     }
+
+    public function impersonate(Request $request, $id)
+    {
+        if ($id == Admin::user()->id) {
+            admin_toastr(__('admin.cant_impersonate_yourself'), 'error');
+
+            return redirect('/');
+        }
+
+        app('impersonate')->login($id);
+
+        return admin_redirect('/');
+        //return response("<script>location.href = '/';</script>");
+    }
+
+    public function deimpersonate(Request $request)
+    {
+        if (app('impersonate')->isActive()) {
+            app('impersonate')->logout();
+        }
+
+        if ($request->has('redirect_to')) {
+            return admin_redirect($request['redirect_to']);
+        }
+
+        return admin_redirect('/');
+    }
+
 }

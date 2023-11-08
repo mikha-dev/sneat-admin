@@ -3,8 +3,6 @@
 namespace Dcat\Admin\Models;
 
 use Exception;
-use App\Models\User;
-use App\Mail\CustomMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Dcat\Admin\Traits\HasDomain;
