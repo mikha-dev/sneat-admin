@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Dcat\Admin\Traits;
 
 use Illuminate\Support\Collection;
 use Dcat\Admin\Repositories\DashboardNotification;

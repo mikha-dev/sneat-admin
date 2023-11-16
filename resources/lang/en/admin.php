@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'welcome'              => 'Welcome to Dcat!',
+    'or' => 'Or',
+    'create_account' => 'Create an account',
+    'new_on_platform' => 'New on our platform?',
+    'sign_in' => 'Sign in',
+    'forgot_password' => 'Forgot Password?',
+    'please_sign_in' => 'Please sign-in to your account and start the adventure',
+    'email_or_username' => 'Email or Username',
     'scaffold' => [
         'header'            => 'Scaffold',
         'choose'            => 'choose',
@@ -200,7 +208,6 @@ return [
     'quick_create'              => 'Quick create',
     'grid_items_selected'       => '{n} items selected',
     'nothing_updated'           => 'Nothing has been updated.',
-    'welcome_back'              => 'Welcome back, please login to your account.',
     'documentation'             => 'Documentation',
     'demo'                      => 'Demo',
     'extensions'                => 'Extensions',

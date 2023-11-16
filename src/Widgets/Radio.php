@@ -2,90 +2,39 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Enums\RadioLayoutType;
+use Dcat\Admin\Enums\StyleClassType;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Radio extends Widget
 {
-
     protected $view = 'admin::widgets.radio';
-    protected $type = 'radio';
-    protected $layout = RadioLayoutType::COMMON;
-    protected $style = 'primary';
-    protected $right = '16px';
-    protected $checked;
-    protected $disabledValues = [];
-    protected $size;
-    protected $inline = false;
-
-    protected string $boxed_width = "150px";
-    protected string $boxed_height = "100px";
+    protected string $checked;
+    protected array $disabledValues = [];
+    protected bool $inline = false;
 
     public function __construct(
         ?string $name = null,
         array $options = [],
-        string $style = 'primary'
+        StyleClassType $style = StyleClassType::PRIMARY
     ) {
         $this->name($name);
         $this->options($options);
         $this->style($style);
     }
 
-    /**
-     * 设置表单 "name" 属性.
-     *
-     * @param  string  $name
-     * @return $this
-     */
-    public function name(?string $name)
+    public function name(?string $name) : Radio
     {
         return $this->setHtmlAttribute('name', $name);
     }
 
-    /**
-     * 尺寸设置.
-     *
-     * "sm", "lg"
-     *
-     * @param  string  $size
-     * @return $this
-     */
-    public function size(string $size)
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    /**
-     * 是否排成一行.
-     *
-     * @param  bool  $inine
-     * @return $this
-     */
-    public function inline(bool $inine = true)
+    public function inline(bool $inine = true) : Radio
     {
         $this->inline = $inine;
 
         return $this;
     }
 
-    public function layout(RadioLayoutType $layout, string $width = "150px", string $height = "100px")
-    {
-        $this->layout = $layout;
-        $this->boxed_width = $width;
-        $this->boxed_height = $height;
-
-        return $this;
-    }
-
-    /**
-     * 设置禁选的选项.
-     *
-     * @param  string|array  $values
-     * @return $this
-     */
-    public function disable($values = null)
+    public function disable($values = null) : Radio
     {
         if ($values) {
             $this->disabledValues = (array) $values;
@@ -96,26 +45,7 @@ class Radio extends Widget
         return $this->setHtmlAttribute('disabled', 'disabled');
     }
 
-    /**
-     * 设置 "margin-right" 样式.
-     *
-     * @param  string  $value
-     * @return $this
-     */
-    public function right(string $value)
-    {
-        $this->right = $value;
-
-        return $this;
-    }
-
-    /**
-     * 设置选中的选项.
-     *
-     * @param  string  $id
-     * @return $this
-     */
-    public function check($option)
+    public function check(string $option) : Radio
     {
         $this->checked = $option;
 
@@ -123,7 +53,6 @@ class Radio extends Widget
     }
 
     /**
-     * 设置选项的名称和值.
      *
      * eg: $opts = [
      *         1 => 'foo',
@@ -134,7 +63,7 @@ class Radio extends Widget
      * @param  array  $opts
      * @return $this
      */
-    public function options($opts = [])
+    public function options($opts = []) : Radio
     {
         if ($opts instanceof Arrayable) {
             $opts = $opts->toArray();
@@ -144,48 +73,23 @@ class Radio extends Widget
         return $this;
     }
 
-    /**
-     * 设置样式.
-     *
-     * 支持 "info", "primary", "danger", "success".
-     *
-     * @param  string  $style
-     * @return $this
-     */
-    public function style(string $style)
+    public function style(StyleClassType $style) : Radio
     {
         $this->style = $style;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function defaultVariables()
+    public function defaultVariables() : array
     {
         return [
-            'style'      => $this->style,
+            'style'      => $this->style->value,
             'options'    => $this->options,
             'attributes' => $this->formatHtmlAttributes(),
             'checked'    => $this->checked,
             'disabled'   => $this->disabledValues,
-            'right'      => $this->right,
-            'size'       => $this->size,
-            'inline'     => $this->inline,
-            'layout'      => $this->layout,
-            'boxed_width'      => $this->boxed_width,
-            'boxed_height'      => $this->boxed_height,
+            'inline'     => $this->inline
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function render()
-    {
-        $this->setHtmlAttribute('type', $this->type);
-
-        return parent::render();
-    }
 }

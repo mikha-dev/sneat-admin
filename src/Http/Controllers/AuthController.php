@@ -4,6 +4,7 @@ namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Form;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Enums\AuthLayoutType;
 use Illuminate\Http\Request;
 use Dcat\Admin\Layout\Content;
 use Illuminate\Auth\GuardHelpers;
@@ -18,29 +19,41 @@ class AuthController extends Controller
 {
     use HasFormResponse;
 
-    /**
-     * @var string
-     */
-    protected $view = 'admin::pages.authentications.login-basic';
+    protected string $view;
 
-    /**
-     * @var string
-     */
-    protected $redirectTo;
+    protected string $redirectTo;
 
-    /**
-     * Show the login page.
-     *
-     * @return Content|\Illuminate\Http\RedirectResponse
-     */
-    public function getLogin(Content $content)
+    public function __construct() {
+        $this->view = match (Admin::authLayoutType()) {
+            AuthLayoutType::BASIC                => 'admin::pages.authentications.login-basic',
+            AuthLayoutType::COVER                => 'admin::pages.authentications.login-cover'
+        };
+
+        Admin::asset()->css([
+            'pages/page-auth.css',
+            //'@form-validation/umd/styles/index.min.css'
+        ]);
+
+        Admin::asset()->font([
+            'boxicons.css',
+            //'@form-validation/umd/styles/index.min.css'
+        ]);
+
+        // Admin::asset()->js([
+        //     'libs/@form-validation/umd/bundle/popular.min.js',
+        //     'libs/@form-validation/umd/plugin-bootstrap5/index.min.js',
+        //     'libs/@form-validation/umd/plugin-auto-focus/index.min.js',
+        // ]);
+    }
+
+    public function getLogin(Content $content) : Content|\Illuminate\Http\RedirectResponse
     {
 
         if ($this->guard()->check()) {
             return redirect($this->getRedirectPath());
         }
 
-        return $content->full()->body(view($this->view));
+        return $content->auth()->content(view($this->view));
     }
 
     /**

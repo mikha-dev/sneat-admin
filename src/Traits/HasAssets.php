@@ -12,15 +12,16 @@ trait HasAssets
         return app('admin.asset');
     }
 
-    /**
-     * @param  string|array  $name
-     * @param  array  $params
-     * @return void
-     */
-    public static function requireAssets($name, array $params = [])
-    {
-        static::asset()->require($name, $params);
-    }
+    //todo::rm me
+    // /**
+    //  * @param  string|array  $name
+    //  * @param  array  $params
+    //  * @return void
+    //  */
+    // public static function requireAssets($name, array $params = [])
+    // {
+    //     static::asset()->require($name, $params);
+    // }
 
     /**
      * Add css.

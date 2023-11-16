@@ -57,10 +57,9 @@ class Content implements Renderable
      */
     protected $rows = [];
 
-    /**
-     * @var array
-     */
-    protected $config = [];
+    protected string $content = '';
+
+    protected array $config = [];
 
     /**
      * Content constructor.
@@ -148,14 +147,13 @@ class Content implements Renderable
         return $this;
     }
 
-    /**
-     * Build full page.
-     *
-     * @return $this
-     */
-    public function full()
+    public function full() : Content
     {
         return $this->view('admin::layouts.full-content');
+    }
+
+    public function auth() {
+        return $this->view('admin::layouts.auth');
     }
 
     /**
@@ -245,6 +243,13 @@ class Content implements Renderable
         return $this;
     }
 
+    public function content($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
     /**
      * @param $content
      * @return $this
@@ -284,6 +289,9 @@ class Content implements Renderable
      */
     public function build()
     {
+        if (!empty($this->content)) {
+            return $this->content;
+        }
         try {
             $html = '';
 
@@ -370,13 +378,7 @@ class Content implements Renderable
         return $this;
     }
 
-    /**
-     * Set content view.
-     *
-     * @param  null|string  $view
-     * @return $this
-     */
-    public function view(?string $view)
+    public function view(?string $view) : Content
     {
         $this->view = $view;
 

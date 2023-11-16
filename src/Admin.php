@@ -5,6 +5,7 @@ namespace Dcat\Admin;
 use Closure;
 use App\Impersonate;
 use Dcat\Admin\Layout\Menu;
+use Illuminate\Support\Arr;
 use Dcat\Admin\Layout\Footer;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Models\Domain;
@@ -13,7 +14,6 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
-use Dcat\Admin\Layout\Shortcuts;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Http\JsonResponse;
@@ -21,16 +21,15 @@ use Illuminate\Auth\GuardHelpers;
 use Composer\Autoload\ClassLoader;
 use Dcat\Admin\Enums\DarkModeType;
 use Dcat\Admin\Support\Translator;
-use Dcat\Admin\Layout\LangSelector;
 use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Enums\AuthLayoutType;
 use Illuminate\Support\Facades\Auth;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Support\Facades\Event;
 use Dcat\Admin\Extend\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasDashboardNotifications;
-use Dcat\Admin\Widgets\Navs\ShortcutsNav;
+use Dcat\Admin\Enums\LayoutDirectionType;
 use Illuminate\Database\Eloquent\Builder;
 use Dcat\Admin\Contracts\ExceptionHandler;
 use Illuminate\Contracts\Support\Renderable;
@@ -38,6 +37,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Symfony\Component\HttpFoundation\Response;
 use Dcat\Admin\Http\Controllers\AuthController;
 use Dcat\Admin\Repositories\EloquentRepository;
+use Dcat\Admin\Traits\HasDashboardNotifications;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Contracts\EmailContextObjectInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -497,8 +497,36 @@ class Admin
         return admin_javascript_json($jsVariables);
     }
 
+    public static function locale() : string {
+        return str_replace('_', '-', app()->getLocale());
+    }
+
+    public static function dir() : LayoutDirectionType {
+        return config('admin.layout.dir');
+    }
+
+    public static function layoutInitials() : string {
+        return Arr::join(config('admin.layout.initials'), ' ');
+    }
+
+    public static function metaDescription() : string {
+        return config('admin.meta.description') ? config('admin.meta.description') : '';
+    }
+
+    public static function metaKeywords() : string {
+        return config('admin.meta.keywords') ? config('admin.meta.keywords') : '';
+    }
+
+    public static function theme() : string {
+        return config('admin.theme');
+    }
+
     public static function darkMode() : DarkModeType {
         return config('admin.layout.dark_mode');
+    }
+
+    public static function authLayoutType() : AuthLayoutType {
+        return config('admin.layout.auth_type');
     }
 
     //todo:clean and rm

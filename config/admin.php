@@ -3,6 +3,7 @@
 use Dcat\Admin\Admin;
 use Dcat\Admin\Enums\LayoutType;
 use Dcat\Admin\Enums\DarkModeType;
+use Dcat\Admin\Enums\AuthLayoutType;
 use Dcat\Admin\Enums\LayoutContentType;
 use Dcat\Admin\Enums\LayoutDirectionType;
 
@@ -33,6 +34,8 @@ return [
     'theme' => 'theme-default',
 
     'layout' => [
+        'auth_type' => AuthLayoutType::BASIC,
+
         'type' => LayoutType::VERTICAL,
 
         'dark_mode' => DarkModeType::SYSTEM,
@@ -53,7 +56,7 @@ return [
     'auth' => [
         'enable' => true,
 
-        'controller' => App\Admin\Controllers\AuthController::class,
+        'controller' => Dcat\Admin\Http\Controllers\AuthController::class,
 
         'guard' => 'admin',
 
@@ -90,7 +93,7 @@ return [
         'recaptch-enabled' => env('ENABLE_RECAPTCHA', false),
         'recaptch-site'   => env('RE_CAP_SITE', 'YOURGOOGLECAPTCHAsitekeyHERE'),
         'recaptch-secret' => env('RE_CAP_SECRET', 'YOURGOOGLECAPTCHAsecretHERE'),
-        'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', 'images/login-bg.png'),
+        'login-background-image' => env('LOGIN_BACKGROUND_IMAGE', '/vendor/dcat-admin/images/login-bg.png'),
     ],
 
     /*
@@ -100,8 +103,8 @@ return [
     |
     */
     'icons' => [
-        'icon-32' => 'images/icon-32.png',
-        'icon-192' => 'images/icon-192.png'
+        'icon-32' => 'vendor/dcat-admin/images/icon-32.png',
+        'icon-192' => 'vendor/dcat-admin/images/icon-192.png'
     ],
 
         /*
@@ -112,13 +115,13 @@ return [
      | Set a default avatar for newly created users.
      |
      */
-    'default_avatar' => '@admin/images/default-avatar.png',
+    'default_avatar' => '/vendor/dcat-admin/images/default-avatar.png',
 
 
-    'logo-mini' => env('APP_LOGO_MINI', 'images/logo-mini.png'),
-    'logo-mini-dark' => env('APP_LOGO_MINI_DARK', 'images/logo-mini-dark.png'),
-    'logo-image'        => env('APP_LOGO_IMAGE', 'images/logo.png'), // todo::rm
-    'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', 'images/logo-dark.png'),
+    'logo-mini' => env('APP_LOGO_MINI', '/vendor/dcat-admin/images/logo-mini.png'),
+    'logo-mini-dark' => env('APP_LOGO_MINI_DARK', '/vendor/dcat-admin/images/logo-mini-dark.png'),
+    'logo-image'        => env('APP_LOGO_IMAGE', '/vendor/dcat-admin/images/logo.png'), // todo::rm
+    'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', '/vendor/dcat-admin/images/logo-dark.png'),
 
     //todo::rm
     //'disable_no_referrer_meta' => true,
@@ -162,7 +165,7 @@ return [
     |
     */
     //todo:rm
-    'logo-image'      => env('APP_LOGO_IMAGE', 'images/logo.png'),
+    //'logo-image'      => env('APP_LOGO_IMAGE', 'images/logo.png'),
 
     /*
     |--------------------------------------------------------------------------
