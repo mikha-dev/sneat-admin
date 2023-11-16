@@ -133,13 +133,13 @@ class Admin
 
         $link = '';
         if(!empty($icon32 = config('admin.icons.icon-32'))) {
-            $link .= "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/storage/{$icon32}\">";
+            $link .= "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"{$icon32}\">";
         }
 
         if(!empty($icon192 = config('admin.icons.icon-192'))) {
-            $link .= "<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/storage/{$icon192}\">";
-            $link .= "<link rel=\"apple-touch-icon\" href=\"/storage/{$icon192}\" />";
-            $link .= "<meta name=\"msapplication-TileImage\" content=\"/storage/{$icon192}\" />";
+            $link .= "<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"{$icon192}\">";
+            $link .= "<link rel=\"apple-touch-icon\" href=\"{$icon192}\" />";
+            $link .= "<meta name=\"msapplication-TileImage\" content=\"{$icon192}\" />";
             $link .= "<meta name=\"msapplication-TileColor\" content=\"#ff0000\">";
         }
 

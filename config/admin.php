@@ -103,8 +103,8 @@ return [
     |
     */
     'icons' => [
-        'icon-32' => 'vendor/dcat-admin/images/icon-32.png',
-        'icon-192' => 'vendor/dcat-admin/images/icon-192.png'
+        'icon-32' => '/vendor/dcat-admin/images/icon-32.png',
+        'icon-192' => '/vendor/dcat-admin/images/icon-192.png'
     ],
 
         /*
