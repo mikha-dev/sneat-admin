@@ -1,14 +1,5 @@
 <!DOCTYPE html>
-@php
-$mode = config('admin.layout.mode')->value; //todo:: move to php
-$mode = $mode.'-style';
-
-$dir = config('admin.layout.dir');
-$initials = config('admin.layout.initials')[0]; //todo::fix
-$theme = config('admin.theme');
-$contentType = config('admin.layout.content_type'); // todo::move to content section/blade
-@endphp
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ $mode }} {{ $initials }}" dir="{{ $dir }}" data-theme="{{ $theme }}">
+<html lang="{{ Dcat\Admin\Admin::locale() }}" class="{{ Dcat\Admin\Admin::darkMode() }} {{ Dcat\Admin\Admin::layoutInitials() }}" dir="{{ Dcat\Admin\Admin::dir() }}" data-theme="{{ Dcat\Admin\Admin::theme() }}">
 
 <head>
     <meta charset="utf-8" />
@@ -19,8 +10,8 @@ $contentType = config('admin.layout.content_type'); // todo::move to content sec
         <meta name="referrer" content="no-referrer"/>
     @endif
 
-    <meta name="description" content="{{ config('admin.meta.description') ? config('admin.meta.description') : '' }}" />
-    <meta name="keywords" content="{{ config('admin.meta.keywords') ? config('admin.meta.keywords') : '' }}">
+    <meta name="description" content="{{ Dcat\Admin\Admin::metaDescription() }}" />
+    <meta name="keywords" content="{{ Dcat\Admin\Admin::metaDescription() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(! empty($favicon = Dcat\Admin\Admin::favicon()))
         {!! $favicon !!}
@@ -40,7 +31,7 @@ $contentType = config('admin.layout.content_type'); // todo::move to content sec
 
     {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
-    <div id="@if(isset($pjaxContainerId)){{ $pjaxContainerId }}@endif">
+    <div id="@if(isset($pjaxContainerId)){{ $pjaxContainerId }}@endif" class="container-xxl">
         @yield('app')
     </div>
 

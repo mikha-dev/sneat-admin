@@ -1,44 +1,30 @@
 @php
     $depth = $item['depth'] ?? 0;
-
-    $horizontal = config('admin.layout.horizontal-menu');
-
-    //dd($item);
-
-    $icon = $item['icon']; 
-    if(isset($item['domain_setting']) && !is_null($item['domain_setting']) && !is_null($item['domain_setting']['icon'])) {
-        $icon = $item['domain_setting']['icon'];
-    }
 @endphp
 
 @if($builder->visible($item))
     @if(empty($item['children']))
-        <li class="nav-item">
-            <a data-id="{{ $item['id'] ?? '' }}" @if(mb_strpos($item['uri'], '://') !== false || ( isset($item['is_target_blank']) && $item['is_target_blank'] == 1)) target="_blank" @endif
+        <li class="menu-item {!! $builder->isActive($item) ? 'active' : '' !!}">
+            <a data-pjax data-id="{{ $item['id'] ?? '' }}" @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif
                href="{{ $builder->getUrl($item['uri']) }}"
-               class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $icon }}"></i>
-                <p>
+               class="menu-link">
+                <i class="menu-icon tf-icons bx {{ $builder->getIcon($item) }}"></i>
+                <div class="text-truncate">
                     {!! $builder->translate($item['title']) !!}
-                </p>
+                </div>
             </a>
         </li>
     @else
 
-        <li class="{{ $horizontal ? 'dropdown' : 'has-treeview' }} {{ $depth > 0 ? 'dropdown-submenu' : '' }} nav-item {{ $builder->isActive($item) ? 'menu-open' : '' }}">
-            <a href="#"  data-id="{{ $item['id'] ?? '' }}"
-               class="nav-link {{ $builder->isActive($item) ? ($horizontal ? 'active' : '') : '' }}
-                    {{ $horizontal ? 'dropdown-toggle' : '' }}">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $icon }}"></i>
-                <p>
+        <li class="menu-item {{ $builder->isActive($item) ? 'open active' : '' }}">
+            <a href="javascript:void(0);"  data-id="{{ $item['id'] ?? '' }}"
+               class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx {{ $builder->getIcon($item) }}"></i>
+                <div class="text-truncate">
                     {!! $builder->translate($item['title']) !!}
-
-                    @if(! $horizontal)
-                        <i class="right fa fa-angle-left"></i>
-                    @endif
-                </p>
+                </div>
             </a>
-            <ul class="nav {{ $horizontal ? 'dropdown-menu' : 'nav-treeview' }}">
+            <ul class="menu-sub">
                 @foreach($item['children'] as $item)
                     @php
                         $item['depth'] = $depth + 1;

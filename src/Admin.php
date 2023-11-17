@@ -14,6 +14,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
+use Dcat\Admin\Enums\LayoutType;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Http\JsonResponse;
@@ -527,6 +528,10 @@ class Admin
 
     public static function authLayoutType() : AuthLayoutType {
         return config('admin.layout.auth_type');
+    }
+
+    public static function layoutType() : LayoutType {
+        return config('admin.layout.type');
     }
 
     //todo:clean and rm

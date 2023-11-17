@@ -1,3 +1,4 @@
+@php //todo::rm if not used @endphp
 @if(isset($errors) && $errors->hasBag('exception'))
     <?php $error = $errors->getBag('exception'); ?>
     <div class="alert alert-warning alert-dismissable">

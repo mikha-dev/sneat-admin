@@ -1,24 +1,44 @@
 @if($user)
-<li class="dropdown dropdown-user nav-item">
-    <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-        <span>
-            <img class="round mr-1" src="{{ $user->avatar }}" alt="avatar" height="40" width="40" />
-        </span>
-        <div class="user-nav d-sm-flex d-none mr-2">
-            <span class="user-name text-bold-600">{{ $user->name }}</span>
-            <span class="user-status"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</span>
+<li class="nav-item navbar-dropdown dropdown-user dropdown">
+    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+        <div class="avatar avatar-online">
+            <img src="{{ $user->getAvatar() }}" alt class="w-px-40 h-auto rounded-circle" />
         </div>
     </a>
-    <div class="dropdown-menu dropdown-menu-right">
-        <a href="{{ admin_url('auth/setting') }}" class="dropdown-item">
-            <i class="feather icon-user"></i> {{ trans('admin.setting') }}
-        </a>
-
-        <div class="dropdown-divider"></div>
-
-        <a class="dropdown-item" href="{{ admin_url('auth/logout') }}">
-            <i class="feather icon-power"></i> {{ trans('admin.logout') }}
-        </a>
-    </div>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <a class="dropdown-item" href="#">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="avatar avatar-online">
+                            <img src="{{ $user->getAvatar() }}" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <span class="fw-medium d-block">{{ $user->name }}</span>
+                        <small class="text-muted">{{ trans('admin.online') }}</small>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li>
+            <div class="dropdown-divider"></div>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ admin_url('auth/setting') }}">
+                <i class="bx bx-cog me-2"></i>
+                <span class="align-middle">{{ trans('admin.setting') }}</span>
+            </a>
+        </li>
+        <li>
+            <div class="dropdown-divider"></div>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ admin_url('auth/logout') }}">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">{{ trans('admin.logout') }}</span>
+            </a>
+        </li>
+    </ul>
 </li>
 @endif

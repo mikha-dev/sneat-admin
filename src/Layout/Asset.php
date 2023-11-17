@@ -193,6 +193,11 @@ class Asset
 
     public array $fonts = [];
 
+    public array $libs = [
+        'jquery/jquery.js',
+        'dcat/dcat-app.js',
+    ];
+
     /**
      * js脚本路径.
      *
@@ -235,6 +240,9 @@ class Asset
      * @var array
      */
     public $baseJs = [
+        'helpers.js',
+        'bootstrap.js',
+        'menu.js', //todo:: move to menu
         // 'theme'  => '@theme',
 
         // 'toastr'    => '@toastr',
@@ -419,12 +427,18 @@ class Asset
 
     public function font(string|array $font)
     {
-        if (! $font) {
-            return;
-        }
+
         $this->fonts = array_merge(
             $this->fonts,
             (array) $font
+        );
+    }
+
+    public function lib(string|array $lib)
+    {
+        $this->libs = array_merge(
+            $this->libs,
+            (array) $lib
         );
     }
 
@@ -695,7 +709,7 @@ class Asset
 
         foreach (array_unique($this->js) as &$v) {
 
-            $path =  self::PATH_BASE.'/js/'.$v;
+            $path =  '/'.self::PATH_BASE.'/js/'.$v;
 
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }
@@ -715,8 +729,14 @@ class Asset
             // if (! $paths = $this->get($v, 'js')) {
             //     continue;
             // }
-            $path =  self::PATH_BASE.'/js/'.$v;
+            $path =  '/'.self::PATH_BASE.'/js/'.$v;
             //$path = $this->url($v);
+            $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
+        }
+
+        foreach (array_unique($this->libs) as &$v) {
+
+            $path =  '/'.self::PATH_BASE.'/libs/'.$v;
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }
 

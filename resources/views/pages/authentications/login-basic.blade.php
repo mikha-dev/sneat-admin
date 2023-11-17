@@ -7,7 +7,7 @@
             <div class="app-brand justify-content-center">
                 <a href="{{url('/')}}" class="app-brand-link gap-2">
                     <span class="app-brand-logo">
-                        <img src="/storage/{!! config('admin.logo-image') !!}" alt="" class="app-brand-img w-px-150" data-app-light-img="/storage/{!! config('admin.logo-image') !!}" data-app-dark-img="/storage/{!! config('admin.logo-image-dark') !!}">
+                        <img src="{!! config('admin.logo-image') !!}" alt="" class="app-brand-img w-px-150" data-app-light-img="{!! config('admin.logo-image') !!}" data-app-dark-img="{!! config('admin.logo-image-dark') !!}">
                     </span>
                     <span class="app-brand-text text-body fw-bold">{{config('admin.name')}}</span>
                 </a>

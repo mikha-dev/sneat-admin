@@ -10,7 +10,7 @@
     @endif
 
     <meta name="description" content="{{ Dcat\Admin\Admin::metaDescription() }}" />
-    <meta name="keywords" content="{{ Dcat\Admin\Admin::metaDescription() }}">
+    <meta name="keywords" content="{{ Dcat\Admin\Admin::metaKeywords() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if(! empty($favicon = Dcat\Admin\Admin::favicon()))
@@ -31,6 +31,9 @@
 </head>
 
 <body>
+    <script>
+        var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
+    </script>
 <!-- Content -->
 <div class="container-xxl">
     {!! $content !!}
