@@ -10,10 +10,12 @@ class DashboardNotificationNav extends NotificationNav
     {
         parent::__construct(admin_url('notifications'));
 
-        $notifications = Admin::user()->dashboardNotifications();
+        if(Admin::user()) {
+            $notifications = Admin::user()->dashboardNotifications();
 
-        foreach($notifications as $notification) {
-            $this->elements[] = $notification;
+            foreach($notifications as $notification) {
+                $this->elements[] = $notification;
+            }
         }
 
     }

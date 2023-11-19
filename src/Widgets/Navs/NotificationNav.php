@@ -19,8 +19,6 @@ class NotificationNav implements Renderable, NavElement
     {
 
         $this->viewAllLink = $viewAllLink;
-
-        $this->elements = collect();
     }
 
     public function add(string $icon, string $title, string $message, string $time, bool $isRead = false) : NotificationNav

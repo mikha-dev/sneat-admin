@@ -17,7 +17,6 @@ class ShortcutsNav implements Renderable, NavElement
 
     public function __construct()
     {
-        $this->elements = collect();
     }
 
     protected function canAddShortcut(bool $value = false) {

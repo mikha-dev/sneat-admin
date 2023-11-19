@@ -1,7 +1,6 @@
 @php
     $depth = $item['depth'] ?? 0;
 @endphp
-
 @if($builder->visible($item))
     @if(empty($item['children']))
         <li class="menu-item {!! $builder->isActive($item) ? 'active' : '' !!}">
@@ -15,7 +14,6 @@
             </a>
         </li>
     @else
-
         <li class="menu-item {{ $builder->isActive($item) ? 'open active' : '' }}">
             <a href="javascript:void(0);"  data-id="{{ $item['id'] ?? '' }}"
                class="menu-link menu-toggle">

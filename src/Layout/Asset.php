@@ -193,23 +193,25 @@ class Asset
 
     public array $fonts = [];
 
-    public array $libs = [
-        //'jquery/jquery.js',
-        'dcat/plugins/vendors.min.js',
-        'dcat/js/dcat-app.js',
-        'dcat/plugins/extensions/toastr.min.js',
-        'dcat/plugins/jquery-pjax/jquery.pjax.min.js',
-        'dcat/plugins/bootstrap-validator/validator.min.js',
-        'dcat/plugins/layer/layer.js',
-        'dcat/plugins/jquery.initialize/jquery.initialize.min.js'
-    ];
-
     /**
      * js脚本路径.
      *
      * @var array
      */
-    public $js = [];
+    public $htmlJs = [
+        'libs/dcat/plugins/extensions/toastr.min.js',
+        'libs/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        'libs/dcat/plugins/bootstrap-validator/validator.min.js',
+        'libs/dcat/plugins/layer/layer.js',
+        'libs/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+
+//        'libs/jquery/jquery.js',
+        'js/bootstrap.js',
+        'libs/popper/popper.js',
+        'libs/perfect-scrollbar/perfect-scrollbar.js',
+        'js/menu.js',
+        'js/core.js',
+    ];
 
     /**
      * 在head标签内加载的js脚本.
@@ -217,6 +219,9 @@ class Asset
      * @var array
      */
     public $headerJs = [
+        'libs/dcat/plugins/vendors.min.js',
+        'libs/dcat/js/dcat-app.js',
+        'js/helpers.js'
         // 'vendors' => '@vendors',
         // 'dcat'    => '@dcat',
     ];
@@ -245,18 +250,18 @@ class Asset
      *
      * @var array
      */
-    public $baseJs = [
-        //'helpers.js',
-        //'bootstrap.js',
-        //'menu.js', //todo:: move to menu
-        // 'theme'  => '@theme',
+    // public $baseJs = [
+    //     //'helpers.js',
+    //     //'bootstrap.js',
+    //     //'menu.js', //todo:: move to menu
+    //     // 'theme'  => '@theme',
 
-        // 'toastr'    => '@toastr',
-        // 'pjax'      => '@pjax',
-        // 'validator' => '@validator',
-        // 'layer'     => '@layer',
-        // 'init'      => '@jquery.initialize',
-    ];
+    //     // 'toastr'    => '@toastr',
+    //     // 'pjax'      => '@pjax',
+    //     // 'validator' => '@validator',
+    //     // 'layer'     => '@layer',
+    //     // 'init'      => '@jquery.initialize',
+    // ];
 
     protected function setupTheme() {
         $theme = Admin::theme();
@@ -440,13 +445,13 @@ class Asset
         );
     }
 
-    public function lib(string|array $lib)
-    {
-        $this->libs = array_merge(
-            $this->libs,
-            (array) $lib
-        );
-    }
+    // public function lib(string|array $lib)
+    // {
+    //     $this->libs = array_merge(
+    //         $this->libs,
+    //         (array) $lib
+    //     );
+    // }
 
     /**
      * 设置需要载入的基础css脚本.
@@ -469,13 +474,7 @@ class Asset
      */
     public function js($js)
     {
-        if (! $js) {
-            return;
-        }
-        $this->js = array_merge(
-            $this->js,
-            (array) $js
-        );
+        $this->htmlJs = array_merge($this->htmlJs,(array) $js);
     }
 
     // /**
@@ -597,14 +596,14 @@ class Asset
      * @param  array  $js
      * @param  bool  $merge
      */
-    public function baseJs(array $js, bool $merge = true)
-    {
-        if ($merge) {
-            $this->baseJs = array_merge($this->baseJs, $js);
-        } else {
-            $this->baseJs = $js;
-        }
-    }
+    // public function baseJs(array $js, bool $merge = true)
+    // {
+    //     if ($merge) {
+    //         $this->baseJs = array_merge($this->baseJs, $js);
+    //     } else {
+    //         $this->baseJs = $js;
+    //     }
+    // }
 
     public function script(string|array $script, bool $direct = false) : void
     {
@@ -692,30 +691,30 @@ class Asset
         return Str::endsWith($url, '?') ? $url.$ver : $url.'&'.$ver;
     }
 
-    /**
-     * 合并基础js脚本.
-     */
-    protected function mergeBaseJs()
-    {
-        if ($this->isPjax()) {
-            return;
-        }
+    // /**
+    //  * 合并基础js脚本.
+    //  */
+    // protected function mergeBaseJs()
+    // {
+    //     if ($this->isPjax()) {
+    //         return;
+    //     }
 
-        $this->js = array_merge($this->baseJs, $this->js);
-    }
+    //     $this->js = array_merge($this->baseJs, $this->js);
+    // }
 
     /**
      * @return string
      */
     public function jsToHtml()
     {
-        $this->mergeBaseJs();
+//        $this->mergeBaseJs();
 
         $html = '';
 
-        foreach (array_unique($this->js) as &$v) {
+        foreach (array_unique($this->htmlJs) as &$v) {
 
-            $path =  '/'.self::PATH_BASE.'/js/'.$v;
+            $path =  '/'.self::PATH_BASE.'/'.$v;
 
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }
@@ -735,16 +734,11 @@ class Asset
             // if (! $paths = $this->get($v, 'js')) {
             //     continue;
             // }
-            $path =  '/'.self::PATH_BASE.'/js/'.$v;
+            $path =  '/'.self::PATH_BASE.'/'.$v;
             //$path = $this->url($v);
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }
 
-        foreach (array_unique($this->libs) as &$v) {
-
-            $path =  '/'.self::PATH_BASE.'/libs/'.$v;
-            $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
-        }
 
         return $html;
     }

@@ -24,6 +24,7 @@ use Dcat\Admin\Layout\SectionManager;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Dcat\Admin\Contracts\ExceptionHandler;
+use Dcat\Admin\Layout\UserNav;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -177,9 +178,8 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * 默认 section 注册.
-     */
+
+    //todo::rm
     protected function registerDefaultSections()
     {
         Content::composing(function () {
@@ -197,7 +197,7 @@ class AdminServiceProvider extends ServiceProvider
             // }
 
             // Register menu
-            Admin::menu()->register();
+            //Admin::menu()->register();
         }, true);
     }
 
@@ -216,6 +216,7 @@ class AdminServiceProvider extends ServiceProvider
             return new VersionManager(app('admin.extend'));
         });
         $this->app->singleton('admin.navbar', Navbar::class);
+        $this->app->singleton('admin.usernav', UserNav::class);
         $this->app->singleton('admin.footer', Footer::class);
         //$this->app->singleton('admin.shortcuts', Shortcuts::class);
         //$this->app->singleton('admin.lang-selector', LangSelector::class);

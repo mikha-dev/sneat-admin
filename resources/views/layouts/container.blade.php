@@ -1,4 +1,8 @@
 <body>
+<script>
+    var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
+</script>
+
 {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
 <div class="layout-wrapper {{ $layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL ? 'layout-navbar-full layout-horizontal layout-without-menu' : 'layout-content-navbar' }}">

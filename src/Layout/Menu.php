@@ -3,80 +3,94 @@
 namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
+use Illuminate\Support\Arr;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Facades\Lang;
 
 class Menu
 {
-    //todo:: move to Admin or routes
-    protected static $helperNodes = [
-        [
-            'id'        => 1,
-            'title'     => 'Helpers',
-            'icon'      => 'fa fa-keyboard-o',
-            'uri'       => '',
-            'parent_id' => 0,
-        ],
-        [
-            'id'        => 2,
-            'title'     => 'Extensions',
-            'icon'      => '',
-            'uri'       => 'auth/extensions',
-            'parent_id' => 1,
-        ],
-        [
-            'id'        => 3,
-            'title'     => 'Scaffold',
-            'icon'      => '',
-            'uri'       => 'helpers/scaffold',
-            'parent_id' => 1,
-        ],
-        [
-            'id'        => 4,
-            'title'     => 'Icons',
-            'icon'      => '',
-            'uri'       => 'helpers/icons',
-            'parent_id' => 1,
-        ],
-    ];
-
     protected string $view = 'admin::partials.menu';
 
-    public function register() : void
+    protected array $nodes = [];
+
+    public function __construct()
     {
-        if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'])) {
-            admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'], function () {
-                $menuModel = config('admin.database.menu_model');
+        $menuModel = config('admin.database.menu_model');
 
-                return $this->toHtml((new $menuModel())->allNodes()->toArray());
-            });
-        }
+        $this->nodes = array_merge([], (new $menuModel())->allNodes()->toArray());
 
-        if (config('app.debug') && config('admin.helpers.enable', true)) {
-            $this->add(static::$helperNodes, 20);
-        }
+//        Admin::js('js/menu.js');
     }
 
-    public function add(array $nodes = [], int $priority = 10) : void
-    {
-        admin_inject_section(Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM'], function () use (&$nodes) {
-            return $this->toHtml($nodes);
-        }, true, $priority);
-    }
+    //todo:: move to extension
+    // protected static $helperNodes = [
+    //     [
+    //         'id'        => 1,
+    //         'title'     => 'Helpers',
+    //         'icon'      => 'fa fa-keyboard-o',
+    //         'uri'       => '',
+    //         'parent_id' => 0,
+    //     ],
+    //     [
+    //         'id'        => 2,
+    //         'title'     => 'Extensions',
+    //         'icon'      => '',
+    //         'uri'       => 'auth/extensions',
+    //         'parent_id' => 1,
+    //     ],
+    //     [
+    //         'id'        => 3,
+    //         'title'     => 'Scaffold',
+    //         'icon'      => '',
+    //         'uri'       => 'helpers/scaffold',
+    //         'parent_id' => 1,
+    //     ],
+    //     [
+    //         'id'        => 4,
+    //         'title'     => 'Icons',
+    //         'icon'      => '',
+    //         'uri'       => 'helpers/icons',
+    //         'parent_id' => 1,
+    //     ],
+    // ];
 
-    /**
-     * @throws \Throwable
-     */
-    public function toHtml(array $nodes) : string
+    public function render() : string
     {
         $html = '';
 
-        foreach (Helper::buildNestedArray($nodes) as $item) {
-            $html .= $this->render($item);
+        foreach (Helper::buildNestedArray($this->nodes) as $item) {
+            $html .= $this->renderItem($item);
         }
 
         return $html;
+
+        //Admin::js('menu.js');
     }
+
+    public function add(array $nodes = [], bool $append = true) : void
+    {
+        if($append)
+            array_push($this->nodes, $nodes);
+        else
+            Arr::prepend($this->nodes, $nodes);
+        // admin_inject_section(Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM'], function () use (&$nodes) {
+        //     return $this->toHtml($nodes);
+        // }, true, $priority);
+    }
+
+    // /**
+    //  * @throws \Throwable
+    //  */
+    // public function toHtml(array $nodes) : string
+    // {
+    //     $html = '';
+
+    //     foreach (Helper::buildNestedArray($nodes) as $item) {
+    //         $html .= $this->renderItem($item);
+    //     }
+
+    //     return $html;
+    // }
 
     public function view(string $view) : Menu
     {
@@ -85,7 +99,7 @@ class Menu
         return $this;
     }
 
-    public function render(array $item) : string
+    protected function renderItem(array $item) : string
     {
         return view($this->view, ['item' => &$item, 'builder' => $this])->render();
     }

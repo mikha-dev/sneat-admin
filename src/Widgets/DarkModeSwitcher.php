@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Widgets\Navs;
+namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;

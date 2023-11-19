@@ -32,6 +32,7 @@ return [
     'theme' => 'theme-default',
 
     'layout' => [
+        'has_menu_collapser' => false,
         'auth_type' => AuthLayoutType::BASIC,
 
         'type' => LayoutType::VERTICAL,
@@ -119,7 +120,7 @@ return [
 
     'logo-mini' => env('APP_LOGO_MINI', '/vendor/dcat-admin/images/logo-mini.png'),
     'logo-mini-dark' => env('APP_LOGO_MINI_DARK', '/vendor/dcat-admin/images/logo-mini-dark.png'),
-    'logo-image'        => env('APP_LOGO_IMAGE', '/vendor/dcat-admin/images/logo.png'), // todo::rm
+    'logo-image'        => env('APP_LOGO_IMAGE', '/vendor/dcat-admin/images/logo.png'),
     'logo-image-dark'   => env('APP_LOGO_IMAGE_DARK', '/vendor/dcat-admin/images/logo-dark.png'),
 
     //todo::rm
