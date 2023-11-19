@@ -194,8 +194,14 @@ class Asset
     public array $fonts = [];
 
     public array $libs = [
-        'jquery/jquery.js',
-        'dcat/dcat-app.js',
+        //'jquery/jquery.js',
+        'dcat/plugins/vendors.min.js',
+        'dcat/js/dcat-app.js',
+        'dcat/plugins/extensions/toastr.min.js',
+        'dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        'dcat/plugins/bootstrap-validator/validator.min.js',
+        'dcat/plugins/layer/layer.js',
+        'dcat/plugins/jquery.initialize/jquery.initialize.min.js'
     ];
 
     /**
@@ -240,9 +246,9 @@ class Asset
      * @var array
      */
     public $baseJs = [
-        'helpers.js',
-        'bootstrap.js',
-        'menu.js', //todo:: move to menu
+        //'helpers.js',
+        //'bootstrap.js',
+        //'menu.js', //todo:: move to menu
         // 'theme'  => '@theme',
 
         // 'toastr'    => '@toastr',

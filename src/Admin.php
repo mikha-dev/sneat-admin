@@ -10,8 +10,10 @@ use Dcat\Admin\Layout\Footer;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Models\Domain;
 use Dcat\Admin\Extend\Manager;
+use Dcat\Admin\Layout\UserNav;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtml;
+use Dcat\Admin\Enums\RouteAuth;
 use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Enums\LayoutType;
@@ -59,7 +61,7 @@ class Admin
         'APP_INNER_BEFORE' => 'ADMIN_APP_INNER_BEFORE',
         'APP_INNER_AFTER' => 'ADMIN_APP_INNER_AFTER',
 
-        'NAVBAR_USER_PANEL' => 'ADMIN_NAVBAR_USER_PANEL',
+        'NAVBAR_BEFORE_USER_PANEL' => 'ADMIN_NAVBAR_BEFORE_USER_PANEL',
         'NAVBAR_AFTER_USER_PANEL' => 'ADMIN_NAVBAR_AFTER_USER_PANEL',
 
         'NAVBAR_BEFORE' => 'ADMIN_NAVBAR_BEFORE',
@@ -183,6 +185,15 @@ class Admin
         $builder && $builder($navbar);
 
         return $navbar;
+    }
+
+    public static function userNav(Closure $builder = null) : UserNav
+    {
+        $userNav = app('admin.usernav');
+
+        $builder && $builder($userNav);
+
+        return $userNav;
     }
 
     public static function pjax(bool $value = true) : void
@@ -581,13 +592,16 @@ class Admin
 
                 $authController = config('admin.auth.controller', AuthController::class);
 
-                $router->get('auth/login', $authController.'@getLogin');
+                $router->get('auth/login', $authController.'@getLogin')->name(RouteAuth::LOGIN());
                 $router->post('auth/login', $authController.'@postLogin');
-                $router->get('auth/logout', $authController.'@getLogout');
-                $router->get('auth/setting', $authController.'@getSetting');
+                $router->get('auth/logout', $authController.'@getLogout')->name(RouteAuth::LOGOUT());
+                $router->get('auth/setting', $authController.'@getSetting')->name(RouteAuth::SETTINGS());
                 $router->put('auth/setting', $authController.'@putSetting');
-                $router->get('auth/impersonate/{id}', $authController.'@impersonate');
-                $router->get('auth/deimpersonate', $authController.'@deimpersonate');
+                $router->get('auth/impersonate/{id}', $authController.'@impersonate')->name(RouteAuth::IMPERSONATE());
+                $router->get('auth/deimpersonate', $authController.'@deimpersonate')->name(RouteAuth::DEIMPERSONATE());
+
+                $router->get('auth/forgot-password', $authController.'@getForgotPassword')->name(RouteAuth::FORGOT_PASSWORD());
+                $router->get('auth/register', $authController.'@getRegister')->name(RouteAuth::REGISTER());
             });
         }
 

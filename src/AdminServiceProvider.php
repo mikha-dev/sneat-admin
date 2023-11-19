@@ -16,7 +16,6 @@ use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Support\Translator;
-use Dcat\Admin\Layout\LangSelector;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Facades\URL;
 use Dcat\Admin\Extend\UpdateManager;
@@ -25,7 +24,6 @@ use Dcat\Admin\Layout\SectionManager;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Dcat\Admin\Contracts\ExceptionHandler;
-use Dcat\Admin\Layout\Shortcuts;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -185,17 +183,18 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultSections()
     {
         Content::composing(function () {
-            if (! admin_has_default_section(Admin::SECTION['NAVBAR_USER_PANEL'])) {
-                admin_inject_default_section(Admin::SECTION['NAVBAR_USER_PANEL'], function () {
-                    return view('admin::partials.navbar-user-panel', ['user' => Admin::user()]);
-                });
-            }
+            //todo::rm, moved to navbar.blade
+            // if (! admin_has_default_section(Admin::SECTION['NAVBAR_USER_PANEL'])) {
+            //     admin_inject_default_section(Admin::SECTION['NAVBAR_USER_PANEL'], function () {
+            //         return view('admin::partials.navbar-user-panel', ['user' => Admin::user()]);
+            //     });
+            // }
 
-            if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'])) {
-                admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'], function () {
-                    return view('admin::partials.sidebar-user-panel', ['user' => Admin::user()]);
-                });
-            }
+            // if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'])) {
+            //     admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'], function () {
+            //         return view('admin::partials.sidebar-user-panel', ['user' => Admin::user()]);
+            //     });
+            // }
 
             // Register menu
             Admin::menu()->register();
@@ -206,7 +205,8 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app->singleton('admin.app', Application::class);
         $this->app->singleton('admin.asset', Asset::class);
-        $this->app->singleton('admin.color', Color::class);
+        //todo::rm
+        //$this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.extend', Manager::class);
         $this->app->singleton('admin.extend.update', function () {
@@ -217,8 +217,8 @@ class AdminServiceProvider extends ServiceProvider
         });
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.footer', Footer::class);
-        $this->app->singleton('admin.shortcuts', Shortcuts::class);
-        $this->app->singleton('admin.lang-selector', LangSelector::class);
+        //$this->app->singleton('admin.shortcuts', Shortcuts::class);
+        //$this->app->singleton('admin.lang-selector', LangSelector::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Context::class);
         $this->app->singleton('admin.domain', function() {

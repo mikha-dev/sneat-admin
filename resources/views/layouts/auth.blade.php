@@ -36,10 +36,14 @@
     </script>
 <!-- Content -->
 <div class="container-xxl">
+    @include('admin::partials.alerts')
+
     {!! $content !!}
+
+    @include('admin::partials.toastr')
 </div>
 <!-- / Content -->
-
+{!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}
 {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 </body>
 </html>

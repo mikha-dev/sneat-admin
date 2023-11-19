@@ -2,11 +2,12 @@
 
 namespace Dcat\Admin\Widgets\Navs;
 
+use Dcat\Admin\Contracts\NavElement;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Facades\App;
 use Illuminate\Contracts\Support\Renderable;
 
-class LangSelectorNav extends Widget implements Renderable
+class LangSelectorNav extends Widget implements Renderable, NavElement
 {
     protected $view = 'admin::widgets.lang-selector';
 

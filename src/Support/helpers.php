@@ -1,6 +1,7 @@
 <?php
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\DcatEnum;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
@@ -395,7 +396,7 @@ if (! function_exists('admin_route')) {
     /**
      * 根据路由别名获取url.
      *
-     * @param  string|null  $route
+     * @param  string|null|enum  $route
      * @param  array  $params
      * @param  bool  $absolute
      * @return string
@@ -403,6 +404,21 @@ if (! function_exists('admin_route')) {
     function admin_route(?string $route, array $params = [], $absolute = true)
     {
         return Admin::app()->getRoute($route, $params, $absolute);
+    }
+}
+
+//todo::rm, not used
+if (! function_exists('admin_route2')) {
+    /**
+     *
+     * @param  string|null|enum  $route
+     * @param  array  $params
+     * @param  bool  $absolute
+     * @return string
+     */
+    function admin_route2(DcatEnum $route, array $params = [], $absolute = true)
+    {
+        return Admin::app()->getRoute($route->value, $params, $absolute);
     }
 }
 

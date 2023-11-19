@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Widgets\Navs;
 
+use Dcat\Admin\Contracts\NavElement;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 
-class ShortcutsNav implements Renderable
+class ShortcutsNav implements Renderable, NavElement
 {
     protected string $view = 'admin::widgets.shortcuts';
 

@@ -3,11 +3,12 @@
 namespace Dcat\Admin\Widgets\Navs;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\NavElement;
 use Illuminate\Contracts\Support\Renderable;
 
-class DarkModeSwitcherNav implements Renderable
+class DarkModeSwitcherNav implements Renderable, NavElement
 {
-    protected string $view = 'admin::widgets.darkmode-switcher';
+    protected string $view = 'admin::widgets.darkmode-switcher-nav';
 
     public function __construct()
     {

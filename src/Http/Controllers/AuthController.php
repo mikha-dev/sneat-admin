@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     protected string $view;
 
-    protected string $redirectTo;
+    protected string $redirectTo = '';
 
     public function __construct() {
         $this->view = match (Admin::authLayoutType()) {
@@ -53,7 +53,8 @@ class AuthController extends Controller
             return redirect($this->getRedirectPath());
         }
 
-        return $content->auth()->content(view($this->view));
+        return $content->full()->body(view($this->view));
+        //return $content->auth()->content(view($this->view));
     }
 
     /**
