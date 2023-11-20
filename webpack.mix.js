@@ -119,13 +119,4 @@ mixAssetsDir('fonts/!(_)*.scss', (src, dest) =>
   mix.sass(src, dest.replace(/(\\|\/)scss(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), { sassOptions })
 );
 
-/*
- |--------------------------------------------------------------------------
- | Application assets
- |--------------------------------------------------------------------------
- */
-
-mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest));
-mixAssetsDir('css/**/*.css', (src, dest) => mix.copy(src, dest));
-
 mix.copy('node_modules/boxicons/fonts/*', 'resources/dist/fonts/boxicons');
