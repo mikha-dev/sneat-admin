@@ -3,16 +3,18 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Contracts\DcatEnum;
-use Dcat\Admin\Contracts\LazyRenderable;
-use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
+use Illuminate\Support\Arr;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\HasHtmlAttributes;
+use Dcat\Admin\Contracts\DcatEnum;
+use Dcat\Admin\Enums\PlacementType;
 use Dcat\Admin\Traits\HasVariables;
+use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Enums\StyleClassType;
+use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 
 /**
  * @method $this class(array|string|Dcat\Admin\DcatEnum $class, bool $append = false)
@@ -364,5 +366,29 @@ abstract class Widget implements Renderable
     public function __toString()
     {
         return $this->render();
+    }
+
+    public function tooltip(string $html, bool $isPopover = false, PlacementType $place = PlacementType::TOP, StyleClassType $class = StyleClassType::PRIMARY, ?string $title = null) : Widget {
+        $this->setHtmlAttribute('data-bs-html', 'true');
+
+        $toggle = $isPopover ? 'popover' : 'tooltip';
+        $this->setHtmlAttribute('data-bs-toggle', $toggle);
+
+        $this->setHtmlAttribute('data-bs-placement', $place->value);
+
+        $this->setHtmlAttribute('data-bs-custom-class', 'tooltip-'.$class->value);
+
+        if($isPopover) {
+            if(!is_null($title)) {
+                $this->setHtmlAttribute('data-bs-content', $html);
+                $this->setHtmlAttribute('data-bs-original-title', $title);
+            } else {
+                $this->setHtmlAttribute('data-bs-original-title', $html);
+            }
+        } else {
+            $this->setHtmlAttribute('data-bs-original-title', $html);
+        }
+
+        return $this;
     }
 }

@@ -7,6 +7,7 @@ enum ButtonClassType : string
     public const PREFIX = 'btn-';
     public const BASE = 'btn ';
 
+    case PRIMARY = 'primary';
     case OUTLINE = 'outline';
     case NONE = '';
 

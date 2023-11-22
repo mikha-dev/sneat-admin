@@ -213,6 +213,7 @@ class Asset
         'libs/perfect-scrollbar/perfect-scrollbar.js',
         'js/menu.js',
         'js/main.js',
+        'js/ui-popover.js'
     ];
 
     /**
