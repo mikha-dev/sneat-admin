@@ -14,6 +14,6 @@ class UserNavElement implements Renderable
     }
 
     public function render() : string {
-        return view($this->view, ['element' => $this])->render();
+        return view($this->view, ['url' => $this->url, 'icon' => $this->icon, 'title' => $this->title, 'badge' => $this->badge, 'hasDivider' => $this->hasDivider])->render();
     }
 }

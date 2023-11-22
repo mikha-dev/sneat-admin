@@ -20,11 +20,6 @@ class UserNav
         $this->elements = collect();
     }
 
-    protected function init() : void {
-        $this->put(new UserNavElement($this, admin_route(RouteAuth::SETTINGS()), DcatIcon::SETTINGS(), __('admin.settings'), null, true));
-        $this->put(new UserNavElement($this, admin_route(RouteAuth::LOGOUT()), DcatIcon::LOGOUT(), __('admin.logout')));
-    }
-
     public function put(UserNavElement $element) : UserNav
     {
         $this->elements->push($element);
@@ -35,9 +30,8 @@ class UserNav
     public function renderElements() : string {
         $this->callComposing('render-user-nav');
 
-        if ($this->elements->isEmpty()) {
-            return '';
-        }
+        $this->put(new UserNavElement($this, admin_route(RouteAuth::SETTINGS()), DcatIcon::SETTINGS(), __('admin.settings'), null, true));
+        $this->put(new UserNavElement($this, admin_route(RouteAuth::LOGOUT()), DcatIcon::LOGOUT(), __('admin.logout')));
 
         return $this->elements->map([Helper::class, 'render'])->implode('');
     }
