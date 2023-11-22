@@ -6,15 +6,15 @@ class Progress extends Widget
 {
     protected $view = 'admin::widgets.progress';
 
-    private int $value = 0;
-    private int $min = 0;
-    private int $max = 100;
-    private ?string $text;
-    private ?string $height;
-
-    public function __construct()
-    {
-    }
+    public function __construct(
+        private int $value,
+        private int $min = 0,
+        private int $max = 100,
+        private ?string $text = null,
+        private ?string $height = null,
+        private bool $stripped = false,
+        private bool $animated = false
+    ){}
 
     public function height(string $value) : Progress
     {
@@ -51,6 +51,20 @@ class Progress extends Widget
         return $this;
     }
 
+    public function stripped(bool $value = true) : Progress
+    {
+        $this->stripped = $value;
+
+        return $this;
+    }
+
+    public function animated(bool $value = true) : Progress
+    {
+        $this->animated = $value;
+        return $this;
+    }
+
+
     private function formatText() : string {
         return $this->text ?? $this->value.'%';
     }
@@ -58,28 +72,17 @@ class Progress extends Widget
     public function render()
     {
         $vars = [
+            'stripped' => $this->stripped,
+            'animated' => $this->animated,
             'value'    => $this->value,
-            'min'       => $this->min,
-            'max'       => $this->max,
-            'height'       => $this->height,
-            'text'       => $this->formatText(),
-            'attributes' => $this->formatHtmlAttributes(),
+            'min'      => $this->min,
+            'max'      => $this->max,
+            'height'   => $this->height,
+            'text'     => $this->formatText(),
+            'class'    => $this->getHtmlAttribute('class')
         ];
 
         return view($this->view, $vars)->render();
     }
 
-    public function stripped()
-    {
-        $this->class('progress-bar-striped', true);
-
-        return $this;
-    }
-
-    public function animated()
-    {
-        $this->class('progress-bar-animated', true);
-
-        return $this;
-    }
 }

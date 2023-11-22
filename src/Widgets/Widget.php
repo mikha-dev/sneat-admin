@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\DcatEnum;
 use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Layout\Content;
@@ -14,7 +15,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 
 /**
- * @method $this class(array|string $class, bool $append = false)
+ * @method $this class(array|string|Dcat\Admin\DcatEnum $class, bool $append = false)
  * @method $this style(string $style, bool $append = true)
  * @method $this id(string $id = null)
  */
@@ -307,6 +308,10 @@ abstract class Widget implements Renderable
         if ($method === 'style' || $method === 'class') {
             $value = $parameters[0] ?? null;
             $append = $parameters[1] ?? ($method === 'class' ? false : true);
+
+            if($value instanceof DcatEnum) {
+                $value = $value->value;
+            }
 
             if (is_array($value)) {
                 $value = implode(' ', $value);

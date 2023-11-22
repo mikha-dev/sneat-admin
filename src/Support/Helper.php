@@ -3,18 +3,19 @@
 namespace Dcat\Admin\Support;
 
 use Dcat\Admin\Grid;
-use Dcat\Laravel\Database\WhereHasInServiceProvider;
-use Illuminate\Contracts\Support\Arrayable;
+use Dcat\Admin\DcatEnum;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\Process\Process;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
-use Symfony\Component\Process\Process;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 
 class Helper
 {
@@ -140,6 +141,11 @@ class Helper
         $html = '';
 
         foreach ((array) $attributes as $key => &$value) {
+
+            if($value instanceof DcatEnum) {
+                $value = $value->value;
+            }
+
             if (is_array($value)) {
                 $value = implode(' ', $value);
             }
