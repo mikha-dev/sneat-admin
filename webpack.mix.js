@@ -113,6 +113,9 @@ mixAssetsDir('libs/**/*.{png,jpg,jpeg,gif}', (src, dest) => mix.copy(src, dest))
 // Images
 mixAssetsDir('images/*', (src, dest) => mix.copy(src, dest));
 
+//Dcat
+mixAssetsDir('dcat/*', (src, dest) => mix.copy(src, dest));
+
 // Fonts
 mixAssetsDir('fonts/*/*', (src, dest) => mix.copy(src, dest));
 mixAssetsDir('fonts/!(_)*.scss', (src, dest) =>

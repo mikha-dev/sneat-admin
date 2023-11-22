@@ -2,11 +2,11 @@
 
 namespace Dcat\Admin\Widgets\Navs;
 
+use Dcat\Admin\DcatIcon;
 use Dcat\Admin\Contracts\NavElement;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Illuminate\Contracts\Support\Renderable;
 
-class ShortcutsNav implements Renderable, NavElement
+class ShortcutsNav implements NavElement
 {
     protected string $view = 'admin::widgets.shortcuts';
 
@@ -15,18 +15,19 @@ class ShortcutsNav implements Renderable, NavElement
     protected array $elements = [];
     protected bool $canAddShortcut = false;
 
-    public function __construct()
+    public function __construct( \Closure $builder )
     {
+        $builder($this);
     }
 
     protected function canAddShortcut(bool $value = false) {
         $this->canAddShortcut = $value;
     }
 
-    public function add(string $icon, string $title, string $description, string $url) : ShortcutsNav
+    public function add(DcatIcon $icon, string $title, string $description, string $url) : ShortcutsNav
     {
         $this->elements[] = [
-            'icon' => $icon,
+            'icon' => $icon->_(),
             'title' => $title,
             'description' => $description,
             'url' => $url,

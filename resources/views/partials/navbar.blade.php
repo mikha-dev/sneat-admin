@@ -6,7 +6,7 @@
     @if($layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL())
     <div class="container-xxl">
         <div class="navbar-brand app-brand d-none d-xl-flex py-0 me-4">
-            <a href="{{ admin_route(\Dcat\Admin\Enums\RouteAuth::HOME()) }}" class="app-brand-link gap-2">
+            <a href="{{ admin_route(\Dcat\Admin\Enums\RouteAuth::SETTINGS()) }}" class="app-brand-link gap-2">
                 <span class="app-brand-logo">
                     <img src="{!! config('admin.logo-image') !!}" alt="" class="app-brand-img w-px-150" data-app-light-img="{!! config('admin.logo-image') !!}" data-app-dark-img="{!! config('admin.logo-image-dark') !!}">
                 </span>

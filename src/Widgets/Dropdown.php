@@ -19,7 +19,7 @@ class Dropdown extends Widget
     //todo::fix and uncomment
     //protected string $view = 'admin::widgets.dropdown';
 
-    protected array $options = [];
+//    protected array $options = [];
 
     /**
      * @var array
@@ -46,7 +46,7 @@ class Dropdown extends Widget
      * @var bool
      */
     protected $click = false;
-    
+
     protected string $direction = 'down';
 
     public function __construct(array $options = [])
@@ -144,7 +144,7 @@ class Dropdown extends Widget
     public function end()
     {
         return $this->direction('end');
-    }    
+    }
 
     // /**
     //  * Show divider.
@@ -207,7 +207,7 @@ class Dropdown extends Widget
         ];
 
         return $this;
-    }    
+    }
 
     /**
      * Add item.
@@ -224,7 +224,7 @@ class Dropdown extends Widget
         ];
 
         return $this;
-    }    
+    }
 
 
     //todo::rm

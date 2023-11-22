@@ -1,0 +1,10 @@
+/*!
+ * jQuery Form Plugin
+ * version: 4.2.2
+ * Project repository: https://github.com/jquery-form/form
+ */
+
+/*!
+* sweetalert2 v11.7.27
+* Released under the MIT License.
+*/

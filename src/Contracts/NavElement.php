@@ -2,7 +2,9 @@
 
 namespace Dcat\Admin\Contracts;
 
-interface NavElement
+use Illuminate\Contracts\Support\Renderable;
+
+interface NavElement extends Renderable
 {
 
 }

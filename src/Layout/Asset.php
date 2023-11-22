@@ -3,9 +3,9 @@
 namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Color;
-use Dcat\Admin\Enums\LayoutDirectionType;
 use Illuminate\Support\Str;
+use Dcat\Admin\Enums\DarkModeType;
+use Dcat\Admin\Enums\LayoutDirectionType;
 
 class Asset
 {
@@ -191,7 +191,9 @@ class Asset
 
     public array $css = [];
 
-    public array $fonts = [];
+    public array $fonts = [
+        'boxicons.css'
+    ];
 
     /**
      * js脚本路径.
@@ -199,11 +201,11 @@ class Asset
      * @var array
      */
     public $htmlJs = [
-        'libs/dcat/plugins/extensions/toastr.min.js',
-        'libs/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
-        'libs/dcat/plugins/bootstrap-validator/validator.min.js',
-        'libs/dcat/plugins/layer/layer.js',
-        'libs/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+        'dcat/plugins/extensions/toastr.min.js',
+        'dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        'dcat/plugins/bootstrap-validator/validator.min.js',
+        'dcat/plugins/layer/layer.js',
+        'dcat/plugins/jquery.initialize/jquery.initialize.min.js',
 
         //'libs/jquery/jquery.js',
         'libs/popper/popper.js',
@@ -219,8 +221,8 @@ class Asset
      * @var array
      */
     public $headerJs = [
-        'libs/dcat/plugins/vendors.min.js',
-        'libs/dcat/js/dcat-app.js',
+        //'libs/dcat/plugins/vendors.min.js',
+        'dcat/js/dcat-app.js',
         'js/helpers.js',
         'js/config.js'
         // 'vendors' => '@vendors',
@@ -275,6 +277,14 @@ class Asset
         $t .= '.css';
 
         $this->baseCss([$t], true);
+    }
+
+    protected function setupMode() {
+
+        if(Admin::darkMode() == DarkModeType::DARK) {
+            $this->baseCss(['core-dark.css'], true);
+            $this->baseCss([Admin::theme().'-dark.css'], true);
+        }
     }
     //todo::rm me
     // /**
@@ -658,6 +668,7 @@ class Asset
     public function cssToHtml()
     {
         $this->setUpTheme();
+        $this->setupMode();
 
         $html = '';
 
@@ -737,6 +748,7 @@ class Asset
             //     continue;
             // }
             $path =  '/'.self::PATH_BASE.'/'.$v;
+            //todo::rm me
             //$path = $this->url($v);
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 use Dcat\Admin\Contracts\NavElement;
 use Dcat\Admin\Traits\HasBuilderEvents;

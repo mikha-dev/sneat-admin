@@ -1,9 +1,10 @@
+<!-- example of nav bar free item -->
 <div class="navbar-nav align-items-center">
     <div class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
         <a class="nav-link dropdown-toggle hide-arrow show" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
         <i class="bx bx-sm bx-sun"></i>
         </a>
-        <ul class="dropdown-menu dropdown-menu-start dropdown-styles show" data-bs-popper="static">
+        <ul class="dropdown-menu dropdown-menu-start dropdown-styles" data-bs-popper="static">
         <li>
             <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
             <span class="align-middle"><i class="bx bx-sun me-2"></i>Light</span>

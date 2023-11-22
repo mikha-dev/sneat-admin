@@ -69,10 +69,12 @@ class Menu
 
     public function add(array $nodes = [], bool $append = true) : void
     {
-        if($append)
-            array_push($this->nodes, $nodes);
-        else
-            Arr::prepend($this->nodes, $nodes);
+        foreach($nodes as $node) {
+            if($append)
+                array_push($this->nodes, $node);
+            else
+                $this->nodes = Arr::prepend($this->nodes, $node);
+        }
         // admin_inject_section(Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM'], function () use (&$nodes) {
         //     return $this->toHtml($nodes);
         // }, true, $priority);

@@ -2,20 +2,21 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Enums\StyleClassType;
+//use Dcat\Admin\Enums\StyleClassType;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Radio extends Widget
 {
     protected $view = 'admin::widgets.radio';
-    protected string $checked;
+    protected $checked;
     protected array $disabledValues = [];
     protected bool $inline = false;
 
     public function __construct(
         ?string $name = null,
         array $options = [],
-        StyleClassType $style = StyleClassType::PRIMARY
+//        StyleClassType $style = StyleClassType::PRIMARY
+        string $style = 'primary'
     ) {
         $this->name($name);
         $this->options($options);
@@ -73,17 +74,17 @@ class Radio extends Widget
         return $this;
     }
 
-    public function style(StyleClassType $style) : Radio
-    {
-        $this->style = $style;
+    // public function style(StyleClassType $style) : Radio
+    // {
+    //     $this->style = $style;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function defaultVariables() : array
     {
         return [
-            'style'      => $this->style->value,
+            'style'      => $this->style,
             'options'    => $this->options,
             'attributes' => $this->formatHtmlAttributes(),
             'checked'    => $this->checked,
