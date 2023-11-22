@@ -17,7 +17,7 @@
             @if($item['divider'])
                 <hr class="dropdown-divider">
             @endif
-            <li><a class="dropdown-item {{$item['disabled'] ? 'disabled' : ''}}" href="javascript:void(0);">$item</a>
+            <li><a class="dropdown-item {{$item['disabled'] ? 'disabled' : ''}}" href="javascript:void(0);">{{$item['title']}}</a>
             </li>
         @endforeach
     </ul>
