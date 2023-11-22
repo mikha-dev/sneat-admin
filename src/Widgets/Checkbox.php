@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 class Checkbox extends Radio
 {
     protected $view = 'admin::widgets.checkbox';
-    protected array $checked = [];
+    protected $checked;
 
     public function check(string|array $options) : Checkbox
     {

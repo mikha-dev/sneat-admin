@@ -205,12 +205,12 @@ class Asset
         'libs/dcat/plugins/layer/layer.js',
         'libs/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
 
-//        'libs/jquery/jquery.js',
-        'js/bootstrap.js',
+        //'libs/jquery/jquery.js',
         'libs/popper/popper.js',
+        'js/bootstrap.js',
         'libs/perfect-scrollbar/perfect-scrollbar.js',
         'js/menu.js',
-        'js/core.js',
+        'js/main.js',
     ];
 
     /**
@@ -221,7 +221,8 @@ class Asset
     public $headerJs = [
         'libs/dcat/plugins/vendors.min.js',
         'libs/dcat/js/dcat-app.js',
-        'js/helpers.js'
+        'js/helpers.js',
+        'js/config.js'
         // 'vendors' => '@vendors',
         // 'dcat'    => '@dcat',
     ];
@@ -409,21 +410,23 @@ class Asset
     //  * @param  array  $params
     //  * @return void
     //  */
-    // public function require($alias, array $params = [])
-    // {
-    //     if (is_array($alias)) {
-    //         foreach ($alias as $v) {
-    //             $this->require($v, $params);
-    //         }
 
-    //         return;
-    //     }
+    //todo::rm
+    public function require($alias, array $params = [])
+    {
+        if (is_array($alias)) {
+            foreach ($alias as $v) {
+                $this->require($v, $params);
+            }
 
-    //     $assets = $this->getAlias($alias, $params);
+            return;
+        }
 
-    //     $this->js($assets['js']);
-    //     $this->css($assets['css']);
-    // }
+        //$assets = $this->getAlias($alias, $params);
+
+        //$this->js($assets['js']);
+        //$this->css($assets['css']);
+    }
 
     public function css(string|array $css)
     {
@@ -503,18 +506,17 @@ class Asset
     //     return $paths;
     // }
 
-    // public function url(string $path) : string
-    // {
-    //     //todo::rm me
-    //     //$path = $this->getRealPath($path);
+    public function url(string $path) : string
+    {
+        //todo::rm me
+        //$path = $this->getRealPath($path);
 
-    //     vendor/dcat-admin/css
-    //     if (mb_strpos($path, '//') === false) {
-    //         $path = config('admin.assets_server').'/'.trim($path, '/');
-    //     }
+        if (mb_strpos($path, '//') === false) {
+            $path = config('admin.assets_server').'/'.trim($path, '/');
+        }
 
-    //     return (config('admin.https')) ? secure_asset($path) : asset($path);
-    // }
+        return (config('admin.https')) ? secure_asset($path) : asset($path);
+    }
 
     // /**
     //  * 获取真实路径.

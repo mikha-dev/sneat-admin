@@ -206,7 +206,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.app', Application::class);
         $this->app->singleton('admin.asset', Asset::class);
         //todo::rm
-        //$this->app->singleton('admin.color', Color::class);
+        $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.extend', Manager::class);
         $this->app->singleton('admin.extend.update', function () {

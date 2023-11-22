@@ -70,6 +70,11 @@ class Administrator extends Authenticatable implements NotifiableInterface
      */
     public function getAvatarAttribute(): string
     {
+        return $this->getAvatar();
+    }
+
+    public function getAvatar(): string
+    {
         $avatar = $this->avatar_url;
 
         if ($avatar) {
