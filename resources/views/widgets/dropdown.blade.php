@@ -1,16 +1,20 @@
 @if(! empty($button['text']) || $click)
-<span class="drop{{ $direction }}"> 
-    <a class="dropdown-toggle {{ $button['class'] }}" style="{{ $button['style'] }}" id="{{ $buttonId }}" data-bs-toggle="dropdown" aria-expanded="false">
+<span class="drop{{ $direction }}">
+    <a class="dropdown-toggle {{ $button['class'] }}" id="{{ $buttonId }}" data-bs-toggle="dropdown" aria-expanded="false">
         <stub>{!! $button['text'] !!}</stub>
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="{{ $buttonId }}">
-        {!! $options !!}
+        @foreach ($items as $item)
+            <li class='dropdown-item'>$item</li>";
+        @endforeach
     </ul>
 </span>
 @else
     <ul class="dropdown-menu" aria-labelledby="{{ $buttonId }}">
-        {!! $options !!}
+        @foreach ($items as $item)
+            <li class='dropdown-item'>$item</li>";
+        @endforeach
     </ul>
 @endif
 

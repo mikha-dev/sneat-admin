@@ -19,7 +19,7 @@ class Dropdown extends Widget
     //todo::fix and uncomment
     //protected string $view = 'admin::widgets.dropdown';
 
-//    protected array $options = [];
+    protected array $items = [];
 
     /**
      * @var array
@@ -30,7 +30,7 @@ class Dropdown extends Widget
         'icon' => null,
     ];
 
-    protected string $buttonId;
+    protected string $buttonId = '';
 
     // /**
     //  * @var \Closure
@@ -54,23 +54,19 @@ class Dropdown extends Widget
         $this->options($options);
     }
 
-    // /**
-    //  * Set the options of dropdown menus.
-    //  *
-    //  * @param  array  $options
-    //  * @param  string|null  $title
-    //  * @return $this
-    //  */
-    // public function options($options = [], ?string $title = null)
-    // {
-    //     if (! $options) {
-    //         return $this;
-    //     }
+    /**
+     * Set the options of dropdown menus.
+     *
+     * @param  array  $options
+     * @param  string|null  $title
+     * @return $this
+     */
+    public function items(array $options = [])
+    {
+        $this->items = array_merge($this->items, Helper::array($options));
 
-    //     $this->options[] = [$title, Helper::array($options)];
-
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * Set the button text.

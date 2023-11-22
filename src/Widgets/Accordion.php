@@ -8,7 +8,7 @@ class Accordion extends Widget implements Renderable
 {
     protected $view = 'admin::widgets.accordion';
 
-    protected $items = [];
+    protected array $items = [];
 
     public function __construct()
     {
@@ -38,8 +38,9 @@ class Accordion extends Widget implements Renderable
     public function defaultVariables()
     {
         return [
+            'id'         => $this->id,
             'items'      => $this->items,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
         ];
     }
 }

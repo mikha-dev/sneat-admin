@@ -5,6 +5,7 @@ namespace Dcat\Admin\Widgets;
 use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Illuminate\Contracts\Support\Renderable;
 
+// todo:rm. box is abandoned, using cards
 class Box extends Widget
 {
     protected $view = 'admin::widgets.box';

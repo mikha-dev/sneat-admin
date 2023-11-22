@@ -11,7 +11,7 @@ class Alert extends Widget
     protected $content;
     protected $style;
     protected $icon;
-    protected $dismissable = false;
+    protected bool $dismissable = false;
 
     public function __construct($content = '', $title = null, $style = 'danger')
     {

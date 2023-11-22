@@ -3,14 +3,14 @@
 
     <div class="card accordion-item">
         <h2 class="accordion-header d-flex align-items-center">
-        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion{{ $key }}" aria-expanded="false">
+        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion{{ $id.$key }}" aria-expanded="false">
             @if(isset($item['icon']))
             <i class="{{ $item['icon'] }} me-2"></i>
-            {{ $item['title'] }}
             @endif
+            {{ $item['title'] }}
         </button>
         </h2>
-        <div id="accordion{{ $key }}" class="accordion-collapse collapse {{ $item['collapsed'] == true ? 'show' : '' }}" style="">
+        <div id="accordion{{ $id.$key }}" class="accordion-collapse collapse {{ $item['collapsed'] == true ? 'show' : '' }}" style="">
         <div class="accordion-body">
             {!! $item['content'] !!}
         </div>

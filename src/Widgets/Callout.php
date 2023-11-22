@@ -10,7 +10,7 @@ class Callout extends Widget
     protected $title;
     protected $content;
     protected $style = 'default';
-    protected $showCloseBtn = false;
+    protected bool $dismissable = false;
 
     public function __construct($content = '', ?string $title = null, ?string $style = null)
     {
@@ -111,9 +111,9 @@ class Callout extends Widget
      * @param  bool  $value
      * @return $this
      */
-    public function removable(bool $value = true)
+    public function dismissable(bool $value = true)
     {
-        $this->showCloseBtn = $value;
+        $this->dismissable = $value;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class Callout extends Widget
             'title'        => $this->title,
             'content'      => $this->content,
             'attributes'   => $this->formatHtmlAttributes(),
-            'showCloseBtn' => $this->showCloseBtn,
+            'dismissable' => $this->dismissable,
         ];
     }
 }
