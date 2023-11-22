@@ -9,6 +9,7 @@ enum DcatIcon : string
 
     case CALENDAR = 'calendar';
     case HOME = 'home';
+    case HELP = 'help-circle';
     case HOME_CIRCLE = 'home-circle';
     case SETTINGS = 'cog';
     case LOGOUT = 'power-off';

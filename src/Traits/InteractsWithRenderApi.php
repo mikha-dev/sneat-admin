@@ -56,9 +56,7 @@ trait InteractsWithRenderApi
 target.on('{$this->target}:load', function () {
     Dcat.helpers.asyncRender('{$url}', function (html) {
         body.html(html);
-        
         {$this->loadScript}
-        
         target.trigger('{$this->target}:loaded');
     });
 });
