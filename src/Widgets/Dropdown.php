@@ -7,17 +7,7 @@ use Illuminate\Support\Str;
 
 class Dropdown extends Widget
 {
-    //todo::rm
-    // const DIVIDER = '_divider';
-
-    // /**
-    //  * @var string
-    //  */
-    // protected static $dividerHtml = '<li class="dropdown-divider"></li>';
-
     protected $view = 'admin::widgets.dropdown';
-    //todo::fix and uncomment
-    //protected string $view = 'admin::widgets.dropdown';
 
     protected array $items = [];
 
@@ -28,20 +18,10 @@ class Dropdown extends Widget
         'text'  => null,
         'class' => 'btn btn-secondary',
         'icon' => null,
+	    'split'=>FALSE,
     ];
 
     protected string $buttonId = '';
-
-    // /**
-    //  * @var \Closure
-    //  */
-    // protected $builder;
-
-    // /**
-    //  * @var bool
-    //  */
-    // protected $divider;
-
     /**
      * @var bool
      */
@@ -51,7 +31,8 @@ class Dropdown extends Widget
 
     public function __construct(array $options = [])
     {
-        $this->options($options);
+	    $this->options($options);
+		return $this;
     }
 
     /**
@@ -101,19 +82,16 @@ class Dropdown extends Widget
         return $this;
     }
 
-    //todo::rm
-    // /**
-    //  * Set the button style.
-    //  *
-    //  * @param  string  $class
-    //  * @return $this
-    //  */
-    // public function buttonStyle(?string $style)
-    // {
-    //     $this->button['style'] = $style;
+	public function hideArrow() {
+		$this->button['class'].=' hide-arrow';
+		return $this;
+	}
 
-    //     return $this;
-    // }
+	public function toggleSplit() {
+		$this->button['class'].=' dropdown-toggle-split';
+		$this->button['split']=True;
+		return $this;
+	}
 
     public function direction(string $direction = 'down')
     {
@@ -141,33 +119,6 @@ class Dropdown extends Widget
     {
         return $this->direction('end');
     }
-
-    // /**
-    //  * Show divider.
-    //  *
-    //  * @param  string  $class
-    //  * @return $this
-    //  */
-    // public function divider()
-    // {
-    //     $this->divider = true;
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * Applies the callback to the elements of the options.
-    //  *
-    //  * @param  string  $class
-    //  * @return $this
-    //  */
-    // public function map(\Closure $builder)
-    // {
-    //     $this->builder = $builder;
-
-    //     return $this;
-    // }
-
     /**
      * Add click event listener.
      *
@@ -195,11 +146,12 @@ class Dropdown extends Widget
         return $this->buttonId;
     }
 
-    public function add(string $title, bool $disabled = false)
+    public function add(string $title, bool $disabled = false,bool $divider=FALSE)
     {
         $this->items[] = [
             'title'   => $title,
             'disabled' => $disabled,
+	        'divider' => $divider,
         ];
 
         return $this;
@@ -216,62 +168,11 @@ class Dropdown extends Widget
     public function addDivider()
     {
         $this->items[] = [
-            'divider' => true,
+
         ];
 
         return $this;
     }
-
-
-    //todo::rm
-    // /**
-    //  * @return string
-    //  */
-    // protected function renderOptions()
-    // {
-    //     $html = '';
-
-    //     foreach ($this->options as &$items) {
-    //         [$title, $options] = $items;
-
-    //         if ($title) {
-    //             $html .= "<li class='dropdown-header'>$title</li>";
-    //         }
-
-    //         foreach ($options as $key => $val) {
-    //             $html .= $this->renderOption($key, $val);
-    //         }
-    //     }
-
-    //     return $html;
-    // }
-
-    // /**
-    //  * @param  mixed  $k
-    //  * @param  mixed  $v
-    //  * @return mixed|string
-    //  */
-    // protected function renderOption($k, $v)
-    // {
-    //     if ($v === static::DIVIDER) {
-    //         return static::$dividerHtml;
-    //     }
-
-    //     if ($builder = $this->builder) {
-    //         $v = $builder->call($this, $v, $k);
-    //     }
-
-    //     $v = mb_strpos($v, '</a>') ? $v : "<a class='dropdown-item' href='javascript:void(0)'>$v</a>";
-    //     $v = "<li class='dropdown-item'>$v</li>";
-
-    //     if ($this->divider) {
-    //         $v .= static::$dividerHtml;
-    //         $this->divider = null;
-    //     }
-
-    //     return $v;
-    // }
-
     /**
      * @return string
      */
