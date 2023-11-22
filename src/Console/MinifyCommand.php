@@ -126,7 +126,8 @@ class MinifyCommand extends Command
 
         $this->info('npm install...');
 
-        $this->runProcess("cd {$this->packagePath} && npm install");
+        //$this->runProcess("cd {$this->packagePath} && npm install"); //todo::fix, somewhy npm install does not work. using yarn
+        $this->runProcess("cd {$this->packagePath} && yarn");
     }
 
     protected function runProcess($command, $timeout = 1800) : void

@@ -221,7 +221,8 @@ class Asset
      * @var array
      */
     public $headerJs = [
-        //'libs/dcat/plugins/vendors.min.js',
+        'libs/jquery/jquery.js',
+        //'dcat/plugins/vendors.min.js',
         'dcat/js/dcat-app.js',
         'js/helpers.js',
         'js/config.js'
