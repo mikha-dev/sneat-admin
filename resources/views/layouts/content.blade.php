@@ -12,6 +12,8 @@
 @section('content')
     @include('admin::partials.alerts')
     {!! $content !!}
+
+    @include('admin::partials.toastr')
 @endsection
 
 @section('app')

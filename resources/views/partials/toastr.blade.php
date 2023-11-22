@@ -1,3 +1,4 @@
+@dd(Session::get('dcat-admin-toastr'))
 @if(Session::has('dcat-admin-toastr'))
     @php
         $toastr  = Session::get('dcat-admin-toastr');

@@ -372,11 +372,12 @@ abstract class Widget implements Renderable
         $this->setHtmlAttribute('data-bs-html', 'true');
 
         $toggle = $isPopover ? 'popover' : 'tooltip';
+
         $this->setHtmlAttribute('data-bs-toggle', $toggle);
 
         $this->setHtmlAttribute('data-bs-placement', $place->value);
 
-        $this->setHtmlAttribute('data-bs-custom-class', 'tooltip-'.$class->value);
+        $this->setHtmlAttribute('data-bs-custom-class', $toggle.'-'.$class->value);
 
         if($isPopover) {
             if(!is_null($title)) {
