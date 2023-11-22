@@ -1,9 +1,11 @@
 <div class="btn-group">
     @if(!empty($button['split']) && $button['split'])
-        <button type="button" class="{{$button['class']}}">{{$button['text']}}</button>
+        <button type="button" class="{{$button['class']}} {{$button['arrow'] ? 'hide-arrow' : ''}}">
+            {{$button['text']}}
+        </button>
     @endif
-    <button type="button" class="{{$button['class']}} dropdown-toggle" id="{{$buttonId}}"
-            data-bs-toggle="dropdown" aria-expanded="false">
+    <button type="button" class="{{$button['class']}} dropdown-toggle {{$button['split'] ? 'dropdown-toggle-split' : ''}}
+     {{$button['arrow'] ? 'hide-arrow' : ''}}" id="{{$buttonId}}" data-bs-toggle="dropdown" aria-expanded="false">
         @if(!empty($button['split']) && $button['split'])
             <span class="visually-hidden">{{$button['text']}}</span>
         @elseif(!empty($button['icon']))
@@ -17,7 +19,8 @@
             @if($item['divider'])
                 <hr class="dropdown-divider">
             @endif
-            <li><a class="dropdown-item {{$item['disabled'] ? 'disabled' : ''}}" href="javascript:void(0);">{{$item['title']}}</a>
+            <li><a class="dropdown-item {{$item['disabled'] ? 'disabled' : ''}}"
+                   href="javascript:void(0);">{{$item['title']}}</a>
             </li>
         @endforeach
     </ul>
