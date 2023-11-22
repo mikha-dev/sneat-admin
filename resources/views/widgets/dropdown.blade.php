@@ -1,6 +1,6 @@
 <div class="btn-group">
     @if(!empty($button['split']) && $button['split'])
-        <button type="button" class="{{$button['class']}}">Primary</button>
+        <button type="button" class="{{$button['class']}}">{{$button['text']}}</button>
     @endif
     <button type="button" class="{{$button['class']}} dropdown-toggle" id="{{$buttonId}}"
             data-bs-toggle="dropdown" aria-expanded="false">
