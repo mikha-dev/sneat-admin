@@ -2,23 +2,41 @@
 
 namespace Dcat\Admin\Widgets;
 
-class Progress extends Widget
+use Dcat\Admin\Enums\StyleClassType;
+use Illuminate\Contracts\Support\Renderable;
+
+class Progress implements Renderable
 {
     protected $view = 'admin::widgets.progress';
 
+    protected string $class = '';
+    protected string $height = '';
+
     public function __construct(
+        StyleClassType $class = StyleClassType::PRIMARY,
         private int $value,
         private int $min = 0,
         private int $max = 100,
         private ?string $text = null,
-        private ?string $height = null,
+        ?string $height = null,
         private bool $stripped = false,
         private bool $animated = false
-    ){}
+    ){
+        $this->class($class);
+        $this->height($height);
+    }
 
-    public function height(string $value) : Progress
+    public function height(?string $value = null) : Progress
     {
-        $this->height = 'height: '.$value;
+        if(!is_null($value))
+            $this->height = 'height: '.$value;
+
+        return $this;
+    }
+
+    public function class(StyleClassType $class) : Progress
+    {
+        $this->class = $class->value;
 
         return $this;
     }
@@ -79,7 +97,7 @@ class Progress extends Widget
             'max'      => $this->max,
             'height'   => $this->height,
             'text'     => $this->formatText(),
-            'class'    => $this->getHtmlAttribute('class')
+            'class'    => $this->class
         ];
 
         return view($this->view, $vars)->render();
