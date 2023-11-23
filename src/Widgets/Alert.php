@@ -1,34 +1,42 @@
 <?php
+declare(strict_types=1);
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\DcatIcon;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Enums\StyleClassType;
 use Illuminate\Contracts\Support\Renderable;
 
-class Alert extends Widget
+class Alert implements Renderable
 {
     protected $view = 'admin::widgets.alert';
-    protected $title;
-    protected $content;
-    protected $style;
-    protected $icon;
+    protected string $icon = '';
+    protected string $class = '';
     protected bool $dismissable = false;
 
-    public function __construct($content = '', $title = null, $style = 'danger')
+    public function __construct(
+        protected string $content = '',
+        protected ?string $title = null,
+        StyleClassType $class = StyleClassType::DANGER)
     {
         $this->content($content);
-
         $this->title($title);
+        $this->class($class);
+    }
 
-        $this->style($style);
+    public function class(StyleClassType $class) : Alert
+    {
+        $this->class = $class->value;
+
+        return $this;
     }
 
     /**
      * Set title.
      *
-     * @param  string  $title
-     * @return $this
      */
-    public function title($title)
+    public function title(string $title) : Alert
     {
         $this->title = $title;
 
@@ -38,96 +46,44 @@ class Alert extends Widget
     /**
      * Set contents.
      *
-     * @param  string|\Closure|Renderable  $content
-     * @return $this
      */
-    public function content($content)
+    public function content(string|\Closure|Renderable $content) : Alert
     {
-        $this->content = $this->toString($content);
+        $this->content = Helper::render($content);
 
         return $this;
     }
 
-    public function primary()
-    {
-        return $this->style('primary');
-    }
-
-    /**
-     * Set info style.
-     *
-     * @return $this
-     */
-    public function info()
-    {
-        return $this->style('info')->icon('fa fa-info');
-    }
-
-    /**
-     * Set success style.
-     *
-     * @return $this
-     */
-    public function success()
-    {
-        return $this->style('success')->icon('fa fa-check');
-    }
-
-    /**
-     * Set warning style.
-     *
-     * @return $this
-     */
-    public function warning()
-    {
-        return $this->style('warning')->icon('fa fa-warning');
-    }
-
-    /**
-     * Set warning style.
-     *
-     * @return $this
-     */
-    public function danger()
-    {
-        return $this->style('danger')->icon('fa fa-ban');
-    }
-
     /**
      * Show close button.
-     *
-     * @param  bool  $value
-     * @return $this
      */
-    public function dismissable(bool $value = true)
+    public function dismissable(bool $value = true) : Alert
     {
         $this->dismissable = $value;
 
         return $this;
     }
 
-    /**
-     * Add style.
-     *
-     * @param  string  $style
-     * @return $this
-     */
-    public function style($style = 'info')
-    {
-        $this->style = $style;
+    // /**
+    //  * Add style.
+    //  *
+    //  * @param  string  $style
+    //  * @return $this
+    //  */
+    // public function style($style = 'info')
+    // {
+    //     $this->style = $style;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * Add icon.
      *
-     * @param  string  $icon
-     * @return $this
      */
-    public function icon($icon)
+    public function icon(DcatIcon $icon) : Alert
     {
-        $this->icon = $icon;
+        $this->icon = $icon->_();
 
         return $this;
     }
@@ -135,16 +91,14 @@ class Alert extends Widget
     /**
      * @return array
      */
-    public function defaultVariables()
+    public function render() : string
     {
-        $this->class("alert alert-{$this->style} alert-dismissable");
-
-        return [
+        return view($this->view,[
             'title'        => $this->title,
             'content'      => $this->content,
             'icon'         => $this->icon,
-            'attributes'   => $this->formatHtmlAttributes(),
-            'dismissable' => $this->dismissable,
-        ];
+            'class'        => $this->class,
+            'dismissable'  => $this->dismissable,
+        ])->render();
     }
 }

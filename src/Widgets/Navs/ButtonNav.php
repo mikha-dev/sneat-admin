@@ -12,7 +12,7 @@ class ButtonNav implements Renderable
 {
     private string $tipClass = '';
 
-    public function __construct(protected string $title, protected string $href, protected ButtonClassType $btn = ButtonClassType::OUTLINE, protected StyleClassType $class = StyleClassType::PRIMARY, protected ?string $tip = null)
+    public function __construct(protected string $title, protected string $href, protected ButtonClassType $btn = ButtonClassType::PRIMARY, protected StyleClassType $class = StyleClassType::PRIMARY, protected ?string $tip = null)
     {
 
         if ($this->tip) {

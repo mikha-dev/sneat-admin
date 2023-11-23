@@ -17,7 +17,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 
 /**
- * @method $this class(array|string|Dcat\Admin\DcatEnum $class, bool $append = false)
+ * @method $this class(array|string|\Dcat\Admin\DcatEnum $class, bool $append = false)
  * @method $this style(string $style, bool $append = true)
  * @method $this id(string $id = null)
  */
