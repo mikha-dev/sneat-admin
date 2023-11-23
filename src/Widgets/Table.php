@@ -1,73 +1,64 @@
 <?php
+declare(strict_types=1);
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Enums\StyleClassType;
+use Illuminate\Contracts\Support\Renderable;
 
-class Table extends Widget
+class Table implements Renderable
 {
-    /**
-     * @var string
-     */
-    protected $view = 'admin::widgets.table';
+    protected string $view = 'admin::widgets.table';
 
-    /**
-     * @var array
-     */
-    protected $headers = [];
+    protected string $class = '';
+    protected ?string $headerClass = null;
+    protected bool $withBorder = false;
+    protected bool $withFooter = false;
+    protected bool $withHover = false;
+    protected bool $striped = false;
+    protected bool $small = false;
+//todo:Lfix or remove
+//    protected int $depth = 0;
 
-    /**
-     * @var array
-     */
-    protected $rows = [];
-
-    /**
-     * @var int
-     */
-    protected $depth = 0;
-
-    /**
-     * Table constructor.
-     *
-     * @param  array  $headers
-     * @param  mixed  $rows
-     * @param  array  $style
-     */
-    public function __construct($headers = [], $rows = false, $style = [])
+    public function __construct(protected array $headers = [], protected array $rows = [], ?StyleClassType $class = null)
     {
-        if ($rows === false) {
-            $rows = $headers;
-            $headers = [];
-        }
-
-        $this->class('table default-table');
-
-        $this->setHeaders($headers);
-        $this->setRows($rows);
-        $this->setStyle($style);
+        $this->class($class);
     }
 
     /**
      * Set table headers.
-     *
-     * @param  array  $headers
-     * @return $this
      */
-    public function setHeaders($headers = [])
+    public function setHeaders(array $headers = []) : Table
     {
         $this->headers = $headers;
 
         return $this;
     }
 
+    //todo:Lfix or remove
     /**
-     * @param  int  $depth
-     * @return $this
      */
-    public function depth(int $depth)
+    // public function depth(int $depth) : Table
+    // {
+    //     $this->depth = $depth;
+
+    //     return $this;
+    // }
+
+    public function class(?StyleClassType $class) : Table
     {
-        $this->depth = $depth;
+        if($class)
+            $this->class = $class->value;
+
+        return $this;
+    }
+
+    public function headerClass(?StyleClassType $class) : Table
+    {
+        if($class)
+            $this->headerClass = $class->value;
 
         return $this;
     }
@@ -78,7 +69,7 @@ class Table extends Widget
      * @param  array  $rows
      * @return $this
      */
-    public function setRows($rows = [])
+    public function setRows(array $rows = [])
     {
         if ($rows && ! Arr::isAssoc(Helper::array($rows, false))) {
             $this->rows = $rows;
@@ -86,70 +77,82 @@ class Table extends Widget
             return $this;
         }
 
-        $noTrPadding = false;
+        //todo::fix or remove
+        // $noTrPadding = false;
 
-        foreach ($rows as $key => $item) {
-            if (is_array($item)) {
-                if (Arr::isAssoc($item)) {
-                    $borderLeft = $this->depth ? 'table-left-border-nofirst' : 'table-left-border';
+        // foreach ($rows as $key => $item) {
+        //     if (is_array($item)) {
+        //         if (Arr::isAssoc($item)) {
+        //             $borderLeft = $this->depth ? 'table-left-border-nofirst' : 'table-left-border';
 
-                    $item = static::make($item)
-                        ->depth($this->depth + 1)
-                        ->class('table-no-top-border '.$borderLeft, true)
-                        ->render();
+        //             $item = static::make($item)
+        //                 ->depth($this->depth + 1)
+        //                 ->class('table-no-top-border '.$borderLeft, true)
+        //                 ->render();
 
-                    if (! $noTrPadding) {
-                        $this->class('table-no-tr-padding', true);
-                    }
-                    $noTrPadding = true;
-                } else {
-                    $item = json_encode($item, JSON_UNESCAPED_UNICODE);
-                }
-            }
+        //             if (! $noTrPadding) {
+        //                 $this->class('table-no-tr-padding', true);
+        //             }
+        //             $noTrPadding = true;
+        //         } else {
+        //             $item = json_encode($item, JSON_UNESCAPED_UNICODE);
+        //         }
+        //     }
 
-            $this->rows[] = [$key, $item];
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set table style.
-     *
-     * @param  array  $style
-     * @return $this
-     */
-    public function setStyle($style = [])
-    {
-        if ($style) {
-            $this->class(implode(' ', (array) $style), true);
-        }
+        //     $this->rows[] = [$key, $item];
+        // }
 
         return $this;
     }
 
-    /**
-     * Render the table.
-     *
-     * @return string
-     */
-    public function render()
+    public function render() : string
     {
         $vars = [
             'headers'    => $this->headers,
             'rows'       => $this->rows,
-            'attributes' => $this->formatHtmlAttributes(),
+            'class'       => $this->class,
+            'headerClass'       => $this->headerClass,
+            'withFooter'       => $this->withFooter,
+            'withBorder'       => $this->withBorder,
+            'withHover'       => $this->withHover,
+            'striped'       => $this->striped,
+            'small'       => $this->small,
         ];
 
         return view($this->view, $vars)->render();
     }
 
-    /**
-     * @return $this
-     */
-    public function withBorder()
+    public function withBorder() : Table
     {
-        $this->class('table-bordered', true);
+        $this->withBorder = true;
+
+        return $this;
+    }
+
+    public function withFooter() : Table
+    {
+        $this->withFooter = true;
+
+        return $this;
+    }
+
+    public function withHover() : Table
+    {
+        $this->withHover = true;
+
+        return $this;
+    }
+
+    public function striped() : Table
+    {
+        $this->striped = true;
+
+        return $this;
+    }
+
+    public function small() : Table
+    {
+        $this->small = true;
 
         return $this;
     }
