@@ -1,5 +1,5 @@
 {!! $start !!}
-    <div class="card-body>
+    <div class="card-body">
         @if(! $tabObj->isEmpty())
             @include('admin::form.tab', compact('tabObj'))
 

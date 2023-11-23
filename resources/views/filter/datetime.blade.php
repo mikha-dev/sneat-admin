@@ -14,7 +14,7 @@
     @endif
 
     <div class="input-group-prepend">
-        <span class="input-group-text bg-white text-capitalize"><b>{!! $label !!}</b>&nbsp;<i class="feather icon-calendar"></i></span>
+        <span class="input-group-text bg-white text-capitalize"><b>{!! $label !!}</b>&nbsp;<i class="bx bx-calendar"></i></span>
     </div>
     <input class="form-control" id="{{$id}}" autocomplete="off" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>

@@ -20,6 +20,10 @@ enum DcatIcon : string
     case EMAIL = 'envelope';
     case HIDE = 'hide';
     case PENCIL = 'pencil';
+    case MOBILE = 'mobile';
+    case INTERNET = 'edit';
+    case LAPTOP = 'laptop';
+    case TERMINAL = 'terminal';
 
     public function _(bool $fullTag = false) {
         return self::format($this, $fullTag);

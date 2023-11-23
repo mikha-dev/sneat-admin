@@ -221,7 +221,7 @@ class Field implements Renderable
      * @var array
      */
     //protected $formGroupClass = ['form-field'];
-    protected $formGroupClass = ['mb-3'];
+    protected $formGroupClass = [];
 
     /**
      * @var \Closure[]
@@ -902,7 +902,7 @@ class Field implements Renderable
             return [
                 'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
                 'field'      => "col-md-{$this->width['field']} {$this->getFieldClass()}",
-                'form-group' => "row {$this->getFormGroupClass()}",
+                'form-group' => "row mb-3 {$this->getFormGroupClass()}",
             ];
         }
 
