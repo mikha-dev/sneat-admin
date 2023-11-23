@@ -1,8 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <div class="{{$viewClass['label']}} control-label">
-        <span>{!! $label !!}</span>
-    </div>
+    <span class="{{$viewClass['label']}} col-form-label">{!! $label !!}</span>
 
     <div class="{{$viewClass['field']}}">
 
@@ -11,12 +9,12 @@
         <div class="input-group">
 
             @if ($prepend)
-                <span class="input-group-prepend"><span class="input-group-text bg-white">{!! $prepend !!}</span></span>
+                <span class="input-group-text">{!! $prepend !!}</span>
             @endif
             <input {!! $attributes !!} />
 
             @if ($append)
-                <span class="input-group-append">{!! $append !!}</span>
+                <span class="input-group-text">{!! $append !!}</span>
             @endif
         </div>
 

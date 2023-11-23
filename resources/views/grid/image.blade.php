@@ -1,11 +1,11 @@
-<div class="box">
+<div class="card">
     @if(isset($title))
-        <div class="box-header with-border">
-            <h3 class="box-title"> {{ $title }}</h3>
+        <div class="card-header with-border">
+            <h3 class="card-title"> {{ $title }}</h3>
         </div>
     @endif
 
-    <div class="box-header with-border">
+    <div class="card-header with-border">
         <div class="pull-right">
             {!! $grid->renderExportButton() !!}
             {!! $grid->renderCreateButton() !!}
@@ -17,7 +17,7 @@
 
     {!! $grid->renderFilter() !!}
 
-    <div class="box-body table-responsive no-padding">
+    <div class="card-body table-responsive no-padding">
         <ul class="mailbox-attachments clearfix">
             @foreach($grid->rows() as $row)
                 <li>
@@ -44,8 +44,8 @@
         </ul>
     </div>
 
-    <div class="box-footer clearfix">
+    <div class="card-footer clearfix">
         {!! $grid->paginator() !!}
     </div>
-    <!-- /.box-body -->
+    <!-- /.card-body -->
 </div>

@@ -225,6 +225,8 @@ class Asset
         'libs/jquery/jquery.js',
         //'dcat/plugins/vendors.min.js',
         'dcat/js/dcat-app.js',
+        // 'dcat/plugins/webuploader/webuploader.min.js',
+        // 'dcat/extra/upload.js',
         'js/helpers.js',
         'js/config.js'
         // 'vendors' => '@vendors',

@@ -185,7 +185,7 @@ class Field implements Renderable
      */
     protected $width = [
         'label' => 2,
-        'field' => 8,
+        'field' => 10,
     ];
 
     /**
@@ -210,7 +210,7 @@ class Field implements Renderable
     /**
      * @var array
      */
-    protected $labelClass = ['text-capitalize'];
+    protected $labelClass = [];
 
     /**
      * @var array
@@ -220,7 +220,8 @@ class Field implements Renderable
     /**
      * @var array
      */
-    protected $formGroupClass = ['form-field'];
+    //protected $formGroupClass = ['form-field'];
+    protected $formGroupClass = ['mb-3'];
 
     /**
      * @var \Closure[]
@@ -445,7 +446,7 @@ class Field implements Renderable
      * @param  int  $label
      * @return $this
      */
-    public function width($field = 8, $label = 2)
+    public function width($field = 10, $label = 2)
     {
         $this->width = [
             'label' => $label,
@@ -901,7 +902,7 @@ class Field implements Renderable
             return [
                 'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
                 'field'      => "col-md-{$this->width['field']} {$this->getFieldClass()}",
-                'form-group' => "form-group row {$this->getFormGroupClass()}",
+                'form-group' => "row {$this->getFormGroupClass()}",
             ];
         }
 
@@ -1203,7 +1204,7 @@ class Field implements Renderable
         $this->innerView = $view;
 
         return $this;
-    }    
+    }
 
     /**
      * Get script of current field.

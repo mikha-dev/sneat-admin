@@ -190,12 +190,9 @@ class AuthController extends Controller
 
             $form->display('username', trans('admin.username'));
             $form->text('name', trans('admin.name'))->required();
-            if(config('admin.disabled_email_edit'))
-                $form->display('email', trans('admin.email'));
-            else
-                $form->email('email', trans('admin.email'))->required();
-
-            $form->image('avatar_url', trans('admin.avatar'))->autoUpload();
+            $form->email('email', trans('admin.email'))->required();
+            //todo::fix form image
+            //$form->image('avatar_url', trans('admin.avatar'))->autoUpload();
 
             $form->password('old_password', trans('admin.old_password'));
 

@@ -57,6 +57,7 @@ return [
     'setting'               => 'Setting',
     'name'                  => 'Name',
     'username'              => 'Username',
+    'email'                 => 'Email',
     'user'                  => 'User',
     'alias'                 => 'Alias',
     'routes'                => 'Routes',

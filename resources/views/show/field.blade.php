@@ -5,8 +5,8 @@
 
     <div class="col-sm-{{ $width['field'] }}">
         @if($wrapped)
-            <div class="box box-solid box-default no-margin box-show">
-                <div class="box-body">
+            <div class="card box-solid box-default no-margin box-show">
+                <div class="card-body">
                     @if($escape)
                         {{ $content }}
                     @else
