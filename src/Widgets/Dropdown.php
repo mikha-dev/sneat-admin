@@ -2,170 +2,157 @@
 
 namespace Dcat\Admin\Widgets;
 
-use App\Enums\ButtonClassType;
-use Dcat\Admin\Support\Helper;
+use Dcat\Admin\DcatIcon;
 use Illuminate\Support\Str;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Enums\ButtonClassType;
 
-class Dropdown extends Widget {
-	protected $view = 'admin::widgets.dropdown';
+class Dropdown extends Widget
+{
+    protected $view = 'admin::widgets.dropdown';
 
-	protected array $items = [];
+    protected array $items = [];
 
-	/**
-	 * @var array
-	 */
-	protected array $button = [
-		'text' => NULL,
-		'class' => ButtonClassType::BTN . ' ' . ButtonClassType::BTN_SECONDARY,
-		'icon' => NULL,
-		'arrow' => FALSE,
-		'split' => FALSE,
-	];
+    protected array $button = [];
 
-	protected string $buttonId = '';
-	/**
-	 * @var bool
-	 */
-	protected bool $click = FALSE;
+    protected string $buttonId = '';
 
-	protected string $direction = 'down';
+    protected bool $click = FALSE;
 
-	public function __construct(array $options = []) {
-		$this->options($options);
-		return $this;
-	}
+    protected string $direction = 'down';
 
-	/**
-	 * Set the options of dropdown menus.
-	 *
-	 * @param array $options
-	 * @param string|null $title
-	 *
-	 * @return $this
-	 */
-	public function items(array $options = [])
-	: Dropdown {
-		$this->items = array_merge($this->items, Helper::array($options));
-		return $this;
-	}
+    protected bool $isRounded = false;
 
-	/**
-	 * Set the button text.
-	 *
-	 * @param string|null $text
-	 *
-	 * @return $this
-	 */
-	public function button(string $text)
-	: Dropdown {
-		$this->button['text'] = $text;
-		return $this;
-	}
+    public function __construct(array $options = [])
+    {
+        $this->button = [
+            'text' => NULL,
+            'class' => ButtonClassType::SECONDARY(),
+            'icon' => NULL,
+            'arrow' => FALSE,
+            'split' => FALSE,
+        ];
 
-	public function icon(string $icon)
-	: Dropdown {
-		$this->button['icon'] = $icon;
-		return $this;
-	}
+        $this->options($options);
 
-	/**
-	 * Set the button class.
-	 *
-	 * @param string $class
-	 *
-	 * @return $this
-	 */
-	public function buttonClass(string $class)
-	: Dropdown {
-		$this->button['class'] = $class;
-		return $this;
-	}
+        return $this;
+    }
 
-	public function hideArrow()
-	: Dropdown {
-		$this->button['arrow'] = TRUE;
-		return $this;
-	}
+    /**
+     * Set the options of dropdown menus.
+     */
+    public function items(array $options = []): Dropdown
+    {
+        $this->items = array_merge($this->items, Helper::array($options));
+        return $this;
+    }
 
-	public function toggleSplit()
-	: Dropdown {
-		$this->button['split'] = TRUE;
-		return $this;
-	}
+    public function rounded(bool $value = true) : Dropdown {
+        $this->isRounded = $value;
 
-	public function direction(string $direction = 'down')
-	: Dropdown {
-		$this->direction = $direction;
-		return $this;
-	}
+        return $this;
+    }
 
-	public function up()
-	: Dropdown {
-		return $this->direction('up');
-	}
+    /**
+     * Set the button text.
+     */
+    public function button(?string $text = null): Dropdown
+    {
+        $this->button['text'] = $text;
+        return $this;
+    }
 
-	public function down()
-	: Dropdown {
-		return $this->direction('down');
-	}
+    public function icon(DcatIcon $icon): Dropdown
+    {
+        $this->button['icon'] = $icon->_();
+        return $this;
+    }
 
-	public function start()
-	: Dropdown {
-		return $this->direction('start');
-	}
+    /**
+     * Set the button class.
+     */
+    public function buttonClass(ButtonClassType $class, bool $isOutline = false): Dropdown
+    {
+        $this->button['class'] = $class->_($isOutline);
+        return $this;
+    }
 
-	public function end()
-	: Dropdown {
-		return $this->direction('end');
-	}
+    public function hideArrow(): Dropdown
+    {
+        $this->button['arrow'] = TRUE;
+        return $this;
+    }
 
-	/**
-	 * Add click event listener.
-	 *
-	 * @param string|null $defaultLabel
-	 *
-	 * @return $this
-	 */
-	public function click(?string $defaultLabel = NULL)
-	: Dropdown {
-		$this->click = TRUE;
-		$this->buttonId = 'dropd-' . Str::random(8);
-		if ( $defaultLabel !== NULL ) {
-			$this->button($defaultLabel);
-		}
-		return $this;
-	}
+    public function toggleSplit(): Dropdown
+    {
+        $this->button['split'] = TRUE;
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getButtonId()
-	: string {
-		return $this->buttonId;
-	}
+    public function direction(string $direction = 'down'): Dropdown
+    {
+        $this->direction = $direction;
+        return $this;
+    }
 
-	public function add(string $title, bool $disabled = FALSE, bool $divider = FALSE)
-	: Dropdown {
-		$this->items[] = [
-			'title' => $title,
-			'disabled' => $disabled,
-			'divider' => $divider,
-		];
-		return $this;
-	}
+    public function up(): Dropdown
+    {
+        return $this->direction('up');
+    }
 
-	/**
-	 * @return string
-	 */
-	public function render()
-	: string {
-		$this->addVariables([
-			'items' => $this->items,
-			'button' => $this->button,
-			'buttonId' => $this->buttonId,
-			'click' => $this->click,
-			'direction' => $this->direction,
-		]);
-		return parent::render();
-	}
+    public function down(): Dropdown
+    {
+        return $this->direction('down');
+    }
+
+    public function start(): Dropdown
+    {
+        return $this->direction('start');
+    }
+
+    public function end(): Dropdown
+    {
+        return $this->direction('end');
+    }
+
+    /**
+     * Add click event listener.
+     */
+    public function click(?string $defaultLabel = NULL): Dropdown
+    {
+        $this->click = TRUE;
+        $this->buttonId = 'dropd-' . Str::random(8);
+        if ($defaultLabel !== NULL) {
+            $this->button($defaultLabel);
+        }
+        return $this;
+    }
+
+    public function getButtonId(): string
+    {
+        return $this->buttonId;
+    }
+
+    public function add(string $title, bool $disabled = FALSE, bool $divider = FALSE): Dropdown
+    {
+        $this->items[] = [
+            'title' => $title,
+            'disabled' => $disabled,
+            'divider' => $divider,
+        ];
+        return $this;
+    }
+
+    public function render(): string
+    {
+        $this->addVariables([
+            'items' => $this->items,
+            'button' => $this->button,
+            'buttonId' => $this->buttonId,
+            'click' => $this->click,
+            'direction' => $this->direction,
+            'rounded' => $this->isRounded
+        ]);
+        return parent::render();
+    }
 }

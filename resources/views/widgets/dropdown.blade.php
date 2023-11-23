@@ -1,11 +1,11 @@
 <div class="btn-group">
     @if(!empty($button['split']) && $button['split'])
-        <button type="button" class="{{$button['class']}} {{$button['arrow'] ? 'hide-arrow' : ''}}">
+        <button type="button" class="{{$button['class']}} {{$button['arrow'] ? 'hide-arrow' : ''}} {{$rounded ? 'rounded-pill' : ''}}">
             {{$button['text']}}
         </button>
     @endif
     <button type="button" class="{{$button['class']}} dropdown-toggle {{$button['split'] ? 'dropdown-toggle-split' : ''}}
-     {{$button['arrow'] ? 'hide-arrow' : ''}}" id="{{$buttonId}}" data-bs-toggle="dropdown" aria-expanded="false">
+     {{$button['arrow'] ? 'hide-arrow' : ''}} {{$rounded ? 'rounded-pill' : ''}}" id="{{$buttonId}}" data-bs-toggle="dropdown" aria-expanded="false">
         @if(!empty($button['split']) && $button['split'])
             <span class="visually-hidden">{{$button['text']}}</span>
         @elseif(!empty($button['icon']))

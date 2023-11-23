@@ -14,6 +14,8 @@ enum DcatIcon : string
     case SETTINGS = 'cog';
     case LOGOUT = 'power-off';
     case GLOBE = 'globe';
+    case DOTS_VERTICAL_ROUNDED = 'dots-vertical-rounded';
+    case MENU = 'menu me-1';
 
     public function _() {
         return self::format($this);
