@@ -7,11 +7,14 @@ use Dcat\Admin\DcatIcon;
 use Illuminate\Support\Str;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Enums\ButtonClassType;
+use Dcat\Admin\Enums\ButtonSizeType;
+use Illuminate\Contracts\Support\Arrayable;
 
 class Dropdown extends Widget
 {
     protected $view = 'admin::widgets.dropdown';
 
+    /** @var DropdownItem[] $items */
     protected array $items = [];
 
     protected array $button = [];
@@ -24,27 +27,33 @@ class Dropdown extends Widget
 
     protected bool $isRounded = false;
 
-    public function __construct(array $options = [])
+    /** @var DropdownItem[] $items */
+    public function __construct($items = [])
     {
         $this->button = [
             'text' => NULL,
             'class' => ButtonClassType::SECONDARY(),
+            'size_class' => ButtonSizeType::DEF,
             'icon' => NULL,
             'arrow' => FALSE,
             'split' => FALSE,
         ];
 
-        $this->options($options);
+        $this->items($items);
 
         return $this;
     }
 
-    /**
-     * Set the options of dropdown menus.
-     */
-    public function items(array $options = []): Dropdown
+    /** @var DropdownItem[] $items */
+    public function items( array $items = []): Dropdown
     {
-        $this->items = array_merge($this->items, Helper::array($options));
+        // //$this->items = array_merge($this->items, Helper::array($options));
+        // if ($options instanceof Arrayable) {
+        //     $options = $options->toArray();
+        // }
+
+        $this->items = array_merge($this->items, $items);
+
         return $this;
     }
 
@@ -75,6 +84,13 @@ class Dropdown extends Widget
     public function buttonClass(ButtonClassType $class, bool $isOutline = false): Dropdown
     {
         $this->button['class'] = $class->_($isOutline);
+        return $this;
+    }
+
+    public function size(ButtonSizeType $class ): Dropdown
+    {
+        $this->button['size_class'] = $class->_();
+
         return $this;
     }
 
