@@ -150,13 +150,10 @@ class Dropdown extends Widget
         return $this->buttonId;
     }
 
-    public function add(string $title, bool $disabled = FALSE, bool $divider = FALSE): Dropdown
+    public function add(string $title, ?string $url = null, bool $disabled = FALSE, bool $hasDivider = FALSE): Dropdown
     {
-        $this->items[] = [
-            'title' => $title,
-            'disabled' => $disabled,
-            'divider' => $divider,
-        ];
+        $this->items[] =  new DropdownItem($title, $url, $hasDivider, $disabled);
+
         return $this;
     }
 

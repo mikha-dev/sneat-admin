@@ -20,7 +20,7 @@
                 <hr class="dropdown-divider">
             @endif
             <li><a class="dropdown-item {{$item->isDisabled ? 'disabled' : ''}}"
-                   href="{{$item->link}}">{{$item->value}}</a>
+                   href="{{ $item->link ?? '#' }}">{{$item->value}}</a>
             </li>
         @endforeach
     </ul>

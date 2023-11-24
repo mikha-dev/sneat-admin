@@ -5,7 +5,7 @@ namespace Dcat\Admin\Widgets;
 
 class DropdownItem
 {
-    public function __construct(public string $value, public string $link, public bool $hasDivider = false, public bool $isDisabled = false)
+    public function __construct(public string $value, public ?string $link = null, public bool $hasDivider = false, public bool $isDisabled = false)
     {
     }
 }
