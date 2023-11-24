@@ -10,7 +10,7 @@ use Dcat\Admin\Enums\LayoutDirectionType;
 class Asset
 {
 
-    const PATH_BASE = 'vendor/dcat-admin';
+    const PATH_BASE = 'vendor/dcat-admin/';
     //todo::rm me
     // /**
     //  * 别名.
@@ -206,6 +206,8 @@ class Asset
         'dcat/plugins/bootstrap-validator/validator.min.js',
         'dcat/plugins/layer/layer.js',
         'dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+        'dcat/plugins/switchery/switchery.min.js',
+        //'dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
 
         //'libs/jquery/jquery.js',
         'libs/popper/popper.js',
@@ -249,7 +251,14 @@ class Asset
     // ];
 
     private array $baseCss = [
-        'core.css'
+        'css/core.css',
+        'dcat/plugins/switchery/switchery.min.css',
+        'css/nprogress.css',
+
+        // paid version
+        'libs/datatables-bs5/datatables.bootstrap5.css',
+        'libs/datatables-responsive-bs5/responsive.bootstrap5.css',
+        'libs/datatables-buttons-bs5/buttons.bootstrap5.css'
     ];
 
     /**
@@ -280,14 +289,14 @@ class Asset
         }
         $t .= '.css';
 
-        $this->baseCss([$t], true);
+        $this->baseCss(['css/'.$t], true);
     }
 
     protected function setupMode() {
 
         if(Admin::darkMode() == DarkModeType::DARK) {
-            $this->baseCss(['core-dark.css'], true);
-            $this->baseCss([Admin::theme().'-dark.css'], true);
+            $this->baseCss(['css/core-dark.css'], true);
+            $this->baseCss(['css/'.Admin::theme().'-dark.css'], true);
         }
     }
     //todo::rm me
@@ -612,14 +621,14 @@ class Asset
      * @param  array  $js
      * @param  bool  $merge
      */
-    // public function baseJs(array $js, bool $merge = true)
-    // {
-    //     if ($merge) {
-    //         $this->baseJs = array_merge($this->baseJs, $js);
-    //     } else {
-    //         $this->baseJs = $js;
-    //     }
-    // }
+    public function baseJs(array $js, bool $merge = true)
+    {
+        if ($merge) {
+            $this->htmlJs = array_merge($this->htmlJs, $js);
+        } else {
+            $this->htmlJs = $js;
+        }
+    }
 
     public function script(string|array $script, bool $direct = false) : void
     {
@@ -680,13 +689,13 @@ class Asset
 
         foreach (array_unique($this->css) as &$v) {
 
-            $path =  '/'.self::PATH_BASE.'/css/'.$v;
+            $path =  '/'.self::PATH_BASE.$v;
             $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
         }
 
         foreach (array_unique($this->fonts) as &$v) {
 
-            $path =  '/'.self::PATH_BASE.'/fonts/'.$v;
+            $path =  '/'.self::PATH_BASE.'fonts/'.$v;
             $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
         }
 
@@ -731,7 +740,7 @@ class Asset
 
         foreach (array_unique($this->htmlJs) as &$v) {
 
-            $path =  '/'.self::PATH_BASE.'/'.$v;
+            $path =  '/'.self::PATH_BASE.$v;
 
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
         }
@@ -751,7 +760,7 @@ class Asset
             // if (! $paths = $this->get($v, 'js')) {
             //     continue;
             // }
-            $path =  '/'.self::PATH_BASE.'/'.$v;
+            $path =  '/'.self::PATH_BASE.$v;
             //todo::rm me
             //$path = $this->url($v);
             $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";

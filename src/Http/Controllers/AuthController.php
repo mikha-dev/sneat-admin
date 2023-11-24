@@ -30,7 +30,7 @@ class AuthController extends Controller
         };
 
         Admin::asset()->css([
-            'pages/page-auth.css',
+            'css/pages/page-auth.css',
             //'@form-validation/umd/styles/index.min.css'
         ]);
 

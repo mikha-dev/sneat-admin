@@ -6,6 +6,7 @@ namespace Dcat\Admin\Widgets;
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 
+//todo:: tab addLink
 class Tab extends Widget {
 	const TYPE_TAB  = 1;
 	const TYPE_PILL = 2;

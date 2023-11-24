@@ -1,9 +1,9 @@
 @if (!empty($default) || !empty($custom))
 <div class="grid-dropdown-actions dropdown">
-    <a href="#" style="padding:0 10px;" data-toggle="dropdown">
-        <i class="feather icon-more-vertical"></i>
+    <a href="#" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+        <i class="bx bx-dots-vertical-rounded"></i>
     </a>
-    <ul class="dropdown-menu" style="left: -65px;">
+    <ul class="dropdown-menu dropdown-menu-end m-0">
 
         @foreach($default as $action)
             <li class="dropdown-item">{!! Dcat\Admin\Support\Helper::render($action) !!}</li>

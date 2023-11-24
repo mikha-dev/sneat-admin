@@ -21,8 +21,10 @@
                 @if($layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL)
                     @include('admin::partials.sidebar')
                 @endif
-                <div class="{{ $layout['content_type'] }} flex-grow-1 container-p-y" id="{{ $pjaxContainerId }}">
-                    @yield('app')
+                <div class="app-content">
+                    <div class="{{ $layout['content_type'] }} flex-grow-1 container-p-y" id="{{ $pjaxContainerId }}">
+                        @yield('app')
+                    </div>
                 </div>
 
                 @include('admin::partials.footer')

@@ -408,7 +408,7 @@ return [
         'system_notification_settings_model' => Dcat\Admin\Models\SystemNotificationSetting::class,
 
         // Tags table and model.
-        'tags_table' => 'admin_roles',
+        'tags_table' => 'admin_tags',
         'tags_model' => Dcat\Admin\Models\Tag::class,
 
         // Pivot table for table above.

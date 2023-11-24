@@ -166,6 +166,9 @@ trait HasPaginator
     {
         $this->paginator();
 
+        if(is_null($this->paginator))
+            return '';
+
         return $this->paginator->render('admin::grid.pagination', ['selector' => new PerPageSelector($this)]);
         //return view('admin::grid.table-pagination', ['grid' => $this ]);
     }

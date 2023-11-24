@@ -1,7 +1,7 @@
 <!-- todo::split on two files -->
 {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_BEFORE']) !!}
 
-<nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme {{ $layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL() ? '' : $layout['content_type'].' navbar-detached' }} "
+<nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme {{ $layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL() ? '' : $layout['content_type'] }} "
     id="layout-navbar">
     @if($layout['type'] == Dcat\Admin\Enums\LayoutType::HORIZONTAL())
     <div class="container-xxl">

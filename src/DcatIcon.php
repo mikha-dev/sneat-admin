@@ -24,31 +24,38 @@ enum DcatIcon: string {
 	case TERMINAL = 'terminal';
 	case USER = 'user';
 	case MESSAGE_SQUARE = 'message-square';
+    case TRASH = 'trash';
+    case EYE = 'bx-show-alt';
 
 
-	public function _(bool $fullTag = FALSE) {
-		return self::format($this, $fullTag);
+	public function _(bool $fullTag = FALSE, ?string $title = null) {
+		return self::format($this, $fullTag, $title);
 	}
 
 	public static function __callStatic($name, $args) {
 		$fullTag = FALSE;
+        $title = null;
+
 		if ( $args && count($args) > 0 ) {
-			$fullTag = TRUE;
+			$fullTag = $args[0];
+            $title = isset($args[1]) ? $args[1] : '';
 		}
 		$cases = static::cases();
 		foreach ($cases as $case) {
 			if ( $case->name === $name ) {
-				return $case->_($fullTag);
+				return $case->_($fullTag, $title);
 			}
 		}
 	}
 
-	public static function format(DcatIcon $icon, bool $fullTag = FALSE)
+	public static function format(DcatIcon $icon, bool $fullTag = FALSE, ?string $title = null)
 	: string {
-		$t = self::BASE . self::PREFIX . $icon->value;
+		$class = self::BASE . self::PREFIX . $icon->value;
+        $title = !is_null($title) ? 'title="'.$title.'"' : '';
+
 		if ( $fullTag ) {
-			return '<i class="' . $t . '"></i>';
+			return '<i class="'.$class.'" $title></i>';
 		}
-		return $t;
+		return $class;
 	}
 }
