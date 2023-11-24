@@ -4,6 +4,8 @@ namespace Dcat\Admin;
 
 use Closure;
 use App\Impersonate;
+use Dcat\Admin\Enums\RegisterLayoutType;
+use Dcat\Admin\Http\Controllers\RegistrationController;
 use Dcat\Admin\Layout\Menu;
 use Illuminate\Support\Arr;
 use Dcat\Admin\Layout\Footer;
@@ -542,6 +544,10 @@ class Admin
         return config('admin.layout.auth_type');
     }
 
+	public static function registerLayoutType() : RegisterLayoutType {
+        return config('admin.layout.register_type');
+    }
+
     public static function layoutType() : LayoutType {
         return config('admin.layout.type');
     }
@@ -595,6 +601,7 @@ class Admin
                 })->name(RouteAuth::DASH_SETTINGS());
 
                 $authController = config('admin.auth.controller', AuthController::class);
+                $registerController = config('admin.register.controller', RegistrationController::class);
 
                 $router->get('auth/login', $authController.'@getLogin')->name(RouteAuth::LOGIN());
                 $router->post('auth/login', $authController.'@postLogin');
@@ -605,7 +612,8 @@ class Admin
                 $router->get('auth/deimpersonate', $authController.'@deimpersonate')->name(RouteAuth::DEIMPERSONATE());
 
                 $router->get('auth/forgot-password', $authController.'@getForgotPassword')->name(RouteAuth::FORGOT_PASSWORD());
-                $router->get('auth/register', $authController.'@getRegister')->name(RouteAuth::REGISTER());
+                $router->get('auth/register', $registerController.'@getRegister')->name(RouteAuth::REGISTER());
+                $router->post('auth/register', $registerController.'@store')->name(RouteAuth::REGISTER());
             });
         }
 
