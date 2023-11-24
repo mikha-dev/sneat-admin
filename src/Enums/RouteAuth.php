@@ -17,4 +17,5 @@ enum RouteAuth : string implements DcatEnum
     case FORGOT_PASSWORD = 'auth.forgot_password';
     case REGISTER = 'auth.register';
     case SETTINGS = 'auth.settings';
+    case DASH_SETTINGS = 'dash.settings';
 }

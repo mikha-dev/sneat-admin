@@ -30,6 +30,9 @@ class UserNav
     public function renderElements() : string {
         $this->callComposing('render-user-nav');
 
+        if(config('admin.dashboard_settings.enable', false)) {
+            $this->put(new UserNavElement($this, admin_route(RouteAuth::DASH_SETTINGS()), DcatIcon::SETTINGS(), __('admin.dash_settings'), null, true));
+        }
         $this->put(new UserNavElement($this, admin_route(RouteAuth::SETTINGS()), DcatIcon::SETTINGS(), __('admin.settings'), null, true));
         $this->put(new UserNavElement($this, admin_route(RouteAuth::LOGOUT()), DcatIcon::LOGOUT(), __('admin.logout')));
 

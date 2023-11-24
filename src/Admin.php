@@ -44,6 +44,7 @@ use Dcat\Admin\Traits\HasDashboardNotifications;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Contracts\EmailContextObjectInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Dcat\Admin\Http\Controllers\DashboardSettingsController;
 
 class Admin
 {
@@ -589,6 +590,9 @@ class Admin
                 });
 
                 $router->resource('auth/extensions', 'Dcat\Admin\Http\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
+                $router->get('dashboard-settings', function (\Dcat\Admin\Layout\Content $content) {
+                    return (new DashboardSettingsController())->index($content);
+                })->name(RouteAuth::DASH_SETTINGS());
 
                 $authController = config('admin.auth.controller', AuthController::class);
 
@@ -602,6 +606,14 @@ class Admin
 
                 $router->get('auth/forgot-password', $authController.'@getForgotPassword')->name(RouteAuth::FORGOT_PASSWORD());
                 $router->get('auth/register', $authController.'@getRegister')->name(RouteAuth::REGISTER());
+            });
+        }
+
+        if (config('admin.dashboard_settings.enable', true)) {
+            app('router')->group($attributes, function ($router) {
+                $router->get('dashboard-settings', function (\Dcat\Admin\Layout\Content $content) {
+                    return (new DashboardSettingsController())->index($content);
+                })->name(RouteAuth::DASH_SETTINGS());
             });
         }
 
