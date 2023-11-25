@@ -112,13 +112,13 @@ Dcat.Action({
     calledClass: '{$this->makeCalledClass()}',
     before: {$this->actionScript()},
     html: {$this->handleHtmlResponse()},
-    success: {$this->resolverScript()}, 
+    success: {$this->resolverScript()},
     error: {$this->rejectScript()},
 });
 JS;
 
         Admin::script($script);
-        Admin::js('@admin/dcat/extra/action.js');
+        Admin::js('admin/dcat/extra/action.js');
     }
 
     /**

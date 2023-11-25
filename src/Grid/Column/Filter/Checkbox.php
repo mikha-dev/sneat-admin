@@ -44,7 +44,7 @@ JS;
         return <<<HTML
 &nbsp;<span class="dropdown">
 <form action="{$this->formAction()}" {$pjaxContainer} style="display: inline-block;">
-    <a class="dropdown-toggle {$active}" data-toggle="dropdown">
+    <a class="dropdown-toggle {$active}" data-bs-toggle="dropdown">
         <i class="fas fa-filter"></i>
     </a>
     <ul class="dropdown-menu" role="menu" style="padding: 10px;left: -70px;border-radius: 0;font-weight:normal;background:#fff">

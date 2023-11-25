@@ -95,35 +95,5 @@ const sassOptions = {
   precision: 5
 };
 
-// Core stylesheets
-mixAssetsDir('scss/**/!(_)*.scss', (src, dest) =>
-  mix.sass(src, dest.replace(/(\\|\/)scss(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), { sassOptions })
-);
-
-// Core javascripts
-mixAssetsDir('js/**/*.js', (src, dest) => mix.js(src, dest));
-
-// Libs
-mixAssetsDir('libs/**/*.js', (src, dest) => mix.js(src, dest));
-mixAssetsDir('libs/**/!(_)*.scss', (src, dest) =>
-  mix.sass(src, dest.replace(/\.scss$/, '.css'), { sassOptions })
-);
-mixAssetsDir('libs/**/*.{png,jpg,jpeg,gif}', (src, dest) => mix.copy(src, dest));
-
-// Images
-mixAssetsDir('images/*', (src, dest) => mix.copy(src, dest));
-
 //Dcat
 mixAssetsDir('dcat/js/dcat-app.js', (src, dest) => mix.js(src, dest));
-mixAssetsDir('dcat/plugins/*', (src, dest) => mix.copy(src, dest));
-mixAssetsDir('dcat/extra/*', (src, dest) => mix.copy(src, dest));
-//todo::rm
-//mixAssetsDir('dcat/*', (src, dest) => mix.copy(src, dest));
-
-// Fonts
-mixAssetsDir('fonts/*/*', (src, dest) => mix.copy(src, dest));
-mixAssetsDir('fonts/!(_)*.scss', (src, dest) =>
-  mix.sass(src, dest.replace(/(\\|\/)scss(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), { sassOptions })
-);
-
-mix.copy('node_modules/boxicons/fonts/*', 'resources/dist/fonts/boxicons');

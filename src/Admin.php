@@ -610,6 +610,7 @@ class Admin
         }
 
         if (config('admin.dashboard_settings.enable', true)) {
+
             app('router')->group($attributes, function ($router) {
                 $router->get('dashboard-settings', function (\Dcat\Admin\Layout\Content $content) {
                     return (new DashboardSettingsController())->index($content);

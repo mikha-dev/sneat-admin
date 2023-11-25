@@ -207,6 +207,12 @@ class Asset
         'dcat/plugins/layer/layer.js',
         'dcat/plugins/jquery.initialize/jquery.initialize.min.js',
         'dcat/plugins/switchery/switchery.min.js',
+        'dcat/plugins/number-input/bootstrap-number-input.js',
+        'dcat/plugins/webuploader/webuploader.min.js',
+        'dcat/extra/upload.js',
+        'dcat/plugins/nestable/jquery.nestable.min.js',
+        'dcat/plugins/select/select2.full.min.js',
+        'dcat/extra/grid-extend.js',
         //'dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
 
         //'libs/jquery/jquery.js',
@@ -253,6 +259,7 @@ class Asset
     private array $baseCss = [
         'css/core.css',
         'dcat/plugins/switchery/switchery.min.css',
+        'dcat/plugins/select/select2.min.css',
         'css/nprogress.css',
 
         // paid version
