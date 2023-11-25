@@ -29,10 +29,11 @@ class AuthController extends Controller
             AuthLayoutType::COVER                => 'admin::pages.authentications.login-cover'
         };
 
-        Admin::asset()->css([
-            'css/pages/page-auth.css',
-            //'@form-validation/umd/styles/index.min.css'
-        ]);
+        Admin::requireAssets('sneat-auth');
+        // Admin::asset()->css([
+        //     'css/pages/page-auth.css',
+        //     //'@form-validation/umd/styles/index.min.css'
+        // ]);
 
         Admin::asset()->font([
             'boxicons.css',

@@ -10,15 +10,120 @@ use Dcat\Admin\Enums\LayoutDirectionType;
 class Asset
 {
 
-    const PATH_BASE = 'vendor/dcat-admin/';
-    //todo::rm me
-    // /**
-    //  * 别名.
-    //  *
-    //  * @var array
-    //  */
-    // protected $alias = [
-    //     '@admin' => 'vendor/dcat-admin',
+    protected $alias = [
+        '@admin' => 'vendor/dcat-admin',
+        '@extension' => 'vendor/dcat-admin-extensions',
+        '@sneat' => [
+            'js' => [
+                '@admin/js/helpers.js',
+                '@admin/js/config.js',
+            ],
+            'css' => [
+                '@admin/css/nprogress.css',
+                '@admin/css/core.css',
+            ],
+        ],
+        '@sneat-menu' => [
+            'js' => [
+                '@admin/js/menu.js',
+            ],
+        ],
+        '@sneat-main' => [
+            'js' => [
+                '@admin/js/main.js',
+            ],
+        ],
+        '@sneat-auth' => [
+            'css' => [
+                '@admin/css/pages/page-auth.css',
+            ],
+        ],
+        '@boxicons' => [
+            'css'  => '@admin/fonts/boxicons.css',
+        ],
+        '@nunito' => [
+            //https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700
+            'css' => 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i',
+            //'css' => '@admin/dcat/css/nunito.css',
+        ],
+        '@dcat' => [
+            'js'  => '@admin/dcat/js/dcat-app.js',
+        ],
+
+        '@jquery' => [
+            'js' => '@admin/libs/jquery/jquery.js',
+        ],
+        '@datatables' => [
+            'css' => [
+                '@admin/libs/datatables-bs5/datatables.bootstrap5.css',
+                '@admin/libs/datatables-responsive-bs5/responsive.bootstrap5.css',
+                '@admin/libs/datatables-buttons-bs5/buttons.bootstrap5.css'
+            ]
+            //'@admin/dcat/plugins/tables/datatable/datatables.min.css',
+        ],
+        '@layer' => [
+            'js' => '@admin/dcat/plugins/layer/layer.js',
+        ],
+        '@tinymce' => [
+            'js' => '@admin/dcat/plugins/tinymce/tinymce.min.js',
+        ],
+        '@pjax' => [
+            'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        ],
+        '@toastr' => [
+            'js'  => '@admin/dcat/plugins/extensions/toastr.min.js',
+            'css' => '@admin/dcat/plugins/extensions/toastr.css',
+        ],
+        '@jquery.nestable' => [
+            'js'  => '@admin/dcat/plugins/nestable/jquery.nestable.min.js',
+            'css' => '@admin/dcat/plugins/nestable/nestable.css',
+        ],
+        '@validator' => [
+            'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
+        ],
+        '@select2' => [
+            'js'  => [
+                '@admin/dcat/plugins/select/select2.full.min.js',
+                '@admin/dcat/plugins/select/i18n/{lang}.js',
+            ],
+            'css' => '@admin/dcat/plugins/select/select2.min.css',
+        ],
+        '@switchery' => [
+            'js'  => '@admin/dcat/plugins/switchery/switchery.min.js',
+            'css' => '@admin/dcat/plugins/switchery/switchery.min.css',
+        ],
+        '@webuploader' => [
+            'js' => [
+                '@admin/dcat/plugins/webuploader/webuploader.min.js',
+                '@admin/dcat/extra/upload.js',
+            ],
+    //         'css' => '@admin/dcat/extra/upload.css',
+        ],
+        '@editor-md' => [
+            'js' => [
+                '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                '@admin/dcat/plugins/editor-md/lib/marked.min.js',
+                '@admin/dcat/plugins/editor-md/lib/prettify.min.js',
+                '@admin/dcat/plugins/editor-md/lib/underscore.min.js',
+                '@admin/dcat/plugins/editor-md/lib/sequence-diagram.min.js',
+                '@admin/dcat/plugins/editor-md/lib/flowchart.min.js',
+                '@admin/dcat/plugins/editor-md/lib/jquery.flowchart.min.js',
+                '@admin/dcat/plugins/editor-md/editormd.min.js',
+            ],
+            'css' => [
+                '@admin/dcat/plugins/editor-md/css/editormd.preview.min.css',
+                '@admin/dcat/extra/markdown.css',
+            ],
+        ],
+        '@editor-md-form' => [
+            'js' => [
+                '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                '@admin/dcat/plugins/editor-md/editormd.min.js',
+            ],
+            'css' => [
+                '@admin/dcat/plugins/editor-md/css/editormd.min.css',
+            ],
+        ],
 
     //     '@theme' => [
     //         'js' => [
@@ -28,24 +133,13 @@ class Asset
     //             '@admin/css/theme.css',
     //         ],
     //     ],
-
-    //     // Dcat Acmin扩展静态资源路径别名
-    //     '@extension' => 'vendor/dcat-admin-extensions',
-
-    //     '@dcat' => [
-    //         'js'  => '@admin/dcat/js/dcat-app.js',
-    //         'css' => '@admin/dcat/css/dcat-app.css',
-    //     ],
     //     '@vendors' => [
     //         'js'  => '@admin/dcat/plugins/vendors.min.js',
     //         'css' => '@admin/dcat/plugins/vendors.min.css',
     //     ],
-    //     '@jquery.initialize' => [
-    //         'js' => '@admin/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
-    //     ],
-    //     '@datatables' => [
-    //         'css' => '@admin/dcat/plugins/tables/datatable/datatables.min.css',
-    //     ],
+        '@jquery.initialize' => [
+            'js' => '@admin/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+        ],
     //     '@grid-extension' => [
     //         'js' => '@admin/dcat/extra/grid-extend.js',
     //     ],
@@ -54,33 +148,6 @@ class Asset
     //     ],
     //     '@select-table' => [
     //         'js' => '@admin/dcat/extra/select-table.js',
-    //     ],
-    //     '@layer' => [
-    //         'js' => '@admin/dcat/plugins/layer/layer.js',
-    //     ],
-    //     '@tinymce' => [
-    //         'js' => '@admin/dcat/plugins/tinymce/tinymce.min.js',
-    //     ],
-    //     '@pjax' => [
-    //         'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
-    //     ],
-    //     '@toastr' => [
-    //         'js'  => '@admin/dcat/plugins/extensions/toastr.min.js',
-    //         'css' => '@admin/dcat/plugins/extensions/toastr.css',
-    //     ],
-    //     '@jquery.nestable' => [
-    //         'js'  => '@admin/dcat/plugins/nestable/jquery.nestable.min.js',
-    //         'css' => '@admin/dcat/plugins/nestable/nestable.css',
-    //     ],
-    //     '@validator' => [
-    //         'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
-    //     ],
-    //     '@select2' => [
-    //         'js'  => [
-    //             '@admin/dcat/plugins/select/select2.full.min.js',
-    //             '@admin/dcat/plugins/select/i18n/{lang}.js',
-    //         ],
-    //         'css' => '@admin/dcat/plugins/select/select2.min.css',
     //     ],
     //     '@bootstrap-datetimepicker' => [
     //         'js'  => '@admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
@@ -99,17 +166,6 @@ class Asset
     //     '@jstree' => [
     //         'js'  => '@admin/dcat/plugins/jstree-theme/jstree.min.js',
     //         'css' => '@admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
-    //     ],
-    //     '@switchery' => [
-    //         'js'  => '@admin/dcat/plugins/switchery/switchery.min.js',
-    //         'css' => '@admin/dcat/plugins/switchery/switchery.min.css',
-    //     ],
-    //     '@webuploader' => [
-    //         'js' => [
-    //             '@admin/dcat/plugins/webuploader/webuploader.min.js',
-    //             '@admin/dcat/extra/upload.js',
-    //         ],
-    //         'css' => '@admin/dcat/extra/upload.css',
     //     ],
     //     '@chartjs' => [
     //         'js' => '@admin/dcat/plugins/chart.js/chart.bundle.min.js',
@@ -131,31 +187,6 @@ class Asset
     //         'css' => [
     //             '@admin/dcat/plugins/ionslider/ion.rangeSlider.css',
     //             '@admin/dcat/plugins/ionslider/ion.rangeSlider.skinNice.css',
-    //         ],
-    //     ],
-    //     '@editor-md' => [
-    //         'js' => [
-    //             '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/marked.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/prettify.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/underscore.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/sequence-diagram.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/flowchart.min.js',
-    //             '@admin/dcat/plugins/editor-md/lib/jquery.flowchart.min.js',
-    //             '@admin/dcat/plugins/editor-md/editormd.min.js',
-    //         ],
-    //         'css' => [
-    //             '@admin/dcat/plugins/editor-md/css/editormd.preview.min.css',
-    //             '@admin/dcat/extra/markdown.css',
-    //         ],
-    //     ],
-    //     '@editor-md-form' => [
-    //         'js' => [
-    //             '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
-    //             '@admin/dcat/plugins/editor-md/editormd.min.js',
-    //         ],
-    //         'css' => [
-    //             '@admin/dcat/plugins/editor-md/css/editormd.min.css',
     //         ],
     //     ],
     //     '@jquery.inputmask' => [
@@ -181,7 +212,7 @@ class Asset
     //     '@autocomplete' => [
     //         'js' => '@admin/dcat/plugins/autocomplete/jquery.autocomplete.min.js',
     //     ],
-    // ];
+    ];
 
     public array $script = [];
 
@@ -191,99 +222,112 @@ class Asset
 
     public array $css = [];
 
+    //todo::rm
+    // public array $fonts = [
+    //     'boxicons.css'
+    // ];
+    public array $js = [];
+    public array $headerJs = [
+//        'vendors' => '@vendors',
+        'jquery'    => '@jquery',
+        'dcat'    => '@dcat',
+        'sneat'    => '@sneat',
+    ];
+
+    public array $baseCss = [
+        'sneat'    => '@sneat',
+//        'vendors'     => '@vendors',
+        'toastr'      => '@toastr',
+        'datatables'  => '@datatables', //todo::move to other css, load on demand
+//        'dcat'        => '@dcat',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ];
+
+    public array $baseJs = [
+//        'adminlte'  => '@adminlte',
+        'toastr'    => '@toastr',
+        'pjax'      => '@pjax',
+        'validator' => '@validator',
+        'layer'     => '@layer',
+        'init'      => '@jquery.initialize',
+        'sneat-menu'     => '@sneat-menu',
+        'sneat-main'     => '@sneat-main',
+    ];
+
     public array $fonts = [
-        'boxicons.css'
+        '@nunito',
+        '@boxicons'
     ];
 
-    /**
-     * js脚本路径.
-     *
-     * @var array
-     */
-    public $htmlJs = [
-        'dcat/plugins/extensions/toastr.min.js',
-        'dcat/plugins/jquery-pjax/jquery.pjax.min.js',
-        'dcat/plugins/bootstrap-validator/validator.min.js',
-        'dcat/plugins/layer/layer.js',
-        'dcat/plugins/jquery.initialize/jquery.initialize.min.js',
-        'dcat/plugins/switchery/switchery.min.js',
-        'dcat/plugins/number-input/bootstrap-number-input.js',
-        'dcat/plugins/webuploader/webuploader.min.js',
-        'dcat/extra/upload.js',
-        'dcat/plugins/nestable/jquery.nestable.min.js',
-        'dcat/plugins/select/select2.full.min.js',
-        'dcat/extra/grid-extend.js',
-        //'dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
 
-        //'libs/jquery/jquery.js',
-        'libs/popper/popper.js',
-        'js/bootstrap.js',
-        'libs/perfect-scrollbar/perfect-scrollbar.js',
-        'js/menu.js',
-        'js/main.js',
-        'js/ui-popover.js'
-    ];
+    //todo::rm/check
+    // public $htmlJs = [
+    //     'dcat/plugins/extensions/toastr.min.js',
+    //     'dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+    //     'dcat/plugins/bootstrap-validator/validator.min.js',
+    //     'dcat/plugins/layer/layer.js',
+    //     'dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+    //     'dcat/plugins/switchery/switchery.min.js',
+    //     'dcat/plugins/number-input/bootstrap-number-input.js',
+    //     'dcat/plugins/webuploader/webuploader.min.js',
+    //     'dcat/extra/upload.js',
+    //     'dcat/plugins/nestable/jquery.nestable.min.js',
+    //     'dcat/plugins/select/select2.full.min.js',
+    //     'dcat/extra/grid-extend.js',
+    //     //'dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
 
-    /**
-     * 在head标签内加载的js脚本.
-     *
-     * @var array
-     */
-    public $headerJs = [
-        'libs/jquery/jquery.js',
-        //'dcat/plugins/vendors.min.js',
-        'dcat/js/dcat-app.js',
-        // 'dcat/plugins/webuploader/webuploader.min.js',
-        // 'dcat/extra/upload.js',
-        'js/helpers.js',
-        'js/config.js'
-        // 'vendors' => '@vendors',
-        // 'dcat'    => '@dcat',
-    ];
-
-    //todo::rm me
-    // /**
-    //  * 基础css.
-    //  *
-    //  * @var array
-    //  */
-    // public $baseCss = [
-    //     'theme'    => '@theme',
-
-    //     'vendors'     => '@vendors',
-    //     'toastr'      => '@toastr',
-    //     'datatables'  => '@datatables',
-    //     'dcat'        => '@dcat',
+    //     //'libs/jquery/jquery.js',
+    //     'libs/popper/popper.js',
+    //     'js/bootstrap.js',
+    //     'libs/perfect-scrollbar/perfect-scrollbar.js',
+    //     'js/menu.js',
+    //     'js/main.js',
+    //     'js/ui-popover.js'
     // ];
 
-    private array $baseCss = [
-        'css/core.css',
-        'dcat/plugins/switchery/switchery.min.css',
-        'dcat/plugins/select/select2.min.css',
-        'css/nprogress.css',
+    //todo::rm/check
+    // public $headerJs = [
+    //     'libs/jquery/jquery.js',
+    //     //'dcat/plugins/vendors.min.js',
+    //     'dcat/js/dcat-app.js',
+    //     // 'dcat/plugins/webuploader/webuploader.min.js',
+    //     // 'dcat/extra/upload.js',
+    //     'js/helpers.js',
+    //     'js/config.js'
+    //     // 'vendors' => '@vendors',
+    //     // 'dcat'    => '@dcat',
+    // ];
 
-        // paid version
-        'libs/datatables-bs5/datatables.bootstrap5.css',
-        'libs/datatables-responsive-bs5/responsive.bootstrap5.css',
-        'libs/datatables-buttons-bs5/buttons.bootstrap5.css'
-    ];
+    // private array $baseCss = [
+    //     'css/core.css',
+    //     'dcat/plugins/switchery/switchery.min.css',
+    //     'dcat/plugins/select/select2.min.css',
+    //     'css/nprogress.css',
 
-    /**
-     * 基础js.
-     *
-     * @var array
-     */
-    // public $baseJs = [
-    //     //'helpers.js',
-    //     //'bootstrap.js',
-    //     //'menu.js', //todo:: move to menu
-    //     // 'theme'  => '@theme',
-
-    //     // 'toastr'    => '@toastr',
-    //     // 'pjax'      => '@pjax',
-    //     // 'validator' => '@validator',
-    //     // 'layer'     => '@layer',
-    //     // 'init'      => '@jquery.initialize',
+    //     // paid version
+    //     'libs/datatables-bs5/datatables.bootstrap5.css',
+    //     'libs/datatables-responsive-bs5/responsive.bootstrap5.css',
+    //     'libs/datatables-buttons-bs5/buttons.bootstrap5.css'
     // ];
 
     protected function setupTheme() {
@@ -296,7 +340,7 @@ class Asset
         }
         $t .= '.css';
 
-        $this->baseCss(['css/'.$t], true);
+        $this->baseCss(['@admin/css/'.$t], true);
     }
 
     protected function setupMode() {
@@ -306,7 +350,6 @@ class Asset
             $this->baseCss(['css/'.Admin::theme().'-dark.css'], true);
         }
     }
-    //todo::rm me
     // /**
     //  * 初始化主题样式.
     //  */
@@ -334,114 +377,110 @@ class Asset
     //     }
     // }
 
-    // /**
-    //  * 设置或获取别名.
-    //  *
-    //  * @param  string|array  $name
-    //  * @param  string|array  $value
-    //  * @return void|array
-    //  */
-    // public function alias($name, $value = null)
-    // {
-    //     if (is_array($name)) {
-    //         foreach ($name as $key => $value) {
-    //             $this->alias($key, $value);
-    //         }
+    /**
+     * @param  string|array  $name
+     * @param  string|array  $value
+     * @return string|array
+     */
+    public function alias( string|array $name, string|array $value = null) : array|string|null
+    {
+        if (is_array($name)) {
+            foreach ($name as $key => $value) {
+                $this->alias($key, $value);
+            }
 
-    //         return;
-    //     }
+            return null;
+        }
 
-    //     if ($value === null) {
-    //         return $this->getAlias($name);
-    //     }
+        if ($value === null) {
+            return $this->getAlias($name);
+        }
 
-    //     if (mb_strpos($name, '@') !== 0) {
-    //         $name = '@'.$name;
-    //     }
+        if (mb_strpos($name, '@') !== 0) {
+            $name = '@'.$name;
+        }
 
-    //     $this->alias[$name] = $value;
-    // }
+        $this->alias[$name] = $value;
+    }
 
-    // /**
-    //  * 获取别名.
-    //  *
-    //  * @param  string  $name
-    //  * @param  array  $params
-    //  * @return array|string
-    //  */
-    // public function getAlias($name, array $params = [])
-    // {
-    //     if (mb_strpos($name, '@') !== 0) {
-    //         $name = '@'.$name;
-    //     }
+    /**
+     * 获取别名.
+     *
+     * @param  string  $name
+     * @param  array  $params
+     * @return array|string
+     */
+    public function getAlias($name, array $params = [])
+    {
+        if (mb_strpos($name, '@') !== 0) {
+            $name = '@'.$name;
+        }
 
-    //     [$name, $query] = $this->parseParams($name);
+        [$name, $query] = $this->parseParams($name);
 
-    //     $assets = $this->alias[$name] ?? [];
+        $assets = $this->alias[$name] ?? [];
 
-    //     // 路径别名
-    //     if (is_string($assets)) {
-    //         return $assets;
-    //     }
+        // 路径别名
+        if (is_string($assets)) {
+            return $assets;
+        }
 
-    //     $params += $query;
+        $params += $query;
 
-    //     return [
-    //         'js' => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
-    //         'css' => $this->normalizeAliasPaths($assets['css'] ?? [], $params) ?: null,
-    //     ];
-    // }
+        return [
+            'js' => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
+            'css' => $this->normalizeAliasPaths($assets['css'] ?? [], $params) ?: null,
+        ];
+    }
 
-    // /**
-    //  * @param  array  $files
-    //  * @param  array  $params
-    //  * @return array
-    //  */
-    // protected function normalizeAliasPaths($files, array $params)
-    // {
-    //     $files = (array) $files;
+    /**
+     * @param  array  $files
+     * @param  array  $params
+     * @return array
+     */
+    protected function normalizeAliasPaths($files, array $params)
+    {
+        $files = (array) $files;
 
-    //     foreach ($files as &$file) {
-    //         foreach ($params as $k => $v) {
-    //             if ($v !== '' && $v !== null) {
-    //                 $file = str_replace("{{$k}}", $v, $file);
-    //             }
-    //         }
-    //     }
+        foreach ($files as &$file) {
+            foreach ($params as $k => $v) {
+                if ($v !== '' && $v !== null) {
+                    $file = str_replace("{{$k}}", $v, $file);
+                }
+            }
+        }
 
-    //     return array_filter($files, function ($file) {
-    //         return ! mb_strpos($file, '{');
-    //     });
-    // }
+        return array_filter($files, function ($file) {
+            return ! mb_strpos($file, '{');
+        });
+    }
 
-    // /**
-    //  * 解析参数.
-    //  *
-    //  * @param  string  $name
-    //  * @return array
-    //  */
-    // protected function parseParams($name)
-    // {
-    //     $name = explode('?', $name);
+    /**
+     * 解析参数.
+     *
+     * @param  string  $name
+     * @return array
+     */
+    protected function parseParams($name)
+    {
+        $name = explode('?', $name);
 
-    //     if (empty($name[1])) {
-    //         return [$name[0], []];
-    //     }
+        if (empty($name[1])) {
+            return [$name[0], []];
+        }
 
-    //     parse_str($name[1], $params);
+        parse_str($name[1], $params);
 
-    //     return [$name[0], $params];
-    // }
+        return [$name[0], $params];
+    }
 
-    // /**
-    //  * 根据别名设置需要载入的js和css脚本.
-    //  *
-    //  * @param  string|array  $alias
-    //  * @param  array  $params
-    //  * @return void
-    //  */
-
-    //todo::rm
+    /**
+     * 根据别名设置需要载入的js和css脚本.
+     *
+     * @param  string|array  $alias
+     * @param  array  $params
+     * @return void
+     */
     public function require($alias, array $params = [])
     {
         if (is_array($alias)) {
@@ -452,13 +491,18 @@ class Asset
             return;
         }
 
-        //$assets = $this->getAlias($alias, $params);
+        $assets = $this->getAlias($alias, $params);
 
-        //$this->js($assets['js']);
-        //$this->css($assets['css']);
+        $this->js($assets['js']);
+        $this->css($assets['css']);
     }
 
-    public function css(string|array $css)
+    /**
+     * 设置需要载入的css脚本.
+     *
+     * @param  string|array  $css
+     */
+    public function css($css)
     {
         if (! $css) {
             return;
@@ -507,106 +551,121 @@ class Asset
      */
     public function js($js)
     {
-        $this->htmlJs = array_merge($this->htmlJs,(array) $js);
+        if (! $js) {
+            return;
+        }
+        $this->js = array_merge(
+            $this->js,
+            (array) $js
+        );
     }
 
-    // /**
-    //  * 根据别名获取资源路径.
-    //  *
-    //  * @param  string  $path
-    //  * @param  string  $type
-    //  * @return string|array|null
-    //  */
-    // public function get($path, string $type = 'js')
-    // {
-    //     if (empty($this->alias[$path])) {
-    //         return $this->url($path);
-    //     }
-
-    //     $paths = isset($this->alias[$path][$type]) ? (array) $this->alias[$path][$type] : null;
-
-    //     if (! $paths) {
-    //         return $paths;
-    //     }
-
-    //     foreach ($paths as &$value) {
-    //         $value = $this->url($value);
-    //     }
-
-    //     return $paths;
-    // }
-
-    public function url(string $path) : string
+    /**
+     * 根据别名获取资源路径.
+     *
+     * @param  string  $path
+     * @param  string  $type
+     * @return string|array|null
+     */
+    public function get($path, string $type = 'js')
     {
-        //todo::rm me
-        //$path = $this->getRealPath($path);
+        if (empty($this->alias[$path])) {
+            return $this->url($path);
+        }
+
+        $paths = isset($this->alias[$path][$type]) ? (array) $this->alias[$path][$type] : null;
+
+        if (! $paths) {
+            return $paths;
+        }
+
+        foreach ($paths as &$value) {
+            $value = $this->url($value);
+        }
+
+        return $paths;
+    }
+
+    /**
+     * 获取静态资源完整URL.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    public function url($path)
+    {
+        if (! $path) {
+            return $path;
+        }
+
+        $path = $this->getRealPath($path);
 
         if (mb_strpos($path, '//') === false) {
             $path = config('admin.assets_server').'/'.trim($path, '/');
         }
 
-        return (config('admin.https')) ? secure_asset($path) : asset($path);
+        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
     }
 
-    // /**
-    //  * 获取真实路径.
-    //  *
-    //  * @param  string|null  $path
-    //  * @return string|null
-    //  */
-    // public function getRealPath(?string $path)
-    // {
-    //     if (! $this->containsAlias($path)) {
-    //         return $path;
-    //     }
+    /**
+     * 获取真实路径.
+     *
+     * @param  string|null  $path
+     * @return string|null
+     */
+    public function getRealPath(?string $path)
+    {
+        if (! $this->containsAlias($path)) {
+            return $path;
+        }
 
-    //     return implode(
-    //         '/',
-    //         array_map(
-    //             function ($v) {
-    //                 if (! $this->isPathAlias($v)) {
-    //                     return $v;
-    //                 }
+        return implode(
+            '/',
+            array_map(
+                function ($v) {
+                    if (! $this->isPathAlias($v)) {
+                        return $v;
+                    }
 
-    //                 return $this->getRealPath($this->alias($v));
-    //             },
-    //             explode('/', $path)
-    //         )
-    //     );
-    // }
+                    return $this->getRealPath($this->alias($v)); //todo::fix it
+                },
+                explode('/', $path)
+            )
+        );
+    }
 
-    // /**
-    //  * 判断是否是路径别名.
-    //  *
-    //  * @param  mixed  $value
-    //  * @return bool
-    //  */
-    // public function isPathAlias($value)
-    // {
-    //     return $this->hasAlias($value) && is_string($this->alias[$value]);
-    // }
+    /**
+     * 判断是否是路径别名.
+     *
+     * @param  mixed  $value
+     * @return bool
+     */
+    public function isPathAlias($value)
+    {
+        return $this->hasAlias($value) && is_string($this->alias[$value]);
+    }
 
-    // /**
-    //  * 判断别名是否存在.
-    //  *
-    //  * @param $value
-    //  * @return bool
-    //  */
-    // public function hasAlias($value)
-    // {
-    //     return isset($this->alias[$value]);
-    // }
+    /**
+     * 判断别名是否存在.
+     *
+     * @param $value
+     * @return bool
+     */
+    public function hasAlias($value)
+    {
+        return isset($this->alias[$value]);
+    }
 
-    // /**
-    //  * 判断是否含有别名.
-    //  *
-    //  * @param  string  $value
-    //  * @return bool
-    //  */
-    // protected function containsAlias($value)
-    // {
-    //     return $value && mb_strpos($value, '@') === 0;
-    // }
+    /**
+     * 判断是否含有别名.
+     *
+     * @param  string  $value
+     * @return bool
+     */
+    protected function containsAlias($value)
+    {
+        return $value && mb_strpos($value, '@') === 0;
+    }
 
     /**
      * 设置在head标签内加载的js.
@@ -631,13 +690,19 @@ class Asset
     public function baseJs(array $js, bool $merge = true)
     {
         if ($merge) {
-            $this->htmlJs = array_merge($this->htmlJs, $js);
+            $this->baseJs = array_merge($this->baseJs, $js);
         } else {
-            $this->htmlJs = $js;
+            $this->baseJs = $js;
         }
     }
 
-    public function script(string|array $script, bool $direct = false) : void
+    /**
+     * 设置js代码.
+     *
+     * @param  string|array  $script
+     * @param  bool  $direct
+     */
+    public function script($script, bool $direct = false)
     {
         if (! $script) {
             return;
@@ -662,25 +727,35 @@ class Asset
         $this->style = array_merge($this->style, (array) $style);
     }
 
+    /**
+     * 字体css脚本路径.
+     */
+    protected function addFontCss()
+    {
+        $this->fonts && ($this->baseCss = array_merge(
+            $this->baseCss,
+            (array) $this->fonts
+        ));
+    }
+
     protected function isPjax()
     {
         return request()->pjax();
     }
 
-    //todo:rm me
-    // /**
-    //  * 合并基础css脚本.
-    //  */
-    // protected function mergeBaseCss()
-    // {
-    //     if ($this->isPjax()) {
-    //         return;
-    //     }
+    /**
+     * 合并基础css脚本.
+     */
+    protected function mergeBaseCss()
+    {
+        if ($this->isPjax()) {
+            return;
+        }
 
-    //     $this->addFontCss();
+        $this->addFontCss();
 
-    //     $this->css = array_merge($this->baseCss, $this->css);
-    // }
+        $this->css = array_merge($this->baseCss, $this->css);
+    }
 
     /**
      * @return string
@@ -688,22 +763,19 @@ class Asset
     public function cssToHtml()
     {
         $this->setUpTheme();
-        $this->setupMode();
+
+        $this->mergeBaseCss();
 
         $html = '';
 
-        $this->css = array_merge($this->baseCss, $this->css);
-
         foreach (array_unique($this->css) as &$v) {
+            if (! $paths = $this->get($v, 'css')) {
+                continue;
+            }
 
-            $path =  '/'.self::PATH_BASE.$v;
-            $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
-        }
-
-        foreach (array_unique($this->fonts) as &$v) {
-
-            $path =  '/'.self::PATH_BASE.'fonts/'.$v;
-            $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
+            foreach ((array) $paths as $path) {
+                $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
+            }
         }
 
         return $html;
@@ -724,32 +796,35 @@ class Asset
         return Str::endsWith($url, '?') ? $url.$ver : $url.'&'.$ver;
     }
 
-    // /**
-    //  * 合并基础js脚本.
-    //  */
-    // protected function mergeBaseJs()
-    // {
-    //     if ($this->isPjax()) {
-    //         return;
-    //     }
+    /**
+     * 合并基础js脚本.
+     */
+    protected function mergeBaseJs()
+    {
+        if ($this->isPjax()) {
+            return;
+        }
 
-    //     $this->js = array_merge($this->baseJs, $this->js);
-    // }
+        $this->js = array_merge($this->baseJs, $this->js);
+    }
 
     /**
      * @return string
      */
     public function jsToHtml()
     {
-//        $this->mergeBaseJs();
+        $this->mergeBaseJs();
 
         $html = '';
 
-        foreach (array_unique($this->htmlJs) as &$v) {
+        foreach (array_unique($this->js) as &$v) {
+            if (! $paths = $this->get($v, 'js')) {
+                continue;
+            }
 
-            $path =  '/'.self::PATH_BASE.$v;
-
-            $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
+            foreach ((array) $paths as $path) {
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
+            }
         }
 
         return $html;
@@ -763,16 +838,14 @@ class Asset
         $html = '';
 
         foreach (array_unique($this->headerJs) as &$v) {
-            //todo::rm me
-            // if (! $paths = $this->get($v, 'js')) {
-            //     continue;
-            // }
-            $path =  '/'.self::PATH_BASE.$v;
-            //todo::rm me
-            //$path = $this->url($v);
-            $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
-        }
+            if (! $paths = $this->get($v, 'js')) {
+                continue;
+            }
 
+            foreach ((array) $paths as $path) {
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
+            }
+        }
 
         return $html;
     }
